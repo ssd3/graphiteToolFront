@@ -179,6 +179,7 @@ export class Debits extends Component {
             <div className="p-grid">
                 <div className="p-col-12">
                         <div>
+
                             <Toolbar>
                                 <div className="p-toolbar-group-left">
                                     <h2 className="page-title">Debit</h2>
@@ -186,9 +187,10 @@ export class Debits extends Component {
                                     <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" style={{marginRight: '.25em'}}/>
                                 </div>
                                 <div className="p-toolbar-group-right" style={{display: 'flex'}}>
-                                    <Button label="Add Product" icon="pi pi-plus" onClick={this.displayDialog} />
-                                    <Button label="Add To Box" icon="pi pi-plus" className="p-button-success" onClick={this.displayBoxSidebar} />
-                                    <Button label="Clear Filters" className="p-button-danger" tooltipOptions={{position: 'left'}} />
+                                    <Button label="Add Product" icon="pi pi-plus" className="p-button-secondary" onClick={this.displayDialog} />
+                                    <Button label="Add To Box" icon="pi pi-plus" className="p-button-secondary" onClick={this.displayBoxSidebar} />
+                                    <Button label="Change Status" icon="pi pi-check" className="p-button-secondary" />
+                                    <Button label="Clear Filters" className="p-button-secondary" tooltipOptions={{position: 'left'}} />
                                 </div>
                             </Toolbar>
 
@@ -248,7 +250,7 @@ export class Debits extends Component {
                     </div>
                 </Dialog>
 
-                <Growl ref={(el) => this.growl = el} position={'topleft'} />
+                <Growl ref={(el) => this.growl = el} position='topleft' />
             </div>
         )
     }
