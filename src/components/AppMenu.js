@@ -6,51 +6,51 @@ import classNames from 'classnames'
 class AppSubmenu extends Component {
 
     constructor(props) {
-        super(props);
-        this.state = {activeIndex: null};
+        super(props)
+        this.state = {activeIndex: null}
     }
-    
+
     onMenuItemClick(event, item, index) {
         //avoid processing disabled items
         if(item.disabled) {
-            event.preventDefault();
-            return true;
+            event.preventDefault()
+            return true
         }
                         
         //execute command
         if(item.command) {
-            item.command({originalEvent: event, item: item});
+            item.command({originalEvent: event, item: item})
         }
 
         if(index === this.state.activeIndex)
-            this.setState({activeIndex: null});    
+            this.setState({activeIndex: null})
         else
-            this.setState({activeIndex: index});
+            this.setState({activeIndex: index})
 
         if(this.props.onMenuItemClick) {
             this.props.onMenuItemClick({
                 originalEvent: event,
                 item: item
-            });
+            })
         }
     }
 
-	renderLinkContent(item) {
-		let submenuIcon = item.items && <i className="pi pi-fw pi-angle-down menuitem-toggle-icon"></i>;
-		let badge = item.badge && <span className="menuitem-badge">{item.badge}</span>;
+	static renderLinkContent(item) {
+		let submenuIcon = item.items && <i className="pi pi-fw pi-angle-down menuitem-toggle-icon" />
+		let badge = item.badge && <span className="menuitem-badge">{item.badge}</span>
 
 		return (
 			<React.Fragment>
-				<i className={item.icon}></i>
+				<i className={item.icon} />
 				<span>{item.label}</span>
 				{submenuIcon}
 				{badge}
 			</React.Fragment>
-		);
+		)
 	}
 
 	renderLink(item, i) {
-		let content = this.renderLinkContent(item);
+		let content = AppSubmenu.renderLinkContent(item)
 
 		if (item.to) {
 			return (
@@ -64,26 +64,26 @@ class AppSubmenu extends Component {
 				<a href={item.url} onClick={(e) => this.onMenuItemClick(e, item, i)} target={item.target}>
 					{content}
 				</a>
-			);
+			)
 
 		}
 	}
     
     render() {
         let items = this.props.items && this.props.items.map((item, i) => {
-            let active = this.state.activeIndex === i;
-            let styleClass = classNames(item.badgeStyleClass, {'active-menuitem': active && !item.to});
+            let active = this.state.activeIndex === i
+            let styleClass = classNames(item.badgeStyleClass, {'active-menuitem': active && !item.to})
 
             return (
                 <li className={styleClass} key={i}>
-                    {item.items && this.props.root===true && <div className='arrow'></div>}
+                    {item.items && this.props.root===true && <div className='arrow' />}
 					{this.renderLink(item, i)}
                     <AppSubmenu items={item.items} onMenuItemClick={this.props.onMenuItemClick}/>
                 </li>
             )
         })
         
-        return items ? <ul className={this.props.className}>{items}</ul> : null;
+        return items ? <ul className={this.props.className}>{items}</ul> : null
     }
 
     static propTypes = {
@@ -110,7 +110,7 @@ export class AppMenu extends Component {
     static defaultProps = {
         model: null,
         onMenuItemClick: null
-    };
+    }
 
     static propTypes = {
         model: PropTypes.array,

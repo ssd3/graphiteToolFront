@@ -9,5 +9,7 @@
   "rules": {
     "semi": ["error", "never"],
     "quotes": ["error", "single"]
-  }
+  },
+  "plugins": ["babel"],
+  "parser": "babel-eslint"
 }

@@ -23,7 +23,7 @@
   /* IE10+ */
   background: linear-gradient(to right, #0388E5 0%, #07BDF4 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$left, endColorstr=$right,GradientType=1 );
+  filter: progid:DXImageTransform.Microsoft.gradient( StartColorStr=$left, EndColorStr=$right, GradientType=1 );
   /* IE6-9 */ }
   .splash-screen .splash-container {
     width: 40px;
@@ -1521,6 +1521,19 @@ body .p-toolbar button {
 
 .p-fieldset {
   height: 100%;
+}
+
+body .p-component {
+  font-size: 12px;
+}
+
+body .p-inputtext {
+  font-size: 12px;
+}
+
+.p-datatable-scrollable-body,
+.p-datatable-scrollable-header {
+  border-right: 1px solid #c8c8c8;
 }
 /*
 .p-datatable-thead {

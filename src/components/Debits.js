@@ -73,7 +73,7 @@ export class Debits extends Component {
         this.onGlobalSearch = this.onGlobalSearch.bind(this)
         this.displayBoxSidebar = this.displayBoxSidebar.bind(this)
         this.hideBoxSidebar = this.hideBoxSidebar.bind(this)
-        this.rowExpansionTemplate = this.rowExpansionTemplate.bind(this)
+        Debits.rowExpansionTemplate = Debits.rowExpansionTemplate.bind(this)
         this.hideDialog = this.hideDialog.bind(this)
         this.displayDialog = this.displayDialog.bind(this)
 
@@ -109,7 +109,7 @@ export class Debits extends Component {
         this.setState({globalFilter: event.target.value})
     }
 
-    displaySelection(data) {
+    static displaySelection(data) {
         if(!data || data.length === 0) {
             return <div style={{textAlign: 'left'}}>No Selection</div>
         }
@@ -145,7 +145,7 @@ export class Debits extends Component {
         })
     }
 
-    rowExpansionTemplate(data) {
+    static rowExpansionTemplate(data) {
         const src = 'public/images/' + data.brand + '.png'
 
         return  (
@@ -181,7 +181,7 @@ export class Debits extends Component {
                         <div>
                             <Toolbar>
                                 <div className="p-toolbar-group-left">
-                                    <h1 className="page-title">Debit</h1>
+                                    <h2 className="page-title">Debit</h2>
                                     <i className="pi pi-search" style={{margin:'4px 4px 0 0'}} />
                                     <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" style={{marginRight: '.25em'}}/>
                                 </div>
@@ -207,10 +207,10 @@ export class Debits extends Component {
                                        rowsPerPageOptions={[5,10,15,20]}
                                        scrollable={true}
                                        scrollHeight="60vh" /*should be calculated*/
-                                       footer={this.displaySelection(this.state.selectedRows)}
+                                       footer={Debits.displaySelection(this.state.selectedRows)}
                                        expandedRows={this.state.expandedRows}
                                        onRowToggle={(e) => this.setState({expandedRows:e.data})}
-                                       rowExpansionTemplate={this.rowExpansionTemplate}>
+                                       rowExpansionTemplate={Debits.rowExpansionTemplate}>
                                 <Column expander={true} style={{width: '3em'}} />
                                 <Column field="vin" header="Vin" sortable={true} filter={true} headerStyle={{overflow:'visible'}}  />
                                 <Column field="year" header="Year" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<InputText style={{width: '100%'}} onInput={this.onYearChange} />} />
