@@ -18,11 +18,12 @@ import 'primeflex/primeflex.css'
 
 import './styles/layout.css'
 import './styles/App.css'
+import PropTypes from 'prop-types'
 
 class App extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             layoutMode: 'static',
             layoutColorMode: 'dark',
@@ -166,13 +167,17 @@ class App extends Component {
 
                 <div className="layout-main">
                     <Route path="/" exact component={Dashboard} />
-                    <Route path="/debits" exact component={Debits} />
+                    <Route path="/debits" exact render={props => <Debits {...props} apolloClient={this.props.apolloClient} />} />
                     <Route path="/empty" component={EmptyPage} />
                 </div>
 
                 <div className="layout-mask"></div>
             </div>
         )
+    }
+
+    static propTypes = {
+        apolloClient: PropTypes.object.isRequired
     }
 }
 

@@ -10,6 +10,9 @@ import {Sidebar} from 'primereact/sidebar'
 import {Growl} from 'primereact/growl'
 import {Fieldset} from 'primereact/fieldset'
 import {Dialog} from 'primereact/dialog'
+import {ProgressBar} from 'primereact/progressbar'
+import PropTypes from 'prop-types'
+import gql from 'graphql-tag'
 
 export class Debits extends Component {
     constructor(props){
@@ -64,7 +67,8 @@ export class Debits extends Component {
                 {label: 'Brown', value: 'Brown'},
                 {label: 'Orange', value: 'Orange'},
                 {label: 'Blue', value: 'Blue'}
-            ]
+            ],
+            dataLoading: false,
         }
 
         this.onYearChange = this.onYearChange.bind(this)
@@ -86,7 +90,30 @@ export class Debits extends Component {
     }
 
     componentDidMount(){
-        this.growl.show({severity: 'success', summary: 'Success Message', detail: 'Component did mount' })
+        // apollo client usage
+        this.props.apolloClient
+        .query({
+            query: gql`
+                {
+                    products {
+                        productid
+                        title
+                        created
+                    }
+                }
+            `
+        })
+        .then(result => {
+            const { loading, error, data } = result
+            this.setState({dataLoading: loading})
+            if (error) {
+                this.growl.show({severity: 'error', summary: 'Error Message', detail: JSON.stringify(error) })
+            } else {
+                this.growl.show({severity: 'success', summary: 'Success Message', detail: JSON.stringify(data) })
+            }
+        })
+        .catch(e => console.log(e))
+        // apollo client usage
     }
 
     onYearChange(event) {
@@ -174,12 +201,16 @@ export class Debits extends Component {
 
     render() {
 
-        const { cars } = this.state
+        const { cars, dataLoading } = this.state
         return (
             <div className="p-grid">
+                {dataLoading &&
+                    <div className="p-col-12-1px">
+                    <ProgressBar mode="indeterminate" style={{height: '1px'}} />
+                    </div>
+                }
                 <div className="p-col-12">
                         <div>
-
                             <Toolbar>
                                 <div className="p-toolbar-group-left">
                                     <h2 className="page-title">Debit</h2>
@@ -253,5 +284,9 @@ export class Debits extends Component {
                 <Growl ref={(el) => this.growl = el} position='topleft' />
             </div>
         )
+    }
+
+    static propTypes = {
+        apolloClient: PropTypes.object.isRequired
     }
 }
