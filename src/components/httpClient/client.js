@@ -2,6 +2,13 @@ import ApolloClient from 'apollo-boost'
 
 const client = new ApolloClient({
     uri: 'http://localhost:8000/graphql/'
+    /*
+    clientState: {
+        defaults: {},
+        resolvers: {},
+        typeDefs: '',
+    }
+     */
 })
 
 class HttpClient {
@@ -19,4 +26,5 @@ class HttpClient {
     }
 }
 
-export default HttpClient
+export { HttpClient }
+// export { client }

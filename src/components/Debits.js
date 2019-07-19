@@ -13,10 +13,15 @@ import {Fieldset} from 'primereact/fieldset'
 import {Dialog} from 'primereact/dialog'
 import {ProgressBar} from 'primereact/progressbar'
 
-import HttpClient from './httpClient/client'
+import {HttpClient} from './httpClient/client'
 import ProductQueries from './queries/ProductQueries'
+
+
 import Query from 'react-apollo/Query'
 
+// option 1 - макароны 1
+// этот компонент <Products /> вызывается ниже в методе render
+// dropdownlist c списком продуктов
 const Products = ({ onProductSelected }) => (
     <Query query={ProductQueries.GET_PRODUCTS}>
         {({ loading, error, data }) => {
@@ -25,9 +30,9 @@ const Products = ({ onProductSelected }) => (
 
             return (
                 <select name="dog" onChange={onProductSelected}>
-                    {data.products.map(product => (
-                        <option key={product.productid} value={product.title}>
-                            {product.title}
+                    {data.products.data.map(result => (
+                        <option key={result.product.productid} value={result.product.title}>
+                            {result.product.title}
                         </option>
                     ))}
                 </select>
@@ -35,6 +40,7 @@ const Products = ({ onProductSelected }) => (
         }}
     </Query>
 )
+
 
 export class Debits extends Component {
     constructor(props){
@@ -90,7 +96,7 @@ export class Debits extends Component {
                 {label: 'Orange', value: 'Orange'},
                 {label: 'Blue', value: 'Blue'}
             ],
-            dataLoading: false,
+            dataLoading: true
         }
 
         this.onYearChange = this.onYearChange.bind(this)
@@ -113,8 +119,12 @@ export class Debits extends Component {
 
     componentDidMount(){
         // apollo client usage
-
-        HttpClient.getData(ProductQueries.GET_PRODUCTS, {})
+        // option 2 - макароны 2
+        // этот вариант тоже макароны но интереснее
+        // т.к. такой код можно вынести в отдельный модуль/уровень и вызвать например так
+        // const products = await getProducts(page=1, filters={...} ...)
+        // вывод результатов в console и в всплывающий popup
+        HttpClient.getData(ProductQueries.GET_PRODUCTS, {/*variables object here*/})
             .then(result => {
                 const { loading, error, data } = result
                 this.setState({dataLoading: loading})
@@ -127,6 +137,7 @@ export class Debits extends Component {
             })
             .catch(e => console.log(e))
         // apollo client usage
+        this.props.pageTitle('Debit')
     }
 
     onYearChange(event) {
@@ -226,7 +237,6 @@ export class Debits extends Component {
                         <div>
                             <Toolbar>
                                 <div className="p-toolbar-group-left">
-                                    <h2 className="page-title">Debit</h2>
                                     <i className="pi pi-search" style={{margin:'4px 4px 0 0'}} />
                                     <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" style={{marginRight: '.25em'}}/>
                                 </div>
@@ -240,7 +250,6 @@ export class Debits extends Component {
 
                             <div className="vertical-space10" />
 
-                            <Products />
                             <DataTable value={cars}
                                        globalFilter={this.state.globalFilter}
                                        ref={(el) => this.dt = el}
@@ -267,6 +276,7 @@ export class Debits extends Component {
                             </DataTable>
 
                         </div>
+                    <Products />
                 </div>
 
                 <Sidebar

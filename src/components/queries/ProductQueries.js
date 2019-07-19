@@ -5,14 +5,13 @@ class ProductQueries {
         return gql`
             {
                 products {
-                    productid
-                    title
-                    created
-                }
-                products {
-                    productid
-                    title
-                    created
+                    data: edges{
+                        product: node{
+                            productid
+                            title
+                            description
+                        }
+                    }
                 }
             }
         `

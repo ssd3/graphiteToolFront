@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 
-export class Dashboard extends Component {
+export class Balance extends Component {
 
     componentDidMount () {
-        this.props.pageTitle('Dashboard')
+        this.props.pageTitle('Balance')
     }
 
     render() {

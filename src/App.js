@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Route} from 'react-router-dom'
 import classNames from 'classnames'
 import {AppTopbar} from './components/AppTopbar'
@@ -8,6 +9,8 @@ import {ScrollPanel} from 'primereact/components/scrollpanel/ScrollPanel'
 
 import {Dashboard} from './components/Dashboard'
 import {Debits} from './components/Debits'
+import {Credits} from './components/Credits'
+import {Balance} from './components/Balance'
 
 import {EmptyPage} from './components/EmptyPage'
 
@@ -18,7 +21,6 @@ import 'primeflex/primeflex.css'
 
 import './styles/layout.css'
 import './styles/App.css'
-import PropTypes from 'prop-types'
 
 class App extends Component {
 
@@ -29,7 +31,8 @@ class App extends Component {
             layoutColorMode: 'dark',
             staticMenuInactive: false,
             overlayMenuActive: false,
-            mobileMenuActive: false
+            mobileMenuActive: false,
+            pageTitle: 'Dashboard'
         }
 
         this.onWrapperClick = this.onWrapperClick.bind(this)
@@ -128,6 +131,10 @@ class App extends Component {
         return window.innerWidth > 1024
     }
 
+    pageTitle = (value) => {
+        this.setState({ pageTitle: value})
+    }
+
     componentDidUpdate() {
         if (this.state.mobileMenuActive)
             this.addClass(document.body, 'body-overflow-hidden')
@@ -150,7 +157,11 @@ class App extends Component {
         return (
             <div className={wrapperClass} onClick={this.onWrapperClick}>
 
-                <AppTopbar onToggleMenu={this.onToggleMenu} selectedItem={this.state.selectedItem}/>
+                <AppTopbar
+                    onToggleMenu={this.onToggleMenu}
+                    selectedItem={this.state.selectedItem}
+                    pageTitle={this.state.pageTitle}
+                />
 
                 <div ref={(el) => this.sidebar = el} className={sidebarClassName} onClick={this.onSidebarClick}>
 
@@ -166,18 +177,21 @@ class App extends Component {
                 </div>
 
                 <div className="layout-main">
-                    <Route path="/" exact component={Dashboard} />
-                    <Route path="/debits" exact render={props => <Debits {...props} apolloClient={this.props.apolloClient} />} />
+                    <Route path="/" exact render={props => <Dashboard {...props} pageTitle={this.pageTitle} />} />
+                    <Route path="/debits" exact render={props => <Debits {...props} apolloClient={this.props.apolloClient} pageTitle={this.pageTitle} />} />
+                    <Route path="/credits" exact render={props => <Credits {...props} pageTitle={this.pageTitle} />} />
+                    <Route path="/balance" exact render={props => <Balance {...props} pageTitle={this.pageTitle} />} />
                     <Route path="/empty" component={EmptyPage} />
                 </div>
 
-                <div className="layout-mask"></div>
+                <div className="layout-mask"/>
             </div>
         )
     }
 
     static propTypes = {
-        apolloClient: PropTypes.object.isRequired
+        apolloClient: PropTypes.object.isRequired,
+        pageTitle: PropTypes.func
     }
 }
 

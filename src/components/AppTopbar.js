@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {InputText} from 'primereact/inputtext';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import {InputText} from 'primereact/inputtext'
 
 export class AppTopbar extends Component {
 
@@ -9,12 +9,14 @@ export class AppTopbar extends Component {
     }
 
     render() {
+        const { pageTitle, onToggleMenu } = this.props
         return (
             <div className="layout-topbar clearfix">
                 <div className="pi p-toolbar-group-left">
-                    <button className="p-link layout-menu-button" onClick={this.props.onToggleMenu}>
+                    <button className="p-link layout-menu-button" onClick={onToggleMenu}>
                         <span className="pi pi-bars"/>
                     </button>
+                    <h1 className="page-title">{pageTitle}</h1>
                 </div>
                 <div className="layout-topbar-icons">
                     <span className="layout-topbar-search">
@@ -39,6 +41,7 @@ export class AppTopbar extends Component {
     }
 
     static propTypes = {
-        onToggleMenu: PropTypes.func.isRequired
+        onToggleMenu: PropTypes.func.isRequired,
+        pageTitle: PropTypes.string
     }
 }

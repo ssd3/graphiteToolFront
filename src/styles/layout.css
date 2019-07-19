@@ -1503,9 +1503,11 @@ h2 {
 }
 
 .page-title {
-  float: left;
+  float: right;
   text-align: left;
-  margin-right: .25em;
+  margin-left: .50em;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  color: #ffffff;
 }
 
 .p-datatable-wrapper {
