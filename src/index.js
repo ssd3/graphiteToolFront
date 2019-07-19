@@ -9,22 +9,6 @@ import ScrollToTop from './components/ScrollToTop'
 
 const client = new ApolloClient({
     uri: 'http://localhost:8000/graphql/'
-    /*
-    onError: error => {
-        if (error.response) {
-            console.log(`[Error response]: ${error.response}`)
-        }
-
-        if (error.networkError) {
-            console.log(`[Network error]: ${error.networkError}`)
-        }
-
-        if (error.graphQLErrors) {
-            console.log(`[GraphQL error]: ${error.graphQLErrors}`)
-        }
-    }
-
-     */
 })
 
 ReactDOM.render(
