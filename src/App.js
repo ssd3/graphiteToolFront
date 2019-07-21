@@ -11,6 +11,7 @@ import {Dashboard} from './components/Dashboard'
 import {Debits} from './components/Debits'
 import {Credits} from './components/Credits'
 import {Balance} from './components/Balance'
+import {Warehouse} from './components/Warehouse'
 
 import {EmptyPage} from './components/EmptyPage'
 
@@ -181,6 +182,7 @@ class App extends Component {
                     <Route path="/debits" exact render={props => <Debits {...props} apolloClient={this.props.apolloClient} pageTitle={this.pageTitle} />} />
                     <Route path="/credits" exact render={props => <Credits {...props} pageTitle={this.pageTitle} />} />
                     <Route path="/balance" exact render={props => <Balance {...props} pageTitle={this.pageTitle} />} />
+                    <Route path="/warehouse" exact render={props => <Warehouse {...props} apolloClient={this.props.apolloClient} pageTitle={this.pageTitle} />} />
                     <Route path="/empty" component={EmptyPage} />
                 </div>
 
