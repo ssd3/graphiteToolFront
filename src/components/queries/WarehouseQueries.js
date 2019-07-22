@@ -5,7 +5,12 @@ class WarehouseQueries {
         return gql`
             {
                 warehouses {
-                    title 
+                    title
+                    description
+                    active
+                    created
+                    inField
+                    out
                 }
             }
         `
