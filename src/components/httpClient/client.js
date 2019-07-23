@@ -24,6 +24,19 @@ class HttpClient {
 
         })
     }
+
+    static postData(mutate, variables = {}) {
+        return new Promise((resolve, reject) => {
+            client
+                .mutate({
+                    mutation: mutate,
+                    variables: variables
+                })
+                .then(result => { return resolve(result) })
+                .catch(error => { return reject(error.message) })
+
+        })
+    }
 }
 
 export { HttpClient }
