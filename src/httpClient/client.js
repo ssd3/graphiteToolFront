@@ -11,6 +11,7 @@ const client = new ApolloClient({
      */
 })
 
+
 class HttpClient {
     static getData(query, variables = {}) {
         return new Promise((resolve, reject) => {
@@ -39,5 +40,8 @@ class HttpClient {
     }
 }
 
-export { HttpClient }
+export { HttpClient, client }
+
+
 // export { client }
+

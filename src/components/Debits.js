@@ -13,15 +13,18 @@ import {Fieldset} from 'primereact/fieldset'
 import {Dialog} from 'primereact/dialog'
 import {ProgressBar} from 'primereact/progressbar'
 
-import {HttpClient} from './httpClient/client'
-import ProductQueries from './queries/ProductQueries'
+// import {HttpClient} from './httpClient/client'
+import {client} from '../httpClient/client'
+import ProductQueries from '../queries/ProductQueries'
 
 
 import Query from 'react-apollo/Query'
+import {ProductsGet} from '../dal/products'
 
 // option 1 - макароны 1
 // этот компонент <Products /> вызывается ниже в методе render
 // dropdownlist c списком продуктов
+/*
 const Products = ({ onProductSelected }) => (
     <Query query={ProductQueries.GET_PRODUCTS}>
         {({ loading, error, data }) => {
@@ -40,7 +43,7 @@ const Products = ({ onProductSelected }) => (
         }}
     </Query>
 )
-
+*/
 
 export class Debits extends Component {
     constructor(props){
@@ -124,7 +127,8 @@ export class Debits extends Component {
         // т.к. такой код можно вынести в отдельный модуль/уровень и вызвать например так
         // const products = await getProducts(page=1, filters={...} ...)
         // вывод результатов в console и в всплывающий popup
-        HttpClient.getData(ProductQueries.GET_PRODUCTS, {/*variables object here*/})
+        /*
+        HttpClient.getData(ProductQueries.GET_PRODUCTS, {})
             .then(result => {
                 const { loading, error, data } = result
                 this.setState({dataLoading: loading})
@@ -136,8 +140,36 @@ export class Debits extends Component {
                 }
             })
             .catch(e => console.log(e))
+         */
         // apollo client usage
+
+        /*
+        client.query({
+            query: ProductQueries.GET_PRODUCTS,
+            variables: {}
+        })
+            .then(result => {
+                const { loading, data, networkStatus, stale } = result
+                if (loading) this.setState({dataLoading: loading})
+                return this.growl.show({severity: 'success', summary: 'Success Message', detail: JSON.stringify(data) })
+            })
+            .catch(errors => {
+                this.setState({dataLoading: false})
+                return this.growl.show({severity: 'error', summary: 'Error Message', detail: errors.message })
+            })
+        */
         this.props.pageTitle('Debit')
+
+        ProductsGet()
+            .then(results => {
+                const { loading, data, networkStatus, stale } = results
+                this.setState({dataLoading: loading})
+                console.log('result', results)
+            })
+            .catch(errors => {
+                this.setState({dataLoading: false})
+                this.growl.show({severity: 'error', summary: 'Error Message', detail: errors.message })
+            })
     }
 
     onYearChange(event) {
@@ -276,7 +308,6 @@ export class Debits extends Component {
                             </DataTable>
 
                         </div>
-                    <Products />
                 </div>
 
                 <Sidebar

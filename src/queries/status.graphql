@@ -1,0 +1,9 @@
+query GetStatuses
+{
+    statuses {
+        statusid
+        title
+        value
+        created
+    }
+}

@@ -14,6 +14,11 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(graphql|gql)$/,
+                exclude: /node_modules/,
+                loader: 'graphql-tag/loader',
+            },
+            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: ['babel-loader']
@@ -61,7 +66,8 @@ module.exports = {
     resolve: {
         alias: {
             'graphiteToolFront': path.resolve(__dirname, './src/index.js')
-        }
+        },
+        extensions: ['*', '.js', '.json', '.gql', '.graphql']
     },
     plugins: [
         new HtmlWebpackPlugin({

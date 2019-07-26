@@ -12,8 +12,8 @@ import {Debits} from './components/Debits'
 import {Credits} from './components/Credits'
 import {Balance} from './components/Balance'
 import {Warehouse} from './components/Warehouse'
-
 import {EmptyPage} from './components/EmptyPage'
+import {Status} from './components/Status'
 
 import 'primereact/resources/themes/nova-light/theme.css'
 import 'primereact/resources/primereact.min.css'
@@ -183,6 +183,7 @@ class App extends Component {
                     <Route path="/credits" exact render={props => <Credits {...props} pageTitle={this.pageTitle} />} />
                     <Route path="/balance" exact render={props => <Balance {...props} pageTitle={this.pageTitle} />} />
                     <Route path="/warehouse" exact render={props => <Warehouse {...props} apolloClient={this.props.apolloClient} pageTitle={this.pageTitle} />} />
+                    <Route path="/status" exact render={props => <Status {...props} pageTitle={this.pageTitle} />} />
                     <Route path="/empty" component={EmptyPage} />
                 </div>
 

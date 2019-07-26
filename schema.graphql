@@ -1,0 +1,388 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: RootQuery
+    mutation: RootMutation
+}
+
+"An object with an ID"
+interface Node {
+    "The ID of the object."
+    id: ID!
+}
+
+type CategoryType {
+    categoryid: ID!
+    created: DateTime!
+    productSet: [ProductType]
+    title: String!
+    userid: UserType!
+}
+
+type CreateCategory {
+    category: CategoryType
+}
+
+type CreateDebit {
+    debit: DebitType
+}
+
+type CreateDebitComplex {
+    debit: DebitType
+    product: ProductType
+    productcomment: ProductCommentType
+    productdetails: ProductDetailsType
+}
+
+type CreatePriceType {
+    pricetype: PricetypeType
+}
+
+type CreateProduct {
+    product: ProductType
+}
+
+type CreateProductComment {
+    productcomment: ProductCommentType
+}
+
+type CreateProductDetails {
+    productdetails: ProductDetailsType
+}
+
+type CreateStatus {
+    status: StatusType
+}
+
+type CreateWarehouse {
+    warehouse: WarehouseType
+}
+
+type DebitType implements Node {
+    created: DateTime!
+    debitid: ID!
+    discountid: DiscountType!
+    "The ID of the object."
+    id: ID!
+    notes: String
+    price: Float!
+    pricetypeid: PricetypeType!
+    productid: ProductType!
+    qty: Float!
+    statusid: StatusType!
+    tracknumber: String!
+    userid: UserType!
+    warehouseid: WarehouseType!
+}
+
+type DebitTypeConnection {
+    "Contains the nodes in this connection."
+    edges: [DebitTypeEdge]!
+    "Pagination data for this connection."
+    pageInfo: PageInfo!
+}
+
+"A Relay edge containing a `DebitType` and its cursor."
+type DebitTypeEdge {
+    "A cursor for use in pagination"
+    cursor: String!
+    "The item at the end of the edge"
+    node: DebitType
+}
+
+type DiscountType {
+    created: DateTime!
+    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    discountid: ID!
+    title: String!
+    units: String!
+    userid: UserType!
+    value: Float!
+}
+
+"The Relay compliant `PageInfo` type, containing data necessary to paginate this connection."
+type PageInfo {
+    "When paginating forwards, the cursor to continue."
+    endCursor: String
+    "When paginating forwards, are there more items?"
+    hasNextPage: Boolean!
+    "When paginating backwards, are there more items?"
+    hasPreviousPage: Boolean!
+    "When paginating backwards, the cursor to continue."
+    startCursor: String
+}
+
+type PricetypeType {
+    created: DateTime!
+    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    description: String
+    pricetypeid: ID!
+    ratio: Float!
+    title: String!
+    userid: UserType!
+}
+
+type ProductCommentType {
+    comment: String!
+    created: DateTime!
+    productcommentid: ID!
+    productid: ProductType!
+    userid: UserType!
+}
+
+type ProductConnection {
+    "Contains the nodes in this connection."
+    edges: [ProductEdge]!
+    "Pagination data for this connection."
+    pageInfo: PageInfo!
+}
+
+type ProductDetailsType {
+    created: DateTime!
+    height: Float
+    length: Float
+    model: String
+    productdetailsid: ID!
+    productid: ProductType!
+    serialno: String
+    url: String
+    userid: UserType!
+    weight: Float
+    width: Float
+}
+
+"A Relay edge containing a `Product` and its cursor."
+type ProductEdge {
+    "A cursor for use in pagination"
+    cursor: String!
+    "The item at the end of the edge"
+    node: ProductType
+}
+
+type ProductType {
+    categoryid: CategoryType!
+    created: DateTime!
+    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    description: String
+    productcommentSet: [ProductCommentType]
+    productdetailsSet: [ProductDetailsType]
+    productid: ID!
+    title: String!
+    userid: UserType!
+}
+
+type RootMutation {
+    createCategory(title: String!): CreateCategory
+    createDebit(discountid: Int!, notes: String, price: Decimal!, pricetypeid: Int!, productid: Int!, qty: Decimal!, statusid: Int!, tracknumber: String!, warehouseid: Int!): CreateDebit
+    createDebitcomplex(debitData: DebitInput!, productData: ProductInput!, productcommentData: ProductCommentInput, productdetailsData: ProductDetailsInput): CreateDebitComplex
+    createPricetype(description: String, ratio: Int!, title: String!): CreatePriceType
+    createProduct(categoryid: Int!, description: String, title: String!): CreateProduct
+    createProductcomment(comment: String, productid: Int!): CreateProductComment
+    createProductdetails(height: Decimal, length: Decimal, model: String, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): CreateProductDetails
+    createStatus(title: String!, value: String!): CreateStatus
+    createWarehouse(active: Boolean!, description: String, inField: Boolean!, out: Boolean!, title: String!): CreateWarehouse
+    updateCategory(categoryid: Int!, title: String!): UpdateCategory
+    updateDebit(debitid: Int!, discountid: Int!, notes: String, price: Decimal!, pricetypeid: Int!, productid: Int!, qty: Decimal!, statusid: Int!, tracknumber: String!, warehouseid: Int!): UpdateDebit
+    updateDebitcomplex(debitData: DebitUpdateInput!, productData: ProductUpdateInput!, productcommentData: ProductCommentUpdateInput, productdetailsData: ProductDetailsUpdateInput): UpdateDebitComplex
+    updateProduct(categoryid: Int!, description: String, productid: Int!, title: String!): UpdateProduct
+    updateProductcomment(comment: String, productcommentid: Int!): UpdateProductComment
+    updateProductdetails(height: Decimal, length: Decimal, model: String, productdetailsid: Int!, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): UpdateProductDetails
+    updateStatus(statusid: Int!, title: String!, value: String!): UpdateStatus
+    updateWarehouse(active: Boolean!, description: String, inField: Boolean!, out: Boolean!, title: String!, warehouseid: Int!): UpdateWarehouse
+}
+
+type RootQuery {
+    categories: [CategoryType]
+    debit(debitid: Int): DebitType
+    debits(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    discount(discountid: Int, title: String, units: String, value: Decimal): DiscountType
+    discounts: [DiscountType]
+    pricetype(pricetypeid: Int, title: String): PricetypeType
+    pricetypes: [PricetypeType]
+    product(page: Int, productid: Int, title: String, userid: Int): [ProductType]
+    productcomment(productcommentid: Int): ProductCommentType
+    productcomments(productid: Int): [ProductCommentType]
+    productdetail(productdetailsid: Int): ProductDetailsType
+    productdetails(productid: Int): [ProductDetailsType]
+    products(after: String, before: String, first: Int, last: Int): ProductConnection
+    status(statusid: Int, title: String): StatusType
+    statuses: [StatusType]
+    "<graphene.types.scalars.String object at 0x7fecbc3b5cc0>"
+    user(email: String, userid: Int, username: String): UserType
+    users: [UserType]
+    warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]
+    warehouses(after: String, before: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String): WarehouseTypeConnection
+}
+
+type StatusType {
+    created: DateTime!
+    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    statusid: ID!
+    title: String!
+    userid: UserType!
+    value: String!
+}
+
+type UpdateCategory {
+    category: CategoryType
+}
+
+type UpdateDebit {
+    debit: DebitType
+}
+
+type UpdateDebitComplex {
+    debit: DebitType
+    product: ProductType
+    productcomment: ProductCommentType
+    productdetails: ProductDetailsType
+}
+
+type UpdateProduct {
+    product: ProductType
+}
+
+type UpdateProductComment {
+    productcomment: ProductCommentType
+}
+
+type UpdateProductDetails {
+    productdetails: ProductDetailsType
+}
+
+type UpdateStatus {
+    status: StatusType
+}
+
+type UpdateWarehouse {
+    warehouse: WarehouseType
+}
+
+type UserType {
+    categorySet: [CategoryType]
+    dateJoined: DateTime!
+    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    discountSet: [DiscountType]
+    email: String!
+    firstName: String!
+    id: ID!
+    isActive: Boolean!
+    isStaff: Boolean!
+    isSuperuser: Boolean!
+    lastLogin: DateTime
+    lastName: String!
+    password: String!
+    pricetypeSet: [PricetypeType]
+    productSet: [ProductType]
+    productcommentSet: [ProductCommentType]
+    productdetailsSet: [ProductDetailsType]
+    statusSet: [StatusType]
+    username: String!
+    warehouseSet(after: String, before: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String): WarehouseTypeConnection
+}
+
+type WarehouseType implements Node {
+    active: Boolean!
+    created: DateTime!
+    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    description: String
+    "The ID of the object."
+    id: ID!
+    inField: Boolean!
+    out: Boolean!
+    title: String!
+    userid: UserType!
+    warehouseid: ID!
+}
+
+type WarehouseTypeConnection {
+    "Contains the nodes in this connection."
+    edges: [WarehouseTypeEdge]!
+    "Pagination data for this connection."
+    pageInfo: PageInfo!
+}
+
+"A Relay edge containing a `WarehouseType` and its cursor."
+type WarehouseTypeEdge {
+    "A cursor for use in pagination"
+    cursor: String!
+    "The item at the end of the edge"
+    node: WarehouseType
+}
+
+input DebitInput {
+    discountid: Int
+    notes: String
+    price: Decimal
+    pricetypeid: Int
+    qty: Decimal
+    statusid: Int
+    tracknumber: String!
+    warehouseid: Int!
+}
+
+input DebitUpdateInput {
+    debitid: Int!
+    discountid: Int
+    notes: String
+    price: Decimal
+    pricetypeid: Int
+    qty: Decimal
+    statusid: Int
+    tracknumber: String!
+    warehouseid: Int!
+}
+
+input ProductCommentInput {
+    comment: String
+}
+
+input ProductCommentUpdateInput {
+    comment: String
+    productcomentid: Int!
+}
+
+input ProductDetailsInput {
+    height: Decimal
+    length: Decimal
+    model: String
+    serialno: String
+    url: String
+    weight: Decimal
+    width: Decimal
+}
+
+input ProductDetailsUpdateInput {
+    height: Decimal
+    length: Decimal
+    model: String
+    productdetailsid: Int!
+    serialno: String
+    url: String
+    weight: Decimal
+    width: Decimal
+}
+
+input ProductInput {
+    categoryid: Int!
+    description: String
+    title: String!
+}
+
+input ProductUpdateInput {
+    categoryid: Int!
+    description: String
+    productid: Int!
+    title: String!
+}
+
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+"The `Decimal` scalar type represents a python Decimal."
+scalar Decimal
