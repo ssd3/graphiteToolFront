@@ -1,0 +1,13 @@
+mutation CREATE_STATUS($title: String!, $value: String!)
+{
+    result: createStatus(title: $title, value: $value)
+    {
+        status
+        {
+            statusid
+            title
+            value
+            created
+        }
+    }
+}

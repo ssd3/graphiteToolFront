@@ -100,6 +100,11 @@ type DiscountType {
     value: Float!
 }
 
+"Obtain JSON Web Token mutation"
+type ObtainJSONWebToken {
+    token: String
+}
+
 "The Relay compliant `PageInfo` type, containing data necessary to paginate this connection."
 type PageInfo {
     "When paginating forwards, the cursor to continue."
@@ -171,6 +176,11 @@ type ProductType {
     userid: UserType!
 }
 
+type Refresh {
+    payload: GenericScalar
+    token: String
+}
+
 type RootMutation {
     createCategory(title: String!): CreateCategory
     createDebit(discountid: Int!, notes: String, price: Decimal!, pricetypeid: Int!, productid: Int!, qty: Decimal!, statusid: Int!, tracknumber: String!, warehouseid: Int!): CreateDebit
@@ -181,6 +191,9 @@ type RootMutation {
     createProductdetails(height: Decimal, length: Decimal, model: String, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): CreateProductDetails
     createStatus(title: String!, value: String!): CreateStatus
     createWarehouse(active: Boolean!, description: String, inField: Boolean!, out: Boolean!, title: String!): CreateWarehouse
+    refreshToken(token: String!): Refresh
+    "Obtain JSON Web Token mutation"
+    tokenAuth(password: String!, username: String!): ObtainJSONWebToken
     updateCategory(categoryid: Int!, title: String!): UpdateCategory
     updateDebit(debitid: Int!, discountid: Int!, notes: String, price: Decimal!, pricetypeid: Int!, productid: Int!, qty: Decimal!, statusid: Int!, tracknumber: String!, warehouseid: Int!): UpdateDebit
     updateDebitcomplex(debitData: DebitUpdateInput!, productData: ProductUpdateInput!, productcommentData: ProductCommentUpdateInput, productdetailsData: ProductDetailsUpdateInput): UpdateDebitComplex
@@ -189,6 +202,7 @@ type RootMutation {
     updateProductdetails(height: Decimal, length: Decimal, model: String, productdetailsid: Int!, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): UpdateProductDetails
     updateStatus(statusid: Int!, title: String!, value: String!): UpdateStatus
     updateWarehouse(active: Boolean!, description: String, inField: Boolean!, out: Boolean!, title: String!, warehouseid: Int!): UpdateWarehouse
+    verifyToken(token: String!): Verify
 }
 
 type RootQuery {
@@ -207,7 +221,7 @@ type RootQuery {
     products(after: String, before: String, first: Int, last: Int): ProductConnection
     status(statusid: Int, title: String): StatusType
     statuses: [StatusType]
-    "<graphene.types.scalars.String object at 0x7fecbc3b5cc0>"
+    "<graphene.types.scalars.String object at 0x7f25d9a57dd8>"
     user(email: String, userid: Int, username: String): UserType
     users: [UserType]
     warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]
@@ -279,6 +293,10 @@ type UserType {
     statusSet: [StatusType]
     username: String!
     warehouseSet(after: String, before: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String): WarehouseTypeConnection
+}
+
+type Verify {
+    payload: GenericScalar
 }
 
 type WarehouseType implements Node {
@@ -386,3 +404,10 @@ scalar DateTime
 
 "The `Decimal` scalar type represents a python Decimal."
 scalar Decimal
+
+"""
+The `GenericScalar` scalar type represents a generic
+GraphQL scalar value that could be:
+String, Boolean, Int, Float, List or Object.
+"""
+scalar GenericScalar

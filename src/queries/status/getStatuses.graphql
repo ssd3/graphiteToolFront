@@ -1,4 +1,4 @@
-query GetStatuses
+query GET_STATUSES
 {
     statuses {
         statusid

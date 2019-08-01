@@ -1542,24 +1542,8 @@ body .p-inputtext {
   height: 1px;
   width: 100%;
 }
-/*
-.p-datatable-thead {
-}
 
-.p-datatable-tbody {
+.login-h3 {
+  margin-bottom: 0;
+  margin-top: 5px;
 }
-
-.p-datatable-row {
-}
-
-body .p-datatable .p-datatable-tbody > tr {
-  border-right: none;
-}
-body .p-datatable .p-datatable-tbody > tr > td {
-  border-left: none;
-}
-
-body .p-datatable .p-datatable-thead > tr > th {
-  border-left: none;
-}
-*/

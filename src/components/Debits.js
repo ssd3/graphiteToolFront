@@ -160,6 +160,7 @@ export class Debits extends Component {
         */
         this.props.pageTitle('Debit')
 
+        console.log(this.props)
         ProductsGet()
             .then(results => {
                 const { loading, data, networkStatus, stale } = results
@@ -339,9 +340,5 @@ export class Debits extends Component {
                 <Growl ref={(el) => this.growl = el} position='topleft' />
             </div>
         )
-    }
-
-    static propTypes = {
-        apolloClient: PropTypes.object.isRequired
     }
 }

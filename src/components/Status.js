@@ -1,53 +1,44 @@
 import React, { Component } from 'react'
 import { ProgressBar } from 'primereact/progressbar'
-import {Growl} from 'primereact/growl'
 import {DataTable} from 'primereact/datatable'
 import {Column} from 'primereact/column'
 
-import { graphql } from 'react-apollo'
-import GetStatuses from '../queries/status.graphql'
-import gql from 'graphql-tag'
+import {inject, observer} from 'mobx-react'
+import {Button} from 'primereact/button'
 
-const mapResultsToProps = ({data}) => {
-    if (!data.statuses) {
-        return {
-            loading: data.loading
-        }
-    }
-
-    const { statuses } = data.statuses
-    return {
-        loading: data.loading,
-        statuses: statuses
-    }
-}
-
-@graphql(GetStatuses, {
-    props: mapResultsToProps
-})
-export class Status extends Component {
-
+@inject('rootStore')
+@observer
+export default class Status extends Component {
     constructor(props) {
         super(props)
+        this.insertStatus = this.insertStatus.bind(this)
     }
 
     componentDidMount () {
         this.props.pageTitle('Status')
+        this.props.rootStore.statusStore.getStatuses
+    }
+
+    insertStatus() {
+        this.props.rootStore.statusStore.createStatus({
+            title: 'Status Test 1',
+            value: '#eeeddd'
+        })
     }
 
     render() {
-        const { loading, statuses } = this.props
-        console.log('loading', this.props)
-
+        const { loading, statuses, error } =  this.props.rootStore.statusStore
+        console.log('statuses', statuses)
         return (
             <div className="p-grid">
+                {error && this.props.notify('error', error)}
                 {loading &&
                     <div className="p-col-12-1px">
                         <ProgressBar mode="indeterminate" style={{height: '1px'}}/>
                     </div>
                 }
                 <div className="p-col-12">
-
+                    <Button label="Add Status" icon="pi pi-plus" className="p-button-secondary" onClick={this.insertStatus} />
                     <DataTable value={ statuses }
                                resizableColumns={true}
                                reorderableColumns={true}>
@@ -58,7 +49,6 @@ export class Status extends Component {
                     </DataTable>
 
                 </div>
-                <Growl ref={(el) => this.growl = el} position='bottomleft' />
             </div>
         )
     }

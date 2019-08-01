@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Route} from 'react-router-dom'
+import {Route, BrowserRouter as Router} from 'react-router-dom'
 import classNames from 'classnames'
 import {AppTopbar} from './components/AppTopbar'
 import {AppMenu} from './components/AppMenu'
@@ -13,7 +13,11 @@ import {Credits} from './components/Credits'
 import {Balance} from './components/Balance'
 import {Warehouse} from './components/Warehouse'
 import {EmptyPage} from './components/EmptyPage'
-import {Status} from './components/Status'
+import Status from './components/Status'
+import Login from './components/auth/Login'
+
+import {toast, ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import 'primereact/resources/themes/nova-light/theme.css'
 import 'primereact/resources/primereact.min.css'
@@ -22,7 +26,12 @@ import 'primeflex/primeflex.css'
 
 import './styles/layout.css'
 import './styles/App.css'
+import {inject, observer} from 'mobx-react'
+import {PrivateRoute} from './components/PrivateRoute'
+import {Switch} from 'react-router'
 
+@inject('rootStore')
+@observer
 class App extends Component {
 
     constructor(props) {
@@ -136,6 +145,36 @@ class App extends Component {
         this.setState({ pageTitle: value})
     }
 
+    // https://www.npmjs.com/package/react-toastify#demo
+    notify = (type, message) => {
+        console.log('type, message', type, message)
+        const options = {
+            position: 'bottom-right',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            newestOnTop: true
+        }
+
+        if (type === 'success') {
+            toast.success(message, options)
+        }
+
+        if(type === 'error') {
+            toast.error(message, options)
+        }
+
+        if(type === 'warn') {
+            toast.warn(message, options)
+        }
+
+        if(type === 'info') {
+            toast.info(message, options)
+        }
+    }
+
     componentDidUpdate() {
         if (this.state.mobileMenuActive)
             this.addClass(document.body, 'body-overflow-hidden')
@@ -155,46 +194,54 @@ class App extends Component {
         })
         let sidebarClassName = classNames('layout-sidebar', {'layout-sidebar-dark': this.state.layoutColorMode === 'dark'})
 
+        const isAuth = this.props.rootStore.authStore.token
+
         return (
-            <div className={wrapperClass} onClick={this.onWrapperClick}>
+            isAuth ? (
+                <div className={wrapperClass} onClick={this.onWrapperClick}>
 
-                <AppTopbar
-                    onToggleMenu={this.onToggleMenu}
-                    selectedItem={this.state.selectedItem}
-                    pageTitle={this.state.pageTitle}
-                />
+                    <AppTopbar
+                        onToggleMenu={this.onToggleMenu}
+                        selectedItem={this.state.selectedItem}
+                        pageTitle={this.state.pageTitle}
+                    />
 
-                <div ref={(el) => this.sidebar = el} className={sidebarClassName} onClick={this.onSidebarClick}>
+                    <div ref={(el) => this.sidebar = el} className={sidebarClassName} onClick={this.onSidebarClick}>
 
-                    <ScrollPanel ref={(el) => this.layoutMenuScroller = el} style={{height:'100%'}}>
-                        <div className="layout-sidebar-scroll-content" >
-                            <div className="layout-logo" style={{display: 'none'}}>
-                                <img alt="Logo" src={logo} />
+                        <ScrollPanel ref={(el) => this.layoutMenuScroller = el} style={{height:'100%'}}>
+                            <div className="layout-sidebar-scroll-content" >
+                                <div className="layout-logo" style={{display: 'none'}}>
+                                    <img alt="Logo" src={logo} />
+                                </div>
+                                <AppInlineProfile />
+                                <AppMenu model={this.menu} onMenuItemClick={this.onMenuItemClick} />
                             </div>
-                            <AppInlineProfile />
-                            <AppMenu model={this.menu} onMenuItemClick={this.onMenuItemClick} />
-                        </div>
-                    </ScrollPanel>
-                </div>
+                        </ScrollPanel>
+                    </div>
 
-                <div className="layout-main">
-                    <Route path="/" exact render={props => <Dashboard {...props} pageTitle={this.pageTitle} />} />
-                    <Route path="/debits" exact render={props => <Debits {...props} apolloClient={this.props.apolloClient} pageTitle={this.pageTitle} />} />
-                    <Route path="/credits" exact render={props => <Credits {...props} pageTitle={this.pageTitle} />} />
-                    <Route path="/balance" exact render={props => <Balance {...props} pageTitle={this.pageTitle} />} />
-                    <Route path="/warehouse" exact render={props => <Warehouse {...props} apolloClient={this.props.apolloClient} pageTitle={this.pageTitle} />} />
-                    <Route path="/status" exact render={props => <Status {...props} pageTitle={this.pageTitle} />} />
-                    <Route path="/empty" component={EmptyPage} />
-                </div>
-
-                <div className="layout-mask"/>
-            </div>
+                    <div className="layout-main">
+                        <Switch>
+                            <Route path="/login" exact component={Login} notify={this.notify} />
+                            <PrivateRoute path="/" exact component={Dashboard} pageTitle={this.pageTitle} />
+                            <PrivateRoute path="/debits" exact component={Debits} pageTitle={this.pageTitle} />
+                            <PrivateRoute path="/credits" exact component={Credits} pageTitle={this.pageTitle} />
+                            <PrivateRoute path="/balance" exact component={Balance} pageTitle={this.pageTitle} />
+                            <PrivateRoute path="/warehouse" exact component={Warehouse} pageTitle={this.pageTitle} />
+                            <PrivateRoute path="/status" exact component={Status} pageTitle={this.pageTitle} notify={this.notify} />
+                            <Route path="/empty" component={EmptyPage} />
+                        </Switch>
+                    </div>
+                    <ToastContainer />
+                    <div className="layout-mask"/>
+                </div> ) : (
+                    <Login/>
+            )
         )
     }
 
     static propTypes = {
-        apolloClient: PropTypes.object.isRequired,
-        pageTitle: PropTypes.func
+        pageTitle: PropTypes.func,
+        notify: PropTypes.func
     }
 }
 
