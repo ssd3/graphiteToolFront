@@ -28,8 +28,10 @@ export class AppTopbar extends Component {
                         <span className="layout-topbar-icon pi pi-cog"/>
                     </button>
                     <button className="p-link">
-                        <span className="layout-topbar-item-text">User</span>
-                        <span className="layout-topbar-icon pi pi-user"/>
+                        <a href='#/logout' style={{color: '#ffffff'}}>
+                            <span className="layout-topbar-item-text">Logout</span>
+                            <span className="layout-topbar-icon pi pi-fw pi-power-off" />
+                        </a>
                     </button>
                 </div>
             </div>

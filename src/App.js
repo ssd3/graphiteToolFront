@@ -29,6 +29,7 @@ import './styles/App.css'
 import {inject, observer} from 'mobx-react'
 import {PrivateRoute} from './components/PrivateRoute'
 import {Switch} from 'react-router'
+import Logout from './components/auth/Logout'
 
 @inject('rootStore')
 @observer
@@ -228,6 +229,7 @@ class App extends Component {
                             <PrivateRoute path="/balance" exact component={Balance} pageTitle={this.pageTitle} />
                             <PrivateRoute path="/warehouse" exact component={Warehouse} pageTitle={this.pageTitle} />
                             <PrivateRoute path="/status" exact component={Status} pageTitle={this.pageTitle} notify={this.notify} />
+                            <PrivateRoute path="/logout" exact component={Logout} />
                             <Route path="/empty" component={EmptyPage} />
                         </Switch>
                     </div>

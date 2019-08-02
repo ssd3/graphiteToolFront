@@ -25,6 +25,7 @@ export default class Login extends Component {
                     if (data.result.token !== null) {
                         localStorage.setItem('token', data.result.token)
                         this.setState({isAuth: true})
+                        window.location.reload()
                     }
                     else {
                         localStorage.removeItem('token')
