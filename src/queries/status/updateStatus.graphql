@@ -1,0 +1,13 @@
+mutation UPDATE_STATUS($statusid: Int!, $title: String!, $value: String!)
+{
+    result: updateStatus(statusid: $statusid, title: $title, value: $value)
+    {
+        status
+        {
+            statusid
+            title
+            value
+            created
+        }
+    }
+}

@@ -1,0 +1,104 @@
+import React, { Component } from 'react'
+import { ProgressBar } from 'primereact/progressbar'
+import {DataTable} from 'primereact/datatable'
+import {Column} from 'primereact/column'
+
+import {inject, observer} from 'mobx-react'
+import {Button} from 'primereact/button'
+import {Toolbar} from 'primereact/components/toolbar/Toolbar'
+import {InputText} from 'primereact/components/inputtext/InputText'
+import StatusDialog from './StatusDialog'
+import statusFields from './StatusFields'
+
+const DateColumn = (props) => {
+    return (
+            <td className={props.className}>
+                <h4>{props.children}</h4>
+            </td>
+        )
+}
+
+@inject('rootStore')
+@observer
+export default class Status extends Component {
+    constructor(props) {
+        super(props)
+        this.hideDialog = this.hideDialog.bind(this)
+        statusFields.store = this.props.rootStore.statusStore
+    }
+
+    componentDidMount () {
+        this.props.pageTitle('Status')
+        this.props.rootStore.statusStore.getStatuses
+    }
+
+    newStatus = () => {
+        const store = this.props.rootStore.statusStore
+        store.selectStatus({})
+
+        statusFields.clear()
+        statusFields.set('rules', {
+            statusid: 'numeric'
+        })
+        store.showDialog(true, 'Add Status')
+    }
+
+    onStatusSelect = (e) => {
+        const store = this.props.rootStore.statusStore
+        store.selectStatus(e.data)
+
+        statusFields.clear()
+        statusFields.set(e.data)
+        store.showDialog(true, 'Update Status')
+    }
+
+    hideDialog() {
+        this.props.rootStore.statusStore.showDialog(false)
+    }
+
+    render() {
+        const store = this.props.rootStore.statusStore
+        return (
+            <div className="p-grid">
+                {store.error && this.props.notify('error', store.error)}
+                {store.loading &&
+                    <div className="p-col-12-1px">
+                        <ProgressBar mode="indeterminate" style={{height: '1px'}}/>
+                    </div>
+                }
+                <div className="p-col-12">
+                    <div>
+                        <Toolbar>
+                            <div className="p-toolbar-group-left">
+                                <i className="pi pi-search" style={{margin:'4px 4px 0 0'}} />
+                                <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" style={{marginRight: '.25em'}}/>
+                            </div>
+                            <div className="p-toolbar-group-right" style={{display: 'flex'}}>
+                                <Button label="Add Status" icon="pi pi-plus" className="p-button-secondary" onClick={this.newStatus} />
+                            </div>
+                        </Toolbar>
+
+                        <div className="vertical-space10" />
+
+                        <DataTable value={ store.statuses }
+                                   resizableColumns={true}
+                                   reorderableColumns={true}
+                                   selectionMode="single"
+                                   selection={ store.selectedStatus }
+                                   onRowSelect={this.onStatusSelect}>
+                            <Column field="statusid" header="ID" style={{width: '10%'}} />
+                            <Column field="title" header="Title" style={{width: '30%'}} />
+                            <Column field="value" header="Color" style={{width: '30%'}} />
+                            <DateColumn field="created" header="Created" style={{width: '30%'}} />
+                        </DataTable>
+
+                        {store.isShowDialog &&
+                            <StatusDialog form={statusFields} title={store.title} hideDialog={this.hideDialog} />
+                        }
+
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}

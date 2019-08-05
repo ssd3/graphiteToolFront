@@ -5,9 +5,9 @@ import PagesStore from './pagesStore'
 
 export default class RootStore {
     constructor() {
-        this.authStore = new AuthStore()
-        this.pagesStore = new PagesStore()
-        this.statusStore = new StatusStore()
-        this.productStore = new ProductStore()
+        this.authStore = new AuthStore(this)
+        this.pagesStore = new PagesStore(this)
+        this.statusStore = new StatusStore(this)
+        this.productStore = new ProductStore(this)
     }
 }

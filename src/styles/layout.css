@@ -1547,3 +1547,9 @@ body .p-inputtext {
   margin-bottom: 0;
   margin-top: 5px;
 }
+
+.error-text {
+  color: red;
+  padding: 0;
+  display: block;
+}

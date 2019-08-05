@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Route, BrowserRouter as Router} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 import classNames from 'classnames'
 import {AppTopbar} from './components/AppTopbar'
 import {AppMenu} from './components/AppMenu'
@@ -13,7 +13,7 @@ import {Credits} from './components/Credits'
 import {Balance} from './components/Balance'
 import {Warehouse} from './components/Warehouse'
 import {EmptyPage} from './components/EmptyPage'
-import Status from './components/Status'
+import Status from './components/status/Status'
 import Login from './components/auth/Login'
 
 import {toast, ToastContainer} from 'react-toastify'
@@ -151,7 +151,7 @@ class App extends Component {
         console.log('type, message', type, message)
         const options = {
             position: 'bottom-right',
-            autoClose: 3000,
+            autoClose: 5000,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
