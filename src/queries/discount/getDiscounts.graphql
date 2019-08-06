@@ -1,0 +1,8 @@
+query GET_DISCOUNTS {
+    discounts {
+        discountid
+        title
+        value
+        units
+    }
+}

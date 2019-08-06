@@ -10,7 +10,10 @@ import {InputText} from 'primereact/inputtext'
 import {utility} from '../utils/common'
 import {HttpClient} from '../httpClient/client'
 import WarehouseQueries from '../queries/WarehouseQueries'
+import {inject, observer} from 'mobx-react'
 
+@inject('rootStore')
+@observer
 export class Warehouse extends Component {
 
     constructor(props){
@@ -26,7 +29,12 @@ export class Warehouse extends Component {
     }
 
     componentDidMount () {
-        HttpClient.getData(WarehouseQueries.GET_WAREHOUSES, {/*variables object here*/})
+        this.props.rootStore.warehouseStore.getWarehouses({
+            active: true
+        })
+
+        /*
+        HttpClient.getData(WarehouseQueries.GET_WAREHOUSES)
             .then(result => {
                 const { loading, error, data } = result
                 let cleanData = utility.gqlQueryToCleanData(data)
@@ -38,10 +46,10 @@ export class Warehouse extends Component {
                     this.growl.show({severity: 'error', summary: 'Error Message', detail: JSON.stringify(error) })
                 } else {
                     this.growl.show({severity: 'success', summary: 'Success Message', detail: JSON.stringify(data) })
-                    console.log('data', data)
                 }
             })
             .catch(e => console.log(e))
+        */
         this.props.pageTitle('Warehouse')
     }
 
@@ -92,16 +100,16 @@ export class Warehouse extends Component {
     }
 
     render(){
-        const dataLoading  = this.state.dataLoading
+        const { loading, warehouses } = this.props.rootStore.warehouseStore
 
         return (
             <div className="p-grid">
-                {dataLoading &&
+                {loading &&
                     <div className="p-col-12-1px">
                         <ProgressBar mode="indeterminate" style={{height: '1px'}} />
                     </div>
                 }
-                <DataTable value={this.state.warehouses} editable={true}>
+                <DataTable value={warehouses} editable={true}>
                     <Column field="title" header="Title" editor={this.titleEditor} onEditorSubmit={this.updateWarehouse}/>
                     <Column field="description" header="Description" editor={this.descriptionEditor} onEditorSubmit={this.updateWarehouse}/>
                     <Column field="active" header="Active" body={this.renderCheckBox}/>

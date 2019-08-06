@@ -221,11 +221,11 @@ type RootQuery {
     products(after: String, before: String, first: Int, last: Int): ProductConnection
     status(statusid: Int, title: String): StatusType
     statuses: [StatusType]
-    "<graphene.types.scalars.String object at 0x7f25d9a57dd8>"
+    "<graphene.types.scalars.String object at 0x7fb8f2097d68>"
     user(email: String, userid: Int, username: String): UserType
     users: [UserType]
     warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]
-    warehouses(after: String, before: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String): WarehouseTypeConnection
+    warehouses(active: Boolean, after: String, before: String, first: Int, inField: Boolean, last: Int, out: Boolean, title: String, title_Icontains: String, title_Istartswith: String): WarehouseTypeConnection
 }
 
 type StatusType {

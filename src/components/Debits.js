@@ -14,12 +14,11 @@ import {Dialog} from 'primereact/dialog'
 import {ProgressBar} from 'primereact/progressbar'
 
 // import {HttpClient} from './httpClient/client'
-import {client} from '../httpClient/client'
-import ProductQueries from '../queries/ProductQueries'
+// import {client} from '../httpClient/client'
+// import ProductQueries from '../queries/ProductQueries'
 
 
-import Query from 'react-apollo/Query'
-import {ProductsGet} from '../dal/products'
+// import Query from 'react-apollo/Query'
 
 // option 1 - макароны 1
 // этот компонент <Products /> вызывается ниже в методе render
@@ -159,18 +158,6 @@ export class Debits extends Component {
             })
         */
         this.props.pageTitle('Debit')
-
-        console.log(this.props)
-        ProductsGet()
-            .then(results => {
-                const { loading, data, networkStatus, stale } = results
-                this.setState({dataLoading: loading})
-                console.log('result', results)
-            })
-            .catch(errors => {
-                this.setState({dataLoading: false})
-                this.growl.show({severity: 'error', summary: 'Error Message', detail: errors.message })
-            })
     }
 
     onYearChange(event) {

@@ -1,0 +1,19 @@
+query GET_WAREHOUSES($active: Boolean!, $inField: Boolean, $out: Boolean) {
+    warehouses(active: $active, inField: $inField, out: $out) {
+        edges {
+            node {
+                warehouseid
+                title
+                description
+                active
+                inField
+                out
+                created
+                userid {
+                    id
+                    username
+                }
+            }
+        }
+    }
+}
