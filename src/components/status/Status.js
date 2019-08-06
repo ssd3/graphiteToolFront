@@ -9,21 +9,13 @@ import {Toolbar} from 'primereact/components/toolbar/Toolbar'
 import {InputText} from 'primereact/components/inputtext/InputText'
 import StatusDialog from './StatusDialog'
 import statusFields from './StatusFields'
-
-const DateColumn = (props) => {
-    return (
-            <td className={props.className}>
-                <h4>{props.children}</h4>
-            </td>
-        )
-}
+import Moment from 'react-moment'
 
 @inject('rootStore')
 @observer
 export default class Status extends Component {
     constructor(props) {
         super(props)
-        this.hideDialog = this.hideDialog.bind(this)
         statusFields.store = this.props.rootStore.statusStore
     }
 
@@ -52,20 +44,23 @@ export default class Status extends Component {
         store.showDialog(true, 'Update Status')
     }
 
-    hideDialog() {
+    hideDialog = () => {
         this.props.rootStore.statusStore.showDialog(false)
     }
 
+    formatDate = (rowData, column) => {
+        const date = rowData[column.field]
+        return <Moment format="DD/MM/YYYY HH:MM">{date}</Moment>
+    }
+
     render() {
-        const store = this.props.rootStore.statusStore
+        const { isShowDialog, title, selectedStatus, error, loading, statuses } = this.props.rootStore.statusStore
         return (
             <div className="p-grid">
-                {store.error && this.props.notify('error', store.error)}
-                {store.loading &&
-                    <div className="p-col-12-1px">
-                        <ProgressBar mode="indeterminate" style={{height: '1px'}}/>
-                    </div>
-                }
+                {error && this.props.notify('error', error)}
+                <div className="p-col-12-1px">
+                    {loading && <ProgressBar mode="indeterminate" style={{height: '1px'}}/> }
+                </div>
                 <div className="p-col-12">
                     <div>
                         <Toolbar>
@@ -80,20 +75,20 @@ export default class Status extends Component {
 
                         <div className="vertical-space10" />
 
-                        <DataTable value={ store.statuses }
+                        <DataTable value={ statuses }
                                    resizableColumns={true}
                                    reorderableColumns={true}
                                    selectionMode="single"
-                                   selection={ store.selectedStatus }
+                                   selection={ selectedStatus }
                                    onRowSelect={this.onStatusSelect}>
                             <Column field="statusid" header="ID" style={{width: '10%'}} />
                             <Column field="title" header="Title" style={{width: '30%'}} />
                             <Column field="value" header="Color" style={{width: '30%'}} />
-                            <DateColumn field="created" header="Created" style={{width: '30%'}} />
+                            <Column field="created" header="Created" style={{width: '30%'}} body={this.formatDate} />
                         </DataTable>
 
-                        {store.isShowDialog &&
-                            <StatusDialog form={statusFields} title={store.title} hideDialog={this.hideDialog} />
+                        {isShowDialog &&
+                            <StatusDialog form={statusFields} title={title} hideDialog={this.hideDialog} />
                         }
 
                     </div>

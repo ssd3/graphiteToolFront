@@ -21,14 +21,14 @@ class StatusFields extends Form {
                 name: 'title',
                 label: 'Status Name',
                 placeholder: 'Type status name',
-                rules: 'required|string|between:3,25',
+                rules: 'required|string|between:1,48',
                 default: ''
             },
             {
                 name: 'value',
                 label: 'Status Color',
                 placeholder: '',
-                rules: 'required|string|between:6,6',
+                rules: 'required|string|between:1,32',
                 default: 'ffffff'
             }],
         }
