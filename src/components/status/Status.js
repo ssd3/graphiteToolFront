@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component, Fragment} from 'react'
 import { ProgressBar } from 'primereact/progressbar'
 import {DataTable} from 'primereact/datatable'
 import {Column} from 'primereact/column'
@@ -53,6 +53,16 @@ export default class Status extends Component {
         return <Moment format="DD/MM/YYYY HH:MM">{date}</Moment>
     }
 
+    showColor = (rowData, column) => {
+        const value = rowData[column.field]
+        return <Fragment>
+                    <div className='flex-block'>
+                        <div style={{backgroundColor: `#${value}`}} className='color-box' />
+                        <span className='color-value'>{value}</span>
+                    </div>
+               </Fragment>
+    }
+
     render() {
         const { isShowDialog, title, selectedStatus, error, loading, statuses } = this.props.rootStore.statusStore
         return (
@@ -83,7 +93,7 @@ export default class Status extends Component {
                                    onRowSelect={this.onStatusSelect}>
                             <Column field="statusid" header="ID" style={{width: '10%'}} />
                             <Column field="title" header="Title" style={{width: '30%'}} />
-                            <Column field="value" header="Color" style={{width: '30%'}} />
+                            <Column field="value" header="Color" style={{width: '30%'}} body={this.showColor} />
                             <Column field="created" header="Created" style={{width: '30%'}} body={this.formatDate} />
                         </DataTable>
 

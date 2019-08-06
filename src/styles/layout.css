@@ -1553,3 +1553,16 @@ body .p-inputtext {
   padding: 0;
   display: block;
 }
+
+.flex-block {
+  display: flex;
+}
+
+.color-box {
+  width: 15px;
+  height: 15px;
+}
+
+.color-value {
+  margin-left: 10px;
+}
