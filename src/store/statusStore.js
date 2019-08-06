@@ -10,6 +10,7 @@ export default class StatusStore {
     @observable isShowDialog = false
     @observable title = ''
     @observable error = ''
+    @observable search = ''
 
     constructor(rootStore){
         this.rootStore = rootStore
@@ -20,6 +21,7 @@ export default class StatusStore {
         try {
             this.statusService.getStatuses(search)
                 .then(({ loading, data }) => {
+                    this.search = search.search
                     this.loading = loading
                     this.statuses = data.statuses
                 })

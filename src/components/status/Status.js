@@ -21,7 +21,8 @@ export default class Status extends Component {
 
     componentDidMount () {
         this.props.pageTitle('Status')
-        this.props.rootStore.statusStore.getStatuses({})
+        const store = this.props.rootStore.statusStore
+        store.getStatuses({search: store.search})
     }
 
     newStatus = () => {
@@ -68,7 +69,7 @@ export default class Status extends Component {
     }
 
     render() {
-        const { isShowDialog, title, selectedStatus, error, loading, statuses } = this.props.rootStore.statusStore
+        const { search, isShowDialog, title, selectedStatus, error, loading, statuses } = this.props.rootStore.statusStore
         return (
             <div className="p-grid">
                 {error && this.props.notify('error', error)}
@@ -80,7 +81,7 @@ export default class Status extends Component {
                         <Toolbar>
                             <div className="p-toolbar-group-left">
                                 <i className="pi pi-search" style={{margin:'4px 4px 0 0'}} />
-                                <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" style={{marginRight: '.25em'}}/>
+                                <InputText type="search" onInput={this.onGlobalSearch} value={search} placeholder="Search" size="30" style={{marginRight: '.25em'}}/>
                             </div>
                             <div className="p-toolbar-group-right" style={{display: 'flex'}}>
                                 <Button label="Add Status" icon="pi pi-plus" className="p-button-secondary" onClick={this.newStatus} />
