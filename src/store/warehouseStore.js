@@ -17,7 +17,6 @@ export default class WarehouseStore {
                 .then(({ loading, data }) => {
                     this.loading = loading
                     this.warehouses = data.warehouses.edges.map(node => node.node)
-                    console.log('this.warehouses', this.warehouses)
                 })
                 .catch(error => {
                     this.error = error.message

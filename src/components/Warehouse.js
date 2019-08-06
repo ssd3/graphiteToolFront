@@ -112,7 +112,7 @@ export class Warehouse extends Component {
                 <DataTable value={warehouses} editable={true}>
                     <Column field="title" header="Title" editor={this.titleEditor} onEditorSubmit={this.updateWarehouse}/>
                     <Column field="description" header="Description" editor={this.descriptionEditor} onEditorSubmit={this.updateWarehouse}/>
-                    <Column field="active" header="Active" body={this.renderCheckBox}/>
+                    <Column field="active" header="Active" body={this.renderCheckBox} onEditorSubmit={this.updateWarehouse}/>
                     <Column field="created" header="Created" />
                     <Column field="inField" header="In" body={this.renderCheckBox}  />
                     <Column field="out" header="Out" body={this.renderCheckBox}  />

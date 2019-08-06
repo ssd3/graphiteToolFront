@@ -148,7 +148,6 @@ class App extends Component {
 
     // https://www.npmjs.com/package/react-toastify#demo
     notify = (type, message) => {
-        console.log('type, message', type, message)
         const options = {
             position: 'bottom-right',
             autoClose: 5000,
