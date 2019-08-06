@@ -16,9 +16,9 @@ export default class StatusStore {
         this.statusService = new StatusService()
     }
 
-    @computed get getStatuses() {
+    getStatuses(search) {
         try {
-            this.statusService.getStatuses()
+            this.statusService.getStatuses(search)
                 .then(({ loading, data }) => {
                     this.loading = loading
                     this.statuses = data.statuses

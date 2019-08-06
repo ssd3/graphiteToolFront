@@ -21,7 +21,7 @@ export default class Status extends Component {
 
     componentDidMount () {
         this.props.pageTitle('Status')
-        this.props.rootStore.statusStore.getStatuses
+        this.props.rootStore.statusStore.getStatuses({})
     }
 
     newStatus = () => {
@@ -61,6 +61,10 @@ export default class Status extends Component {
                         <span className='color-value'>{value}</span>
                     </div>
                </Fragment>
+    }
+
+    onGlobalSearch = (e) => {
+        this.props.rootStore.statusStore.getStatuses({search: e.target.value})
     }
 
     render() {

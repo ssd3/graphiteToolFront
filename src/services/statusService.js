@@ -5,16 +5,17 @@ import CREATE_STATUS from '../queries/status/createStatus.graphql'
 import UPDATE_STATUS from '../queries/status/updateStatus.graphql'
 
 class StatusService {
-    getStatuses = async () => {
+    getStatuses = async (search) => {
         return await client.query({
-            query: GET_STATUSES
+            query: GET_STATUSES,
+            variables: search
         })
     }
 
     getStatus = async (statusid) => {
         return await client.query({
             query: GET_STATUS,
-            variables: { statusid }
+            variables: statusid
         })
     }
 
