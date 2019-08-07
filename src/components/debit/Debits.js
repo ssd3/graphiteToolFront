@@ -13,37 +13,14 @@ import {Fieldset} from 'primereact/fieldset'
 import {Dialog} from 'primereact/dialog'
 import {ProgressBar} from 'primereact/progressbar'
 
-// import {HttpClient} from './httpClient/client'
-// import {client} from '../httpClient/client'
-// import ProductQueries from '../queries/ProductQueries'
+import DebitDialog from './DebitDialog'
+import debitFields from './DebitFields'
+import {inject, observer} from 'mobx-react'
+import DebitToolbar from './DebitToolbar'
+import Progressbar from '../common/ProgressBar'
 
-
-// import Query from 'react-apollo/Query'
-
-// option 1 - макароны 1
-// этот компонент <Products /> вызывается ниже в методе render
-// dropdownlist c списком продуктов
-/*
-const Products = ({ onProductSelected }) => (
-    <Query query={ProductQueries.GET_PRODUCTS}>
-        {({ loading, error, data }) => {
-            if (loading) return 'Loading...'
-            if (error) return `Error! ${error.message}`
-
-            return (
-                <select name="dog" onChange={onProductSelected}>
-                    {data.products.data.map(result => (
-                        <option key={result.product.productid} value={result.product.title}>
-                            {result.product.title}
-                        </option>
-                    ))}
-                </select>
-            )
-        }}
-    </Query>
-)
-*/
-
+@inject('rootStore')
+@observer
 export class Debits extends Component {
     constructor(props){
         super(props)
@@ -120,6 +97,7 @@ export class Debits extends Component {
     }
 
     componentDidMount(){
+        this.props.rootStore.debitComplexStore.getDebits()
         // apollo client usage
         // option 2 - макароны 2
         // этот вариант тоже макароны но интереснее
@@ -216,6 +194,22 @@ export class Debits extends Component {
         })
     }
 
+    onDebitSearch = (e) => {
+        this.setState({globalFilter: e.target.value})
+    }
+
+    addProduct = () => {
+        this.setState({
+            modalDialog: true
+        })
+    }
+
+    addToBox = () => {
+        this.setState({
+            boxSidebar: true
+        })
+    }
+
     static rowExpansionTemplate(data) {
         const src = 'public/images/' + data.brand + '.png'
 
@@ -244,29 +238,18 @@ export class Debits extends Component {
     }
 
     render() {
-
+        console.log('debits', this.props.rootStore.debitComplexStore.debits)
         const { cars, dataLoading } = this.state
         return (
             <div className="p-grid">
-                {dataLoading &&
-                    <div className="p-col-12-1px">
-                    <ProgressBar mode="indeterminate" style={{height: '1px'}} />
-                    </div>
-                }
+
+                <Progressbar loading={dataLoading}/>
+
                 <div className="p-col-12">
                         <div>
-                            <Toolbar>
-                                <div className="p-toolbar-group-left">
-                                    <i className="pi pi-search" style={{margin:'4px 4px 0 0'}} />
-                                    <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" style={{marginRight: '.25em'}}/>
-                                </div>
-                                <div className="p-toolbar-group-right" style={{display: 'flex'}}>
-                                    <Button label="Add Product" icon="pi pi-plus" className="p-button-secondary" onClick={this.displayDialog} />
-                                    <Button label="Add To Box" icon="pi pi-plus" className="p-button-secondary" onClick={this.displayBoxSidebar} />
-                                    <Button label="Change Status" icon="pi pi-check" className="p-button-secondary" />
-                                    <Button label="Clear Filters" className="p-button-secondary" tooltipOptions={{position: 'left'}} />
-                                </div>
-                            </Toolbar>
+                            <DebitToolbar onDebitSearch={this.onDebitSearch}
+                                          onAddProduct={this.addProduct}
+                                          onAddToBox={this.addToBox} />
 
                             <div className="vertical-space10" />
 
@@ -319,8 +302,28 @@ export class Debits extends Component {
                     maximizable={true}
                     closeOnEscape={false}
                     onHide={this.hideDialog}>
-                    <div style={{height: '50vh'}}>
-                        Form elements, DataTable etc
+                    <div>
+                        <Fieldset key={'Product'} legend="Product" toggleable={false} >
+                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
+                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
+                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
+                        </Fieldset>
+
+                        <div className="vertical-space10" />
+
+                        <Fieldset key={'Product Details'} legend="Product Details" toggleable={false} >
+                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
+                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
+                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
+                        </Fieldset>
+
+                        <div className="vertical-space10" />
+
+                        <Fieldset key={'Product Comments'} legend="Product Comments" toggleable={true} >
+                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
+                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
+                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
+                        </Fieldset>
                     </div>
                 </Dialog>
 
@@ -329,3 +332,7 @@ export class Debits extends Component {
         )
     }
 }
+
+/*
+                <DebitDialog form={debitFields} title={'title'} hideDialog={this.hideDialog} />
+*/

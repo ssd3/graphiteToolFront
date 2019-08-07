@@ -6,8 +6,8 @@ import {ColorPicker} from 'primereact/components/colorpicker/ColorPicker'
 import {Dialog} from 'primereact/components/dialog/Dialog'
 
 
-export default observer(({ form, title, isShowDialog, hideDialog }) => (
-    <Dialog visible={isShowDialog} header={title} modal={true} onHide={hideDialog}
+export default observer(({ form, title, hideDialog }) => (
+    <Dialog visible={true} header={title} modal={true} onHide={hideDialog}
             footer={
                 <div className="ui-dialog-buttonpane p-clearfix">
                     <Button label="Save" icon="pi pi-check" onClick={form.onSubmit}/>
@@ -15,7 +15,7 @@ export default observer(({ form, title, isShowDialog, hideDialog }) => (
                 </div>
             }>
 
-        <form style={{width: '300px'}} onSubmit={form.onSubmit}>
+        <form onSubmit={form.onSubmit}>
 
             <div className="p-grid p-fluid">
                 <div className="p-col-4" style={{padding:'.75em'}}>
@@ -27,16 +27,8 @@ export default observer(({ form, title, isShowDialog, hideDialog }) => (
                     <InputText {...form.$('title').bind()} />
                     <span className="error-text">{form.$('title').error}</span>
                 </div>
-                <div className="p-col-4" style={{padding:'.75em'}}>
-                    <label htmlFor={form.$('value').id}>
-                        {form.$('value').label}
-                    </label>
-                </div>
-                <div className="p-col-8" style={{padding:'.5em'}}>
-                    <ColorPicker {...form.$('value').bind()} />
-                    <span className="error-text">{form.$('value').error}</span>
-                </div>
-                <input type="hidden" {...form.$('statusid').bind()} />
+
+
             </div>
 
             <p>{form.error}</p>

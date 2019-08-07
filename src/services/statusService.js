@@ -22,8 +22,8 @@ class StatusService {
     saveStatus = async (status) => {
         return await client.mutate({
             mutation: status.statusid === '' ? CREATE_STATUS : UPDATE_STATUS,
-            variables: status,
-            refetchQueries: [{ query: GET_STATUSES}]
+            variables: status
+            // refetchQueries: [{ query: GET_STATUSES}]
         })
     }
 }

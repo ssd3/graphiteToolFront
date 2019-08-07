@@ -1,0 +1,57 @@
+query GET_DEBITS {
+    debits(first: 10) {
+        edges{
+            node{
+                debitid
+                warehouse: warehouseid {
+                    warehouseid
+                    title
+                }
+                product: productid {
+                    productid
+                    title
+                    description
+                    category: categoryid {
+                        categoryid
+                        title
+                    }
+                    productdetails: productdetailsSet {
+                        productdetailsid
+                        model
+                        url
+                        serialno
+                        weight
+                        height
+                        width
+                        length
+                    }
+                    productcomment: productcommentSet {
+                        productcommentid
+                        comment
+                        created
+                    }
+                }
+                qty
+                price
+                tracknumber
+                pricetypeid {
+                    pricetypeid
+                    title
+                }
+                discountid {
+                    discountid
+                    title
+                    value
+                    units
+                }
+                statusid {
+                    statusid
+                    title
+                    value
+                }
+                notes
+                created
+            }
+        }
+    }
+}

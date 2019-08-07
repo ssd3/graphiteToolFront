@@ -11,6 +11,7 @@ import {utility} from '../utils/common'
 import {HttpClient} from '../httpClient/client'
 import WarehouseQueries from '../queries/WarehouseQueries'
 import {inject, observer} from 'mobx-react'
+import Progressbar from './common/ProgressBar'
 
 @inject('rootStore')
 @observer
@@ -104,11 +105,7 @@ export class Warehouse extends Component {
 
         return (
             <div className="p-grid">
-                {loading &&
-                    <div className="p-col-12-1px">
-                        <ProgressBar mode="indeterminate" style={{height: '1px'}} />
-                    </div>
-                }
+                <Progressbar loading={loading}/>
                 <DataTable value={warehouses} editable={true}>
                     <Column field="title" header="Title" editor={this.titleEditor} onEditorSubmit={this.updateWarehouse}/>
                     <Column field="description" header="Description" editor={this.descriptionEditor} onEditorSubmit={this.updateWarehouse}/>

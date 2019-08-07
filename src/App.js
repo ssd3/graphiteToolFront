@@ -8,7 +8,7 @@ import {AppInlineProfile} from './components/AppInlineProfile'
 import {ScrollPanel} from 'primereact/components/scrollpanel/ScrollPanel'
 
 import {Dashboard} from './components/Dashboard'
-import {Debits} from './components/Debits'
+import {Debits} from './components/debit/Debits'
 import {Credits} from './components/Credits'
 import {Balance} from './components/Balance'
 import {Warehouse} from './components/Warehouse'

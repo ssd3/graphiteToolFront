@@ -6,6 +6,7 @@ import CategoryStore from './categoryStore'
 import WarehouseStore from './warehouseStore'
 import PriceTypeStore from './priceTypeStore'
 import DiscountStore from './discountStore'
+import DebitComplexStore from './debitComplexStore'
 
 export default class RootStore {
     constructor() {
@@ -17,5 +18,6 @@ export default class RootStore {
         this.warehouseStore = new WarehouseStore(this)
         this.priceTypeStore = new PriceTypeStore(this)
         this.discountStore = new DiscountStore(this)
+        this.debitComplexStore = new DebitComplexStore(this)
     }
 }

@@ -10,6 +10,8 @@ import {InputText} from 'primereact/components/inputtext/InputText'
 import StatusDialog from './StatusDialog'
 import statusFields from './StatusFields'
 import Moment from 'react-moment'
+import Progressbar from '../common/ProgressBar'
+import StatusToolbar from './StatusToolbar'
 
 @inject('rootStore')
 @observer
@@ -25,7 +27,7 @@ export default class Status extends Component {
         store.getStatuses({search: store.search})
     }
 
-    newStatus = () => {
+    addStatus = () => {
         const store = this.props.rootStore.statusStore
         store.selectStatus({})
 
@@ -64,7 +66,7 @@ export default class Status extends Component {
                </Fragment>
     }
 
-    onGlobalSearch = (e) => {
+    onSearch = (e) => {
         this.props.rootStore.statusStore.getStatuses({search: e.target.value})
     }
 
@@ -72,21 +74,14 @@ export default class Status extends Component {
         const { search, isShowDialog, title, selectedStatus, error, loading, statuses } = this.props.rootStore.statusStore
         return (
             <div className="p-grid">
+
                 {error && this.props.notify('error', error)}
-                <div className="p-col-12-1px">
-                    {loading && <ProgressBar mode="indeterminate" style={{height: '1px'}}/> }
-                </div>
+
+                <Progressbar loading={loading}/>
+
                 <div className="p-col-12">
                     <div>
-                        <Toolbar>
-                            <div className="p-toolbar-group-left">
-                                <i className="pi pi-search" style={{margin:'4px 4px 0 0'}} />
-                                <InputText type="search" onInput={this.onGlobalSearch} value={search} placeholder="Search" size="30" style={{marginRight: '.25em'}}/>
-                            </div>
-                            <div className="p-toolbar-group-right" style={{display: 'flex'}}>
-                                <Button label="Add Status" icon="pi pi-plus" className="p-button-secondary" onClick={this.newStatus} />
-                            </div>
-                        </Toolbar>
+                        <StatusToolbar searchExpr={search} onSearch={this.onSearch} onAddStatus={this.addStatus}/>
 
                         <div className="vertical-space10" />
 
@@ -102,9 +97,7 @@ export default class Status extends Component {
                             <Column field="created" header="Created" style={{width: '30%'}} body={this.formatDate} />
                         </DataTable>
 
-                        {isShowDialog &&
-                            <StatusDialog form={statusFields} title={title} hideDialog={this.hideDialog} />
-                        }
+                        <StatusDialog form={statusFields} title={title} isShowDialog={isShowDialog} hideDialog={this.hideDialog} />
 
                     </div>
                 </div>
