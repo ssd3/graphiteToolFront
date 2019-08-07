@@ -4,9 +4,10 @@ import CREATE_DEBIT_COMPLEX from '../queries/debitComplex/createDebit.graphql'
 import UPDATE_DEBIT_COMPLEX from '../queries/debitComplex/updateDebit.graphql'
 
 class DebitComplexService {
-    getDebitsComplex = async () => {
+    getDebitsComplex = async (params) => {
         return await client.query({
-            query: GET_DEBITS
+            query: GET_DEBITS,
+            variables: params
         })
     }
 

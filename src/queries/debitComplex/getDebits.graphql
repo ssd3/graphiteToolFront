@@ -1,5 +1,5 @@
 query GET_DEBITS {
-    debits(first: 10) {
+    debits(first: 20) {
         edges{
             node{
                 debitid
@@ -34,17 +34,17 @@ query GET_DEBITS {
                 qty
                 price
                 tracknumber
-                pricetypeid {
+                pricetype: pricetypeid {
                     pricetypeid
                     title
                 }
-                discountid {
+                discount: discountid {
                     discountid
                     title
                     value
                     units
                 }
-                statusid {
+                status: statusid {
                     statusid
                     title
                     value

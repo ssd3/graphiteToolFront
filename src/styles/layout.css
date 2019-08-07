@@ -1521,6 +1521,10 @@ body .p-toolbar button {
   margin-right: .25em;
 }
 
+body .p-toolbar .p-togglebutton {
+  margin-right: .25em;
+}
+
 .p-fieldset {
   height: 100%;
 }

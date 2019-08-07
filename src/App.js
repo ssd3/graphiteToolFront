@@ -223,7 +223,7 @@ class App extends Component {
                         <Switch>
                             <Route path="/login" exact component={Login} notify={this.notify} />
                             <PrivateRoute path="/" exact component={Dashboard} pageTitle={this.pageTitle} />
-                            <PrivateRoute path="/debits" exact component={Debits} pageTitle={this.pageTitle} />
+                            <PrivateRoute path="/debits" exact component={Debits} pageTitle={this.pageTitle} notify={this.notify} />
                             <PrivateRoute path="/credits" exact component={Credits} pageTitle={this.pageTitle} />
                             <PrivateRoute path="/balance" exact component={Balance} pageTitle={this.pageTitle} />
                             <PrivateRoute path="/warehouse" exact component={Warehouse} pageTitle={this.pageTitle} />

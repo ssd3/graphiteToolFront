@@ -1,23 +1,22 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import {Toolbar} from 'primereact/toolbar'
+import {inject, observer} from 'mobx-react'
 import {Button} from 'primereact/button'
 import {Column} from 'primereact/column'
 import {DataTable} from 'primereact/datatable'
 import {InputText} from 'primereact/inputtext'
-import {Dropdown} from 'primereact/dropdown'
-import {MultiSelect} from 'primereact/multiselect'
 import {Sidebar} from 'primereact/sidebar'
 import {Growl} from 'primereact/growl'
 import {Fieldset} from 'primereact/fieldset'
 import {Dialog} from 'primereact/dialog'
-import {ProgressBar} from 'primereact/progressbar'
 
 import DebitDialog from './DebitDialog'
 import debitFields from './DebitFields'
-import {inject, observer} from 'mobx-react'
 import DebitToolbar from './DebitToolbar'
 import Progressbar from '../common/ProgressBar'
+
+
+const expandedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-down'
+const collapsedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-right'
 
 @inject('rootStore')
 @observer
@@ -27,66 +26,8 @@ export class Debits extends Component {
 
         this.state = {
             modalDialog: false,
-            boxSidebar: false,
-            cars: [
-                {'brand': 'Volkswagen', 'year': 2012, 'color': 'White', 'vin': 'dsad231ff'},
-                {'brand': 'Audi', 'year': 2011, 'color': 'Black', 'vin': 'gwregre345'},
-                {'brand': 'Renault', 'year': 2005, 'color': 'Gray', 'vin': 'h354htr'},
-                {'brand': 'BMW', 'year': 2003, 'color': 'Blue', 'vin': 'j6w54qgh'},
-                {'brand': 'Mercedes', 'year': 1995, 'color': 'White', 'vin': 'hrtwy34'},
-                {'brand': 'Volvo', 'year': 2005, 'color': 'Black', 'vin': 'jejtyj'},
-                {'brand': 'Honda', 'year': 2012, 'color': 'Yellow', 'vin': 'g43gr'},
-                {'brand': 'Jaguar', 'year': 2013, 'color': 'White', 'vin': 'greg34'},
-                {'brand': 'Ford', 'year': 2000, 'color': 'Black', 'vin': 'h54hw5'},
-                {'brand': 'Fiat', 'year': 2013, 'color': 'Red', 'vin': '245t2s'},
-                {'brand': 'Volkswagen', 'year': 2012, 'color': 'White', 'vin': 'dsad231ff'},
-                {'brand': 'Audi', 'year': 2011, 'color': 'Black', 'vin': 'gwregre345'},
-                {'brand': 'Renault', 'year': 2005, 'color': 'Gray', 'vin': 'h354htr'},
-                {'brand': 'BMW', 'year': 2003, 'color': 'Blue', 'vin': 'j6w54qgh'},
-                {'brand': 'Mercedes', 'year': 1995, 'color': 'White', 'vin': 'hrtwy34'},
-                {'brand': 'Volvo', 'year': 2005, 'color': 'Black', 'vin': 'jejtyj'},
-                {'brand': 'Honda', 'year': 2012, 'color': 'Yellow', 'vin': 'g43gr'},
-                {'brand': 'Jaguar', 'year': 2013, 'color': 'White', 'vin': 'greg34'},
-                {'brand': 'Ford', 'year': 2000, 'color': 'Black', 'vin': 'h54hw5'},
-                {'brand': 'Fiat', 'year': 2013, 'color': 'Red', 'vin': '245t2s'}
-            ],
-            brand: null,
-            color: null,
-            brands: [
-                {label: 'All Brands', value: null},
-                {label: 'Audi', value: 'Audi'},
-                {label: 'BMW', value: 'BMW'},
-                {label: 'Fiat', value: 'Fiat'},
-                {label: 'Honda', value: 'Honda'},
-                {label: 'Jaguar', value: 'Jaguar'},
-                {label: 'Mercedes', value: 'Mercedes'},
-                {label: 'Renault', value: 'Renault'},
-                {label: 'VW', value: 'VW'},
-                {label: 'Volvo', value: 'Volvo'}
-            ],
-            colors: [
-                {label: 'White', value: 'White'},
-                {label: 'Green', value: 'Green'},
-                {label: 'Silver', value: 'Silver'},
-                {label: 'Black', value: 'Black'},
-                {label: 'Red', value: 'Red'},
-                {label: 'Maroon', value: 'Maroon'},
-                {label: 'Brown', value: 'Brown'},
-                {label: 'Orange', value: 'Orange'},
-                {label: 'Blue', value: 'Blue'}
-            ],
-            dataLoading: true
+            boxSidebar: false
         }
-
-        this.onYearChange = this.onYearChange.bind(this)
-        this.onBrandChange = this.onBrandChange.bind(this)
-        this.onColorChange = this.onColorChange.bind(this)
-        this.onGlobalSearch = this.onGlobalSearch.bind(this)
-        this.displayBoxSidebar = this.displayBoxSidebar.bind(this)
-        this.hideBoxSidebar = this.hideBoxSidebar.bind(this)
-        Debits.rowExpansionTemplate = Debits.rowExpansionTemplate.bind(this)
-        this.hideDialog = this.hideDialog.bind(this)
-        this.displayDialog = this.displayDialog.bind(this)
 
         this.dialogFooter = (
             <div>
@@ -97,7 +38,6 @@ export class Debits extends Component {
     }
 
     componentDidMount(){
-        this.props.rootStore.debitComplexStore.getDebits()
         // apollo client usage
         // option 2 - макароны 2
         // этот вариант тоже макароны но интереснее
@@ -136,59 +76,34 @@ export class Debits extends Component {
             })
         */
         this.props.pageTitle('Debit')
+        this.props.rootStore.debitComplexStore.getDebits({})
     }
 
-    onYearChange(event) {
-        // execute query
-        this.dt.filter(event.target.value, 'year', 'contains')
-        this.setState({year: event.target.value})
-    }
-
-    onBrandChange(event) {
-        this.dt.filter(event.value, 'brand', 'equals')
-        this.setState({brand: event.value})
-    }
-
-    onColorChange(event) {
-        this.dt.filter(event.value, 'color', 'in')
-        this.setState({color: event.value})
-    }
-
-    onGlobalSearch(event) {
-        this.setState({globalFilter: event.target.value})
-    }
-
-    static displaySelection(data) {
+    displaySelection = (data) => {
         if(!data || data.length === 0) {
             return <div style={{textAlign: 'left'}}>No Selection</div>
         }
         else {
             if(data instanceof Array)
-                return <ul style={{textAlign: 'left', margin: 0}}>{data.map((car, i) => <li key={car.vin}>{car.vin + ' - ' + car.year + ' - ' + car.brand + ' - ' + car.color}</li>)}</ul>
+                return <ul style={{textAlign: 'left', margin: 0}}>{data.map((debit, i) => <li key={debit.debitid}>{debit.debitid + ' - ' + debit.product.title + ' - ' + debit.qty + ' - ' + debit.price}</li>)}</ul>
             else
-                return <div style={{textAlign: 'left'}}>Selected Car: {data.vin + ' - ' + data.year + ' - ' + data.brand + ' - ' + data.color}</div>
+                return <div style={{textAlign: 'left'}}>Selected Row: {data.debitid + ' - ' + data.product.title + ' - ' + data.qty + ' - ' + data.price}</div>
         }
     }
 
-    displayBoxSidebar(event) {
+    displayBoxSidebar = (e) => {
         this.setState({
             boxSidebar: true
         })
     }
 
-    hideBoxSidebar(event) {
+    hideBoxSidebar = (e) => {
         this.setState({
             boxSidebar: false
         })
     }
 
-    displayDialog(event) {
-        this.setState({
-            modalDialog: true
-        })
-    }
-
-    hideDialog(event) {
+    hideDialog = (e) => {
         this.setState({
             modalDialog: false
         })
@@ -198,7 +113,7 @@ export class Debits extends Component {
         this.setState({globalFilter: e.target.value})
     }
 
-    addProduct = () => {
+    addDebit = () => {
         this.setState({
             modalDialog: true
         })
@@ -210,19 +125,45 @@ export class Debits extends Component {
         })
     }
 
-    static rowExpansionTemplate(data) {
-        const src = 'public/images/' + data.brand + '.png'
+    filterColumns = (e) => {
+        this.props.rootStore.debitComplexStore.filterColumns(e.value)
+    }
 
+    sortColumns = (e) => {
+        this.props.rootStore.debitComplexStore.sortColumns(e.value)
+    }
+
+    selectionChange = (e) => {
+        const store = this.props.rootStore.debitComplexStore
+        store.selectRows(e.value)
+    }
+
+    rowClick = (e) => {
+        const store = this.props.rootStore.debitComplexStore
+        store.selectRows(e.data)
+    }
+
+    rowToggle = (e) => {
+        const store = this.props.rootStore.debitComplexStore
+        store.expandRows(e.data)
+        console.log('e.data', e.data)
+    }
+
+    rowsToggleAll = () => {
+        const store = this.props.rootStore.debitComplexStore
+        store.expandRows(store.expandedRows.length > 0 ? [] : store.debits)
+    }
+
+    rowExpansionTemplate = (data) => {
         return  (
             <div className="p-grid p-fluid" style={{padding: '1em'}}>
-                <div className="p-col-12 p-md-3" style={{textAlign:'center'}}>
-                    <img src={src} alt={data.brand}/>
-                </div>
                 <div className="p-col-12 p-md-9">
                     <div className="p-grid">
-                        <div className="p-md-2">Vin: </div>
-                        <div className="p-md-10" style={{fontWeight:'bold'}}>{data.vin}</div>
+                        <div className="p-md-2">Notes: </div>
+                        <div className="p-md-10" style={{fontWeight:'bold'}}>{data.notes}</div>
 
+                        <Fieldset >
+                        </Fieldset>
                         <div className="p-md-2">Year: </div>
                         <div className="p-md-10" style={{fontWeight:'bold'}}>{data.year}</div>
 
@@ -238,26 +179,32 @@ export class Debits extends Component {
     }
 
     render() {
-        console.log('debits', this.props.rootStore.debitComplexStore.debits)
-        const { cars, dataLoading } = this.state
+        const { loading, error, debits, selectedRows, expandedRows, isFilteredByColumns, isSortedByColumns } = this.props.rootStore.debitComplexStore
+
         return (
             <div className="p-grid">
-
-                <Progressbar loading={dataLoading}/>
+                {error && this.props.notify('error', error)}
+                <Progressbar loading={loading}/>
 
                 <div className="p-col-12">
                         <div>
                             <DebitToolbar onDebitSearch={this.onDebitSearch}
-                                          onAddProduct={this.addProduct}
-                                          onAddToBox={this.addToBox} />
+                                          onAddDebit={this.addDebit}
+                                          onAddToBox={this.addToBox}
+                                          isFilteredByColumns={isFilteredByColumns}
+                                          onFilterColumns={this.filterColumns}
+                                          isSortedByColumns={isSortedByColumns}
+                                          onSortColumns={this.sortColumns}
+                            />
 
                             <div className="vertical-space10" />
 
-                            <DataTable value={cars}
+                            <DataTable value={debits}
+                                       loading={loading}
                                        globalFilter={this.state.globalFilter}
                                        ref={(el) => this.dt = el}
-                                       selection={this.state.selectedRows}
-                                       onSelectionChange={e => this.setState({selectedRows: e.value})}
+                                       selection={selectedRows}
+                                       onSelectionChange={this.selectionChange}
                                        sortMode="multiple"
                                        reorderableColumns={true}
                                        resizableColumns={true}
@@ -266,15 +213,26 @@ export class Debits extends Component {
                                        rowsPerPageOptions={[5,10,15,20]}
                                        scrollable={true}
                                        scrollHeight="60vh" /*should be calculated*/
-                                       footer={Debits.displaySelection(this.state.selectedRows)}
-                                       expandedRows={this.state.expandedRows}
-                                       onRowToggle={(e) => this.setState({expandedRows:e.data})}
-                                       rowExpansionTemplate={Debits.rowExpansionTemplate}>
-                                <Column expander={true} style={{width: '3em'}} />
-                                <Column field="vin" header="Vin" sortable={true} filter={true} headerStyle={{overflow:'visible'}}  />
-                                <Column field="year" header="Year" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<InputText style={{width: '100%'}} onInput={this.onYearChange} />} />
-                                <Column field="brand" header="Brand" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<Dropdown appendTo={document.body} style={{width: '100%'}} value={this.state.brand} options={this.state.brands} onChange={this.onBrandChange}/>} />
-                                <Column field="color" header="Color" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<MultiSelect appendTo={document.body} style={{width:'100%'}} value={this.state.color} options={this.state.colors} onChange={this.onColorChange}/>} />
+                                       footer={this.displaySelection(selectedRows)}
+                                       expandedRows={expandedRows}
+                                       onRowToggle={this.rowToggle}
+                                       rowExpansionTemplate={this.rowExpansionTemplate}
+                                       onRowClick={this.rowClick}
+                                       selectionMode="multiple">
+                                <Column header={<span className={ expandedRows.length > 0 ? expandedAllClass : collapsedAllClass } onClick={this.rowsToggleAll} />}
+                                        expander={true}
+                                        style={{cursor: 'pointer', width: '3em'}}/>
+                                <Column field="debitid" header="ID" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="tracknumber" header="Track number" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="warehouse.title" header="Warehouse" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="product.title" header="Product" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="product.category.title" header="Category" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="qty" header="Qty" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="price" header="Price" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="pricetype.title" header="Price type" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="discount.title" header="Discount" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="status.title" header="Status" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="created" header="Created" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} />
                                 <Column selectionMode="multiple" style={{ width:'3em'}} />
                             </DataTable>
 
@@ -334,5 +292,10 @@ export class Debits extends Component {
 }
 
 /*
+                                <Column field="year" header="Year" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<InputText style={{width: '100%'}} onInput={this.onYearChange} />} />
+                                <Column field="brand" header="Brand" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<Dropdown appendTo={document.body} style={{width: '100%'}} value={this.state.brand} options={this.state.brands} onChange={this.onBrandChange}/>} />
+                                <Column field="color" header="Color" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<MultiSelect appendTo={document.body} style={{width:'100%'}} value={this.state.color} options={this.state.colors} onChange={this.onColorChange}/>} />
+
+
                 <DebitDialog form={debitFields} title={'title'} hideDialog={this.hideDialog} />
 */
