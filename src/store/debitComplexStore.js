@@ -5,15 +5,45 @@ import _ from 'lodash'
 export default class DebitComplexStore {
     @observable loading = false
     @observable debits = []
+    @observable debitsPageInfo = {}
     @observable error = ''
     @observable selectedRows = []
     @observable expandedRows = []
     @observable isFilteredByColumns = false
     @observable isSortedByColumns = false
+    @observable pagerInfo = {
+        page: 1,
+        first: 0,
+        rows: 20,
+        pageCount: 0
+    }
 
     constructor(rootStore) {
         this.rootStore = rootStore
         this.debitComplexService = new DebitComplexService()
+    }
+
+    getDebitComplexByID(debitid) {
+        try {
+            this.loading = true
+            this.debitComplexService.getDebitComplexByID(debitid)
+                .then(({ loading, data }) => {
+                    this.loading = loading
+                    const idx = _.findIndex(this.debits, { debitid: data.debit.debitid })
+                    if (idx > -1)
+                        this.debits[idx] = data.debit
+                    else
+                        this.debits.push(data.debit)
+                })
+                .catch(error => {
+                    this.error = error.message
+                })
+                .finally(() => {
+                    this.loading = false
+                })
+        } catch (e) {
+            this.error = e.message
+        }
     }
 
     getDebits(params) {
@@ -23,6 +53,7 @@ export default class DebitComplexStore {
                 .then(({ loading, data }) => {
                     this.loading = loading
                     this.debits = data.debits.edges.map(node => node.node)
+                    this.debitsPageInfo = data.debits.pageInfo
                 })
                 .catch(error => {
                     this.error = error.message
@@ -72,4 +103,43 @@ export default class DebitComplexStore {
     @action sortColumns(value) {
         this.isSortedByColumns = value
     }
+
+    @action clearAll() {
+        this.loading = true
+        this.selectedRows = []
+        this.expandedRows = []
+        this.isFilteredByColumns = false
+        this.isSortedByColumns = false
+        this.loading = false
+    }
+
+    @action pageChange(data) {
+        this.pagerInfo = data
+    }
+
+    @action updateProduct(product, debitid) {
+        this.loading = true
+        const debitIdx = _.findIndex(this.debits, {debitid: debitid})
+        if (debitIdx > -1) {
+            this.debits[debitIdx].product['category'] = product.category
+            this.debits[debitIdx].product['title'] = product.title
+            this.debits[debitIdx].product['description'] = product.description
+        }
+        this.loading = false
+    }
+
+    @action showErrors(errors) {
+        const _errors = []
+        for (let error in errors) {
+            if (errors[error] !== null) {
+                _errors.push(errors[error])
+            }
+        }
+        this.error = _errors.join('\n')
+    }
+
+    @action clearErrors() {
+        this.error = ''
+    }
+
 }

@@ -1,0 +1,28 @@
+mutation UPDATE_PRODUCT
+(
+    $productid: Int!,
+    $categoryid: Int!,
+    $title: String!,
+    $description: String
+)
+{
+    result: updateProduct
+    (
+        productid: $productid,
+        categoryid: $categoryid,
+        title: $title,
+        description: $description
+    )
+    {
+        product {
+            productid
+            category: categoryid {
+                categoryid
+                title
+            }
+            title
+            description
+            created
+        }
+    }
+}

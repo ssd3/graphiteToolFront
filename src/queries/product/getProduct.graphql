@@ -1,0 +1,16 @@
+query GET_PRODUCT($productid: Int!) {
+    product(productid: $productid) {
+        productid
+        category: categoryid {
+            categoryid
+            title
+        }
+        title
+        description
+        user: userid {
+            id
+            username
+        }
+        created
+    }
+}

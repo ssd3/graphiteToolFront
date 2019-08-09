@@ -13,6 +13,7 @@ export default class CategoryStore {
 
     @computed get getCategories() {
         try {
+            this.loading = true
             this.categoryService.getCategories()
                 .then(({ loading, data }) => {
                     this.loading = loading
@@ -20,6 +21,9 @@ export default class CategoryStore {
                 })
                 .catch(error => {
                     this.error = error.message
+                })
+                .finally(() => {
+                    this.loading = false
                 })
         } catch (e) {
             this.error = e.message

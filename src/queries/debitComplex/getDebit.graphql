@@ -1,7 +1,5 @@
-query GET_DEBITS {
-    debits(first: 50) {
-        edges{
-            node{
+query GET_DEBIT($debitid: Int!) {
+    debit(debitid: $debitid) {
                 debitid
                 warehouse: warehouseid {
                     warehouseid
@@ -51,13 +49,5 @@ query GET_DEBITS {
                 }
                 notes
                 created
-            }
-        }
-        pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-        }
     }
 }

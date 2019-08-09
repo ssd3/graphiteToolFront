@@ -1,6 +1,6 @@
 query GET_CATEGORIES {
     categories {
-        categoryid
-        title
+        value: categoryid
+        label: title
     }
 }

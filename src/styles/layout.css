@@ -1570,3 +1570,13 @@ body .p-inputtext {
 .color-value {
   margin-left: 10px;
 }
+
+.p-datatable-tbody {
+  font-size: 12px;
+}
+
+body .p-datatable .p-datatable-tbody > tr > td {
+  background: inherit;
+  border: 1px solid #c8c8c8;
+  padding: 0em 0.4em;
+}

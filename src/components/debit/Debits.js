@@ -13,6 +13,9 @@ import DebitDialog from './DebitDialog'
 import debitFields from './DebitFields'
 import DebitToolbar from './DebitToolbar'
 import Progressbar from '../common/ProgressBar'
+import formatDate from '../common/FormatDate'
+import Pager from '../common/Pager'
+import DebitRowTemplate from './DebitRowTemplate'
 
 
 const expandedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-down'
@@ -76,6 +79,7 @@ export class Debits extends Component {
             })
         */
         this.props.pageTitle('Debit')
+        this.props.rootStore.categoryStore.getCategories
         this.props.rootStore.debitComplexStore.getDebits({})
     }
 
@@ -146,7 +150,6 @@ export class Debits extends Component {
     rowToggle = (e) => {
         const store = this.props.rootStore.debitComplexStore
         store.expandRows(e.data)
-        console.log('e.data', e.data)
     }
 
     rowsToggleAll = () => {
@@ -154,32 +157,32 @@ export class Debits extends Component {
         store.expandRows(store.expandedRows.length > 0 ? [] : store.debits)
     }
 
+    clearAll = () => {
+        const store = this.props.rootStore.debitComplexStore
+        store.clearAll()
+    }
+
+    pageChange = (e) => {
+        const store = this.props.rootStore.debitComplexStore
+        store.pageChange(e)
+    }
+
     rowExpansionTemplate = (data) => {
         return  (
-            <div className="p-grid p-fluid" style={{padding: '1em'}}>
-                <div className="p-col-12 p-md-9">
-                    <div className="p-grid">
-                        <div className="p-md-2">Notes: </div>
-                        <div className="p-md-10" style={{fontWeight:'bold'}}>{data.notes}</div>
-
-                        <Fieldset >
-                        </Fieldset>
-                        <div className="p-md-2">Year: </div>
-                        <div className="p-md-10" style={{fontWeight:'bold'}}>{data.year}</div>
-
-                        <div className="p-md-2">Brand: </div>
-                        <div className="p-md-10" style={{fontWeight:'bold'}}>{data.brand}</div>
-
-                        <div className="p-md-2">Color: </div>
-                        <div className="p-md-10" style={{fontWeight:'bold'}}>{data.color}</div>
-                    </div>
-                </div>
-            </div>
+            <DebitRowTemplate data={data}/>
         )
     }
 
     render() {
-        const { loading, error, debits, selectedRows, expandedRows, isFilteredByColumns, isSortedByColumns } = this.props.rootStore.debitComplexStore
+        const { loading,
+                error,
+                debits,
+                selectedRows,
+                expandedRows,
+                isFilteredByColumns,
+                isSortedByColumns,
+                debitsPageInfo,
+                pagerInfo } = this.props.rootStore.debitComplexStore
 
         return (
             <div className="p-grid">
@@ -195,6 +198,7 @@ export class Debits extends Component {
                                           onFilterColumns={this.filterColumns}
                                           isSortedByColumns={isSortedByColumns}
                                           onSortColumns={this.sortColumns}
+                                          onClear={this.clearAll}
                             />
 
                             <div className="vertical-space10" />
@@ -210,7 +214,7 @@ export class Debits extends Component {
                                        resizableColumns={true}
                                        paginator={true}
                                        rows={20}
-                                       rowsPerPageOptions={[5,10,15,20]}
+                                       rowsPerPageOptions={[10,15,20,50,100]}
                                        scrollable={true}
                                        scrollHeight="60vh" /*should be calculated*/
                                        footer={this.displaySelection(selectedRows)}
@@ -232,7 +236,7 @@ export class Debits extends Component {
                                 <Column field="pricetype.title" header="Price type" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="discount.title" header="Discount" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="status.title" header="Status" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
-                                <Column field="created" header="Created" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} />
+                                <Column field="created" header="Created" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} body={formatDate}  />
                                 <Column selectionMode="multiple" style={{ width:'3em'}} />
                             </DataTable>
 
@@ -298,4 +302,6 @@ export class Debits extends Component {
 
 
                 <DebitDialog form={debitFields} title={'title'} hideDialog={this.hideDialog} />
+
+                            <Pager onPageChange={this.pageChange} pageInfo={debitsPageInfo} pagerInfo={pagerInfo}/>
 */

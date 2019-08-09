@@ -1,0 +1,26 @@
+mutation CREATE_PRODUCT
+(
+    $categoryid: Int!,
+    $title: String!,
+    $description: String
+)
+{
+    result: createProduct
+    (
+        categoryid: $categoryid,
+        title: $title,
+        description: $description
+    )
+    {
+        product {
+            productid
+            category: categoryid {
+                categoryid
+                title
+            }
+            title
+            description
+            created
+        }
+    }
+}

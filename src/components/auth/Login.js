@@ -54,9 +54,9 @@ export default class Login extends Component {
                     <Fragment>
                         <Dialog header="Login" footer={footer} visible={true} style={{width: '20vw'}} modal={true} onHide={this.onLogin}>
                         { this.state.error && <div style={{color: 'red'}}>{error}</div> }
-                        <h3 className="login-h3">Username</h3>
+                        <div className="login-h3">Username</div>
                         <InputText onChange={(e) => { this.setState({ username: e.target.value }) }} />
-                        <h3 className="login-h3">Password</h3>
+                        <div className="login-h3">Password</div>
                         <Password feedback={false} onChange={(e) => { this.setState({ password: e.target.value }) }} />
                         </Dialog>
                     </Fragment>

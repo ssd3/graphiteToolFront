@@ -20,7 +20,7 @@ const DebitToolbar = (props) => {
                               checked={props.isFilteredByColumns} onChange={props.onFilterColumns} />
                 <ToggleButton style={{width:'150px'}} onLabel="Columns Sort On" offLabel="Columns Sort Off" onIcon="pi pi-check" offIcon="pi pi-times"
                               checked={props.isSortedByColumns} onChange={props.onSortColumns} />
-                <Button label="Clear Filters" className="p-button-secondary" tooltipOptions={{position: 'left'}} />
+                <Button label="Clear" className="p-button-secondary" tooltipOptions={{position: 'left'}} onClick={props.onClear} />
             </div>
         </Toolbar>
     )
@@ -33,7 +33,8 @@ DebitToolbar.propTypes = {
     onFilterColumns: PropTypes.func.isRequired,
     isFilteredByColumns: PropTypes.bool.isRequired,
     onSortColumns: PropTypes.func.isRequired,
-    isSortedByColumns: PropTypes.bool.isRequired
+    isSortedByColumns: PropTypes.bool.isRequired,
+    onClear: PropTypes.func.isRequired
 }
 
 export default DebitToolbar

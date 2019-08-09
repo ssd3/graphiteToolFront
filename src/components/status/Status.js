@@ -1,17 +1,16 @@
-import React, {Component, Fragment} from 'react'
-import { ProgressBar } from 'primereact/progressbar'
+import React, {Component} from 'react'
+import {inject, observer} from 'mobx-react'
+
 import {DataTable} from 'primereact/datatable'
 import {Column} from 'primereact/column'
 
-import {inject, observer} from 'mobx-react'
-import {Button} from 'primereact/button'
-import {Toolbar} from 'primereact/components/toolbar/Toolbar'
-import {InputText} from 'primereact/components/inputtext/InputText'
 import StatusDialog from './StatusDialog'
 import statusFields from './StatusFields'
-import Moment from 'react-moment'
+
 import Progressbar from '../common/ProgressBar'
 import StatusToolbar from './StatusToolbar'
+import statusColor from '../common/StatusColor'
+import formatDate from '../common/FormatDate'
 
 @inject('rootStore')
 @observer
@@ -51,21 +50,6 @@ export default class Status extends Component {
         this.props.rootStore.statusStore.showDialog(false)
     }
 
-    formatDate = (rowData, column) => {
-        const date = rowData[column.field]
-        return <Moment format="DD/MM/YYYY HH:MM">{date}</Moment>
-    }
-
-    showColor = (rowData, column) => {
-        const value = rowData[column.field]
-        return <Fragment>
-                    <div className='flex-block'>
-                        <div style={{backgroundColor: `#${value}`}} className='color-box' />
-                        <span className='color-value'>{value}</span>
-                    </div>
-               </Fragment>
-    }
-
     onSearch = (e) => {
         this.props.rootStore.statusStore.getStatuses({search: e.target.value})
     }
@@ -91,10 +75,10 @@ export default class Status extends Component {
                                    selectionMode="single"
                                    selection={ selectedStatus }
                                    onRowSelect={this.onStatusSelect}>
-                            <Column field="statusid" header="ID" style={{width: '10%'}} />
-                            <Column field="title" header="Title" style={{width: '30%'}} />
-                            <Column field="value" header="Color" style={{width: '30%'}} body={this.showColor} />
-                            <Column field="created" header="Created" style={{width: '30%'}} body={this.formatDate} />
+                            <Column field="statusid" header="ID" sortable={true} style={{width: '10%'}} />
+                            <Column field="title" header="Title" sortable={true} style={{width: '30%'}} />
+                            <Column field="value" header="Color" sortable={true} style={{width: '30%'}} body={statusColor} />
+                            <Column field="created" header="Created" sortable={true} style={{width: '30%'}} body={formatDate} />
                         </DataTable>
 
                         <StatusDialog form={statusFields} title={title} isShowDialog={isShowDialog} hideDialog={this.hideDialog} />

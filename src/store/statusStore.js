@@ -19,14 +19,17 @@ export default class StatusStore {
 
     getStatuses(search) {
         try {
+            this.loading = true
             this.statusService.getStatuses(search)
                 .then(({ loading, data }) => {
                     this.search = search.search
-                    this.loading = loading
                     this.statuses = data.statuses
                 })
                 .catch(error => {
                     this.error = error.message
+                })
+                .finally(() => {
+                    this.loading = false
                 })
         } catch (e) {
             this.error = e.message
