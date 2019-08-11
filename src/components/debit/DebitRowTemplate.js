@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {Panel} from 'primereact/panel'
 import ProductForm from '../product/ProductForm'
 import ProductDetailsForm from '../product/ProductDetailsForm'
+import ProductCommentsForm from '../product/ProductCommentsForm'
+import DebitDetailsForm from './DebitDetailsForm'
 
 class DebitRowTemplate extends Component {
     constructor(props) {
@@ -20,28 +22,19 @@ class DebitRowTemplate extends Component {
                 <div className="p-col-12">
                     <div className="p-grid">
                         <div className="p-md-3">
-                            <ProductForm product={data.product} debitid={data.debitid}/>
+                            <ProductForm product={data.product}
+                                         debitid={data.debitid}/>
                         </div>
                         <div className="p-md-3">
-                            <ProductDetailsForm productDetails={data.product.productdetails} debitid={data.debitid} />
+                            <ProductDetailsForm productDetails={data.product.productdetails}
+                                                debitid={data.debitid} />
                         </div>
                         <div className="p-md-3">
-                            <Panel header="Product Comments">
-                                <div className="p-grid">
-                                    <div className="p-col-12">
-                                        2
-                                    </div>
-                                </div>
-                            </Panel>
+                            <ProductCommentsForm productComments={data.product.productcomments}
+                                                 debitid={data.debitid} />
                         </div>
                         <div className="p-md-3">
-                            <Panel header="Debit Details">
-                                <div className="p-grid">
-                                    <div className="p-col-12">
-                                        3
-                                    </div>
-                                </div>
-                            </Panel>
+                            <DebitDetailsForm debit={data}/>
                         </div>
                     </div>
                 </div>

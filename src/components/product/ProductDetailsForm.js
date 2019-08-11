@@ -33,7 +33,7 @@ class ProductDetailsForm extends Component {
 
         return (
             <Panel header="Product Details">
-                <div className="p-grid p-fluid">
+                <div className="p-grid p-fluid" style={{height: '45vh'}}>
                     <div className="p-col-12">
                         <label htmlFor="model">Product model</label>
                         <InputText id="model"

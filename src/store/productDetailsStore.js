@@ -1,4 +1,4 @@
-import {action, autorun, computed, observable} from 'mobx'
+import {action, observable} from 'mobx'
 import ProductDetailsService from '../services/productDetailsService'
 import _ from 'lodash'
 import Validator from 'validatorjs'

@@ -22,7 +22,7 @@ class ProductForm extends Component {
         const { product } = this.props
         return (
             <Panel header="Product">
-                <div className="p-grid p-fluid">
+                <div className="p-grid p-fluid" style={{height: '45vh'}}>
                         <div className="p-col-12">
                             <label htmlFor="categoryid">Category</label>
                             <Dropdown id="categoryid"
@@ -40,7 +40,7 @@ class ProductForm extends Component {
                         <div className="p-col-12">
                             <label htmlFor="description">Product description</label>
                             <InputTextarea id="description"
-                                           rows={9} cols={30}
+                                           rows={11} cols={30}
                                            defaultValue={product.description}
                                            onBlur={this.onDataChange} />
                         </div>

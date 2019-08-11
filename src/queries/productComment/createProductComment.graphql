@@ -1,0 +1,27 @@
+mutation CREATE_PRODUCT_COMMENT
+(
+    $productid: Int!,
+    $comment: String!
+)
+{
+    result: createProductcomment
+    (
+        productid: $productid,
+        comment: $comment
+    )
+    {
+        productcomment
+        {
+            productcommentid
+            productid {
+                productid
+            }
+            comment
+            userid {
+                id
+                username
+            }
+            created
+        }
+    }
+}

@@ -1,0 +1,27 @@
+mutation UPDATE_PRODUCT_COMMENT
+(
+    $productcommentid: Int!,
+    $comment: String!
+)
+{
+    result: updateProductcomment
+    (
+        productcommentid: $productcommentid,
+        comment: $comment
+    )
+    {
+        productcomment
+        {
+            productcommentid
+            productid {
+                productid
+            }
+            comment
+            userid {
+                id
+                username
+            }
+            created
+        }
+    }
+}

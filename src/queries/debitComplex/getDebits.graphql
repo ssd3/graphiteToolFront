@@ -25,7 +25,7 @@ query GET_DEBITS {
                         width
                         length
                     }
-                    productcomment: productcommentSet {
+                    productcomments: productcommentSet {
                         productcommentid
                         comment
                         created

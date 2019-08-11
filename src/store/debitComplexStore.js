@@ -129,15 +129,29 @@ export default class DebitComplexStore {
         this.loading = true
         const debitIdx = _.findIndex(this.debits, {debitid: debitid})
         if (debitIdx > -1) {
-            const productDetailsIdx1 = _.findIndex(this.debits[debitIdx].product.productdetails, {productdetailsid: productdetails.productdetailsid})
-            if (productDetailsIdx1 > -1) {
-                this.debits[debitIdx].product.productdetails[productDetailsIdx1] = productdetails
+            const productDetailsIdx = _.findIndex(this.debits[debitIdx].product.productdetails, {productdetailsid: productdetails.productdetailsid})
+            if (productDetailsIdx > -1) {
+                this.debits[debitIdx].product.productdetails[productDetailsIdx] = productdetails
             }
             else {
                 this.debits[debitIdx].product.productdetails.push(productdetails)
             }
         }
         this.loading = false
+    }
+
+    @action updateProductComment(productcomment, debitid) {
+        const debitIdx = _.findIndex(this.debits, {debitid: debitid})
+        if (debitIdx > -1) {
+            const productCommentIdx = _.findIndex(this.debits[debitIdx].product.productcomments, {productcommentid: productcomment.productcommentid})
+            if (productCommentIdx > -1) {
+                this.debits[debitIdx].product.productcomments[productCommentIdx] = productcomment
+            }
+            else {
+                this.debits[debitIdx].product.productcomments.push(productcomment)
+            }
+        }
+
     }
 
     @action showErrors(errors) {
