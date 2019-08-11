@@ -1,4 +1,4 @@
-import {computed, observable} from 'mobx'
+import {autorun, computed, observable} from 'mobx'
 import CategoryService from '../services/categoryService'
 
 export default class CategoryStore {
@@ -9,6 +9,9 @@ export default class CategoryStore {
     constructor(rootStore) {
         this.rootStore = rootStore
         this.categoryService = new CategoryService()
+        autorun(() => {
+            this.getCategories
+        })
     }
 
     @computed get getCategories() {

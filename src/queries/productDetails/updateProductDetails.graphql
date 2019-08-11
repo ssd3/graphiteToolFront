@@ -1,0 +1,41 @@
+mutation UPDATE_PRODUCT_DETAILS
+(
+    $productdetailsid: Int!,
+    $productid: Int!,
+    $model: String,
+    $url: String,
+    $serialno: String,
+    $weight: Decimal,
+    $height: Decimal,
+    $width: Decimal,
+    $length: Decimal
+)
+{
+    result: updateProductdetails(
+        productdetailsid: $productdetailsid,
+        productid: $productid,
+        model: $model,
+        url: $url,
+        serialno: $serialno,
+        weight: $weight,
+        height: $height,
+        width: $width,
+        length: $length
+    )
+    {
+        productdetails
+        {
+            productdetailsid
+            product: productid {
+                productid
+            }
+            model
+            url
+            serialno
+            weight
+            height
+            width
+            length
+        }
+    }
+}

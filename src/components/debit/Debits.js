@@ -41,45 +41,7 @@ export class Debits extends Component {
     }
 
     componentDidMount(){
-        // apollo client usage
-        // option 2 - макароны 2
-        // этот вариант тоже макароны но интереснее
-        // т.к. такой код можно вынести в отдельный модуль/уровень и вызвать например так
-        // const products = await getProducts(page=1, filters={...} ...)
-        // вывод результатов в console и в всплывающий popup
-        /*
-        HttpClient.getData(ProductQueries.GET_PRODUCTS, {})
-            .then(result => {
-                const { loading, error, data } = result
-                this.setState({dataLoading: loading})
-                if (error) {
-                    this.growl.show({severity: 'error', summary: 'Error Message', detail: JSON.stringify(error) })
-                } else {
-                    this.growl.show({severity: 'success', summary: 'Success Message', detail: JSON.stringify(data) })
-                    console.log('data', data)
-                }
-            })
-            .catch(e => console.log(e))
-         */
-        // apollo client usage
-
-        /*
-        client.query({
-            query: ProductQueries.GET_PRODUCTS,
-            variables: {}
-        })
-            .then(result => {
-                const { loading, data, networkStatus, stale } = result
-                if (loading) this.setState({dataLoading: loading})
-                return this.growl.show({severity: 'success', summary: 'Success Message', detail: JSON.stringify(data) })
-            })
-            .catch(errors => {
-                this.setState({dataLoading: false})
-                return this.growl.show({severity: 'error', summary: 'Error Message', detail: errors.message })
-            })
-        */
         this.props.pageTitle('Debit')
-        this.props.rootStore.categoryStore.getCategories
         this.props.rootStore.debitComplexStore.getDebits({})
     }
 
@@ -157,9 +119,9 @@ export class Debits extends Component {
         store.expandRows(store.expandedRows.length > 0 ? [] : store.debits)
     }
 
-    clearAll = () => {
+    resetAll = () => {
         const store = this.props.rootStore.debitComplexStore
-        store.clearAll()
+        store.resetAll()
     }
 
     pageChange = (e) => {
@@ -198,7 +160,7 @@ export class Debits extends Component {
                                           onFilterColumns={this.filterColumns}
                                           isSortedByColumns={isSortedByColumns}
                                           onSortColumns={this.sortColumns}
-                                          onClear={this.clearAll}
+                                          onReset={this.resetAll}
                             />
 
                             <div className="vertical-space10" />
@@ -226,7 +188,7 @@ export class Debits extends Component {
                                 <Column header={<span className={ expandedRows.length > 0 ? expandedAllClass : collapsedAllClass } onClick={this.rowsToggleAll} />}
                                         expander={true}
                                         style={{cursor: 'pointer', width: '3em'}}/>
-                                <Column field="debitid" header="ID" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="product.productid" header="Product ID" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="tracknumber" header="Track number" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="warehouse.title" header="Warehouse" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="product.title" header="Product" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />

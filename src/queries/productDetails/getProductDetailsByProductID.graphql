@@ -1,0 +1,17 @@
+query GET_PRODUCT_DETAILS_BY_PRODUCTID($productid: Int!)
+{
+    productdetails(productid: $productid)
+    {
+        productdetailsid
+        product: productid{
+            productid
+        }
+        model
+        url
+        serialno
+        weight
+        height
+        width
+        length
+    }
+}

@@ -1,6 +1,14 @@
 import {action, observable} from 'mobx'
 import ProductService from '../services/productService'
 import _ from 'lodash'
+import Validator from 'validatorjs'
+
+const rules = {
+    productid: 'required|numeric',
+    title: 'required|string|between:1,48',
+    categoryid: 'required|numeric',
+    description: 'string|between:1,1024'
+}
 
 export default class ProductStore {
     @observable loading = false
@@ -69,7 +77,28 @@ export default class ProductStore {
         }
     }
 
-    newProductObject() {
-        return
+    @action saveLocalChanges(e, debitid) {
+        const { debitComplexStore } = this.rootStore
+        debitComplexStore.clearErrors()
+        const debitIdx = _.findIndex(debitComplexStore.expandedRows, {debitid: debitid})
+        if (debitIdx > -1) {
+            const { product } = debitComplexStore.expandedRows[debitIdx]
+
+            const updatedProduct = {
+                productid: product.productid,
+                categoryid: product.category.categoryid,
+                title: product.title,
+                description: product.description
+            }
+            updatedProduct[e.target.id] = e.target.value
+
+            const validation = new Validator(updatedProduct, rules)
+            if (validation.check())
+                this.saveProduct(updatedProduct, debitid)
+            else
+            {
+                debitComplexStore.showErrors(validation.errors.all())
+            }
+        }
     }
 }

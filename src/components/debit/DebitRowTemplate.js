@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Panel} from 'primereact/panel'
 import ProductForm from '../product/ProductForm'
+import ProductDetailsForm from '../product/ProductDetailsForm'
 
 class DebitRowTemplate extends Component {
     constructor(props) {
@@ -19,21 +20,10 @@ class DebitRowTemplate extends Component {
                 <div className="p-col-12">
                     <div className="p-grid">
                         <div className="p-md-3">
-                            <Panel header="Product">
-                                <ProductForm product={data.product} debitid={data.debitid}/>
-                            </Panel>
+                            <ProductForm product={data.product} debitid={data.debitid}/>
                         </div>
                         <div className="p-md-3">
-                            <Panel header="Product Details">
-                                <div className="p-grid">
-                                    <div className="p-col-4">
-                                            Label:
-                                    </div>
-                                    <div className="p-col-8">
-                                        Control
-                                    </div>
-                                </div>
-                            </Panel>
+                            <ProductDetailsForm productDetails={data.product.productdetails} debitid={data.debitid} />
                         </div>
                         <div className="p-md-3">
                             <Panel header="Product Comments">

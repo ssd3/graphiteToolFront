@@ -30,10 +30,7 @@ export default class DebitComplexStore {
                 .then(({ loading, data }) => {
                     this.loading = loading
                     const idx = _.findIndex(this.debits, { debitid: data.debit.debitid })
-                    if (idx > -1)
-                        this.debits[idx] = data.debit
-                    else
-                        this.debits.push(data.debit)
+                    idx > -1 ? this.debits[idx] = data.debit : this.debits.push(data.debit)
                 })
                 .catch(error => {
                     this.error = error.message
@@ -104,7 +101,7 @@ export default class DebitComplexStore {
         this.isSortedByColumns = value
     }
 
-    @action clearAll() {
+    @action resetAll() {
         this.loading = true
         this.selectedRows = []
         this.expandedRows = []
@@ -124,6 +121,21 @@ export default class DebitComplexStore {
             this.debits[debitIdx].product['category'] = product.category
             this.debits[debitIdx].product['title'] = product.title
             this.debits[debitIdx].product['description'] = product.description
+        }
+        this.loading = false
+    }
+
+    @action updateProductDetails(productdetails, debitid) {
+        this.loading = true
+        const debitIdx = _.findIndex(this.debits, {debitid: debitid})
+        if (debitIdx > -1) {
+            const productDetailsIdx1 = _.findIndex(this.debits[debitIdx].product.productdetails, {productdetailsid: productdetails.productdetailsid})
+            if (productDetailsIdx1 > -1) {
+                this.debits[debitIdx].product.productdetails[productDetailsIdx1] = productdetails
+            }
+            else {
+                this.debits[debitIdx].product.productdetails.push(productdetails)
+            }
         }
         this.loading = false
     }
