@@ -16,6 +16,7 @@ import Progressbar from '../common/ProgressBar'
 import formatDate from '../common/FormatDate'
 import Pager from '../common/Pager'
 import DebitRowTemplate from './DebitRowTemplate'
+import statusColor from '../common/StatusColor'
 
 
 const expandedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-down'
@@ -135,6 +136,10 @@ export class Debits extends Component {
         )
     }
 
+    statusColor = (rowData, column) => {
+        return statusColor(rowData, column, 'status')
+    }
+
     render() {
         const { loading,
                 error,
@@ -178,7 +183,7 @@ export class Debits extends Component {
                                        rows={20}
                                        rowsPerPageOptions={[10,15,20,50,100]}
                                        scrollable={true}
-                                       scrollHeight="60vh" /*should be calculated*/
+                                       scrollHeight="100vh" /*should be calculated*/
                                        footer={this.displaySelection(selectedRows)}
                                        expandedRows={expandedRows}
                                        onRowToggle={this.rowToggle}
@@ -188,7 +193,7 @@ export class Debits extends Component {
                                 <Column header={<span className={ expandedRows.length > 0 ? expandedAllClass : collapsedAllClass } onClick={this.rowsToggleAll} />}
                                         expander={true}
                                         style={{cursor: 'pointer', width: '3em'}}/>
-                                <Column field="product.productid" header="Product ID" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="product.productid" header="ID" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="tracknumber" header="Track number" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="warehouse.title" header="Warehouse" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="product.title" header="Product" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
@@ -197,7 +202,7 @@ export class Debits extends Component {
                                 <Column field="price" header="Price" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="pricetype.title" header="Price type" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="discount.title" header="Discount" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
-                                <Column field="status.title" header="Status" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="status.title" header="Status" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} body={this.statusColor}  />
                                 <Column field="created" header="Created" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} body={formatDate}  />
                                 <Column selectionMode="multiple" style={{ width:'3em'}} />
                             </DataTable>
