@@ -1,0 +1,79 @@
+mutation UPDATE_DEBIT
+(
+    $debitid: Int!,
+    $warehouseid: Int!,
+    $productid: Int!,
+    $qty: Decimal!,
+    $price: Decimal!,
+    $pricetypeid: Int!,
+    $discountid: Int!,
+    $tracknumber: String!,
+    $statusid: Int!,
+    $notes: String)
+{
+    result: updateDebit(
+        debitid: $debitid,
+        warehouseid: $warehouseid,
+        productid: $productid,
+        qty: $qty,
+        price: $price,
+        pricetypeid: $pricetypeid,
+        discountid: $discountid,
+        tracknumber: $tracknumber,
+        statusid: $statusid,
+        notes: $notes
+    )
+    {
+        debit{
+            debitid
+            warehouse: warehouseid {
+                warehouseid
+                title
+            }
+            product: productid {
+                productid
+                title
+                description
+                category: categoryid {
+                    categoryid
+                    title
+                }
+                productdetails: productdetailsSet {
+                    productdetailsid
+                    model
+                    url
+                    serialno
+                    weight
+                    height
+                    width
+                    length
+                }
+                productcomments: productcommentSet {
+                    productcommentid
+                    comment
+                    created
+                }
+            }
+            qty
+            price
+            tracknumber
+            pricetype: pricetypeid {
+                pricetypeid
+                title
+            }
+            discount: discountid {
+                discountid
+                title
+                value
+                units
+            }
+            status: statusid {
+                statusid
+                title
+                value
+            }
+            notes
+            created
+        }
+    }
+}

@@ -1,10 +1,11 @@
-import {observable, action, computed} from 'mobx'
+import {observable, action, computed, autorun} from 'mobx'
 import StatusService from '../services/statusService'
 import _ from 'lodash'
 
 export default class StatusStore {
     @observable loading = false
     @observable statuses = []
+    @observable all_statuses = []
     @observable status = {}
     @observable selectedStatus = {}
     @observable isShowDialog = false
@@ -15,6 +16,27 @@ export default class StatusStore {
     constructor(rootStore){
         this.rootStore = rootStore
         this.statusService = new StatusService()
+        autorun(() => {
+            this.getAllStatuses
+        })
+    }
+
+    @computed get getAllStatuses() {
+        try {
+            this.loading = true
+            this.statusService.getAllStatuses()
+                .then(({ loading, data }) => {
+                    this.all_statuses = data.statuses
+                })
+                .catch(error => {
+                    this.error = error.message
+                })
+                .finally(() => {
+                    this.loading = false
+                })
+        } catch (e) {
+            this.error = e.message
+        }
     }
 
     getStatuses(search) {

@@ -9,21 +9,13 @@ import Moment from 'react-moment'
 class ProductCommentForm extends Component {
     constructor(props) {
         super(props)
-        this.isChangedData = false
     }
 
-    //TODO: flag is data was changed
-    onChanged = e => {
-        this.isChangedData = true
-    }
-
-    onDataChange = e => {
-        if (this.isChangedData) {
-            const { productCommentsStore } = this.props.rootStore
-            productCommentsStore.saveLocalChanges(e, this.props.debitid, this.props.productComment.productcommentid)
-            this.isChangedData = false
-        }
-
+    showCommentDialog = () => {
+        let comment = this.props.productComment
+        comment.productid = this.props.productid
+        comment.debitid = this.props.debitid
+        this.props.updateProductComment(comment)
     }
 
     render() {
@@ -34,16 +26,18 @@ class ProductCommentForm extends Component {
                     Date: <Moment format="DD/MM/YYYY HH:MM">{productComment.created}</Moment>
                 </label>
                 <InputTextarea rows={15} cols={30}
-                               defaultValue={ productComment.comment }
-                               onBlur={this.onDataChange}
-                               onChange={this.onChanged} />
+                               readOnly={true}
+                               value={ productComment.comment }
+                               onClick={this.showCommentDialog} />
             </div>
         )
     }
 
     static propTypes = {
         productComment: PropTypes.object.isRequired,
-        debitid: PropTypes.string
+        updateProductComment: PropTypes.func.isRequired,
+        debitid: PropTypes.string,
+        productid: PropTypes.string,
     }
 }
 export default ProductCommentForm

@@ -93,6 +93,7 @@ export default class ProductStore {
             updatedProduct[e.target.id] = e.target.value
 
             const validation = new Validator(updatedProduct, rules)
+            validation.setAttributeNames({ title: 'Product name' })
             if (validation.check())
                 this.saveProduct(updatedProduct, debitid)
             else

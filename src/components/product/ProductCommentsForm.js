@@ -5,7 +5,9 @@ import {Panel} from 'primereact/components/panel/Panel'
 import ProductCommentForm from './ProductCommentForm'
 import {ScrollPanel} from 'primereact/scrollpanel'
 import {Button} from 'primereact/components/button/Button'
-import ProductAddCommentForm from './ProductAddCommentForm'
+
+import ProductCommentDialog from './ProductCommentDialog'
+import productCommentFields from './ProductCommentFields'
 
 @inject('rootStore')
 @observer
@@ -14,17 +16,37 @@ class ProductCommentsForm extends Component {
         super(props)
 
         this.state = {
-            isAddProductComment: false
+            isShowDialog: false,
+            title: 'Add Comment'
         }
+        productCommentFields.store = this.props.rootStore.productCommentsStore
     }
 
-    onAddProductComment = () => {
-        this.setState({ isAddProductComment: true })
+    onAddProductComment = (e) => {
+        productCommentFields.clear()
+        productCommentFields.set('rules', {
+            productcommentid: 'numeric'
+        })
+        productCommentFields.$('debitid').set(this.props.debitid)
+        productCommentFields.$('productid').set(this.props.productid)
+
+        this.setState({ isShowDialog: true })
+    }
+
+    onUpdateProductComment = (e) => {
+        productCommentFields.clear()
+        productCommentFields.set(e)
+        this.setState({ isShowDialog: true, title: 'View or Update Comment' })
+    }
+
+    onCancelProductComment = () => {
+        this.setState({ isShowDialog: false })
     }
 
     render() {
-        const { debitid, productComments } = this.props
-        const { isAddProductComment } = this.state
+        let { debitid, productid, productComments } = this.props
+        const { isShowDialog, title } = this.state
+        productComments =_.orderBy(productComments, ['created'], ['desc'])
 
         return (
             <Panel header="Product Comments">
@@ -32,13 +54,20 @@ class ProductCommentsForm extends Component {
                         <div className="p-toolbar-group-left" style={{paddingTop: '5px'}}>
                             <Button label="Add comment" icon="pi pi-plus" className="p-button-secondary" onClick={this.onAddProductComment} />
                         </div>
+
+                    <ProductCommentDialog form={productCommentFields}
+                                          isShowDialog={isShowDialog}
+                                          title={title}
+                                          onHide={this.onCancelProductComment} />
+
                     <ScrollPanel style={{width: '100%', height: '40vh'}}>
-                    { isAddProductComment && <ProductAddCommentForm debitid={debitid} /> }
                     {
                         productComments.map(productComment => {
                             return <ProductCommentForm key={productComment.productcommentid}
                                                        productComment={productComment}
-                                                       debitid={debitid} />
+                                                       debitid={debitid}
+                                                       productid={productid}
+                                                       updateProductComment={this.onUpdateProductComment} />
                         })
                     }
                     </ScrollPanel>
@@ -48,6 +77,7 @@ class ProductCommentsForm extends Component {
     }
     static propTypes = {
         productComments: PropTypes.array.isRequired,
+        productid: PropTypes.string,
         debitid: PropTypes.string
     }
 }

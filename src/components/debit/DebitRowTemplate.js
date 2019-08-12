@@ -22,6 +22,9 @@ class DebitRowTemplate extends Component {
                 <div className="p-col-12">
                     <div className="p-grid">
                         <div className="p-md-3">
+                            <DebitDetailsForm debit={data}/>
+                        </div>
+                        <div className="p-md-3">
                             <ProductForm product={data.product}
                                          debitid={data.debitid}/>
                         </div>
@@ -31,10 +34,8 @@ class DebitRowTemplate extends Component {
                         </div>
                         <div className="p-md-3">
                             <ProductCommentsForm productComments={data.product.productcomments}
+                                                 productid={data.product.productid}
                                                  debitid={data.debitid} />
-                        </div>
-                        <div className="p-md-3">
-                            <DebitDetailsForm debit={data}/>
                         </div>
                     </div>
                 </div>

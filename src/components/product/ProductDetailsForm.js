@@ -52,6 +52,7 @@ class ProductDetailsForm extends Component {
                             <Button icon="pi pi-eye"
                                     className="p-button-success"
                                     tooltip="View URL"
+                                    tooltipOptions={{position: 'top'}}
                                     onClick={this.viewUrl} />
                             ) : (
                             <span className="p-inputgroup-addon">
@@ -68,7 +69,7 @@ class ProductDetailsForm extends Component {
                                    onBlur={this.onDataChange} />
                     </div>
                     <div className="p-grid p-fluid p-col-12">
-                        <div className="p-col-12 p-md-6">
+                        <div className="p-md-6">
                             <label htmlFor="weight">Product weight</label>
                             <InputText id="weight"
                                        placeholder="Type weight"
@@ -76,7 +77,7 @@ class ProductDetailsForm extends Component {
                                        defaultValue={productDetails.weight}
                                        onBlur={this.onDataChange} />
                         </div>
-                        <div className="p-col-12 p-md-6">
+                        <div className="p-md-6">
                             <label htmlFor="height">Product height</label>
                             <InputText id="height"
                                        placeholder="Type height"
@@ -86,7 +87,7 @@ class ProductDetailsForm extends Component {
                         </div>
                     </div>
                     <div className="p-grid p-fluid p-col-12">
-                        <div className="p-col-12 p-md-6">
+                        <div className="p-md-6">
                             <label htmlFor="width">Product width</label>
                             <InputText id="width"
                                        placeholder="Type width"
@@ -94,7 +95,7 @@ class ProductDetailsForm extends Component {
                                        defaultValue={productDetails.width}
                                        onBlur={this.onDataChange} />
                         </div>
-                        <div className="p-col-12 p-md-6">
+                        <div className="p-md-6">
                             <label htmlFor="length">Product length</label>
                             <InputText id="length"
                                        placeholder="Type length"

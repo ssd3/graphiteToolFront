@@ -183,7 +183,7 @@ export class Debits extends Component {
                                        rows={20}
                                        rowsPerPageOptions={[10,15,20,50,100]}
                                        scrollable={true}
-                                       scrollHeight="60vh" /*should be calculated*/
+                                       scrollHeight="65vh" /*should be calculated*/
                                        footer={this.displaySelection(selectedRows)}
                                        expandedRows={expandedRows}
                                        onRowToggle={this.rowToggle}

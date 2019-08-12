@@ -1580,3 +1580,7 @@ body .p-datatable .p-datatable-tbody > tr > td {
   border: 1px solid #c8c8c8;
   padding: 0em 0.4em;
 }
+
+.p-col-12 {
+  padding: 0.2em;
+}

@@ -46,33 +46,30 @@ export default class ProductCommentsStore {
         }
     }
 
-    @action saveLocalChanges(e, debitid, productcommentid = null) {
+    @action saveLocalChanges(productcomment) {
         const { debitComplexStore } = this.rootStore
         debitComplexStore.clearErrors()
-        const debitIdx = _.findIndex(debitComplexStore.expandedRows, {debitid: debitid})
+        const debitIdx = _.findIndex(debitComplexStore.expandedRows, {debitid: productcomment.debitid})
         if (debitIdx > -1) {
             const { product } = debitComplexStore.expandedRows[debitIdx]
             const updatedProductComment = {}
 
-            if (productcommentid === null) {
+            if (productcomment.productcommentid === '') {
                 rules.productcommentid = 'numeric'
                 updatedProductComment.productcommentid = ''
             }
             else {
-                updatedProductComment.productcommentid = productcommentid
+                updatedProductComment.productcommentid = productcomment.productcommentid
             }
 
             updatedProductComment.productid = product.productid
-            updatedProductComment.comment = e.target.value
+            updatedProductComment.comment = productcomment.comment
 
             const validation = new Validator(updatedProductComment, rules)
             if (validation.check())
-                this.saveProductComment(updatedProductComment, debitid)
+                this.saveProductComment(updatedProductComment, productcomment.debitid)
             else
-            {
                 debitComplexStore.showErrors(validation.errors.all())
-            }
         }
     }
-
 }

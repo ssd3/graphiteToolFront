@@ -8,18 +8,17 @@ import {InputTextarea} from 'primereact/components/inputtextarea/InputTextarea'
 class ProductAddCommentForm extends Component {
     constructor(props) {
         super(props)
-        this.isChangedData = false
     }
 
     onChanged = e => {
-        this.isChangedData = true
+        this.props.setChangedData(true)
     }
 
     onDataChange = e => {
-        if (this.isChangedData) {
+        if (this.props.isChangedData) {
             const { productCommentsStore } = this.props.rootStore
             productCommentsStore.saveLocalChanges(e, this.props.debitid, this.props.productcommentid)
-            this.isChangedData = false
+            this.props.setChangedData(false)
         }
     }
 
@@ -35,7 +34,9 @@ class ProductAddCommentForm extends Component {
     }
 
     static propTypes = {
-        debitid: PropTypes.string
+        debitid: PropTypes.string,
+        isChangedData: PropTypes.bool.isRequired,
+        setChangedData: PropTypes.func.isRequired
     }
 }
 

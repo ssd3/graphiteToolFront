@@ -1,0 +1,10 @@
+query GET_IN_WAREHOUSES {
+    warehouses (active: true, inField: true) {
+        edges {
+            node {
+                value: warehouseid
+                label: title
+            }
+        }
+    }
+}
