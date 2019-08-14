@@ -5,6 +5,7 @@ import {Panel} from 'primereact/components/panel/Panel'
 import {Dropdown} from 'primereact/components/dropdown/Dropdown'
 import {InputText} from 'primereact/components/inputtext/InputText'
 import {InputTextarea} from 'primereact/components/inputtextarea/InputTextarea'
+import Progressbar from '../common/ProgressBar'
 
 @inject('rootStore')
 @observer
@@ -13,11 +14,18 @@ class DebitDetailsForm extends Component {
         super(props)
     }
 
+    onDataChange = e => {
+        const { debitStore } = this.props.rootStore
+        debitStore.saveLocalChanges(e, this.props.debit.debitid)
+    }
+
     render() {
+        const { loading } = this.props.rootStore.debitStore
         const { debit } = this.props
         return (
             <Panel header="Product price details">
                 <div className="p-grid p-fluid" style={{height: '45vh'}}>
+                    <Progressbar loading={loading}/>
                     <div className="p-col-12">
                         <label htmlFor="tracknumber">Track Number</label>
                         <InputText id="tracknumber"

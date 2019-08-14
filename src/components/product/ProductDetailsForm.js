@@ -4,6 +4,7 @@ import {inject, observer} from 'mobx-react'
 import {InputText} from 'primereact/components/inputtext/InputText'
 import {Button} from 'primereact/button'
 import {Panel} from 'primereact/components/panel/Panel'
+import Progressbar from '../common/ProgressBar'
 
 @inject('rootStore')
 @observer
@@ -30,10 +31,12 @@ class ProductDetailsForm extends Component {
         let { productDetails } = this.props
         if (productDetails.length > 0)
             productDetails = productDetails[0]
+        const { loading } = this.props.rootStore.productDetailsStore
 
         return (
             <Panel header="Product Details">
                 <div className="p-grid p-fluid" style={{height: '45vh'}}>
+                    <Progressbar loading={loading}/>
                     <div className="p-col-12">
                         <label htmlFor="model">Product model</label>
                         <InputText id="model"

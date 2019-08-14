@@ -154,6 +154,23 @@ export default class DebitComplexStore {
 
     }
 
+    @action updateDebit(debit, debitid) {
+        this.loading = true
+        const debitIdx = _.findIndex(this.debits, {debitid: debitid})
+        if (debitIdx > -1) {
+            const { tracknumber, status, qty, price, pricetype, discount, warehouse, notes } = debit
+            this.debits[debitIdx].tracknumber = tracknumber
+            this.debits[debitIdx].status = status
+            this.debits[debitIdx].price = price
+            this.debits[debitIdx].qty = qty
+            this.debits[debitIdx].pricetype = pricetype
+            this.debits[debitIdx].discount = discount
+            this.debits[debitIdx].warehouse = warehouse
+            this.debits[debitIdx].notes = notes
+        }
+        this.loading = false
+    }
+
     @action showErrors(errors) {
         const _errors = []
         for (let error in errors) {

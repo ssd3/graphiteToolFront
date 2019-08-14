@@ -8,6 +8,7 @@ import {Button} from 'primereact/components/button/Button'
 
 import ProductCommentDialog from './ProductCommentDialog'
 import productCommentFields from './ProductCommentFields'
+import Progressbar from '../common/ProgressBar'
 
 @inject('rootStore')
 @observer
@@ -44,6 +45,7 @@ class ProductCommentsForm extends Component {
     }
 
     render() {
+        const { loading } = this.props.rootStore.productCommentsStore
         let { debitid, productid, productComments } = this.props
         const { isShowDialog, title } = this.state
         productComments =_.orderBy(productComments, ['created'], ['desc'])
@@ -51,6 +53,7 @@ class ProductCommentsForm extends Component {
         return (
             <Panel header="Product Comments">
                 <div className="p-grid p-fluid" style={{height: '45vh'}}>
+                    <Progressbar loading={loading}/>
                         <div className="p-toolbar-group-left" style={{paddingTop: '5px'}}>
                             <Button label="Add comment" icon="pi pi-plus" className="p-button-secondary" onClick={this.onAddProductComment} />
                         </div>

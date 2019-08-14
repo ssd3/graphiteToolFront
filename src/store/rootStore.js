@@ -9,6 +9,7 @@ import DiscountStore from './discountStore'
 import DebitComplexStore from './debitComplexStore'
 import ProductDetailsStore from './productDetailsStore'
 import ProductCommentsStore from './productCommentsStore'
+import DebitStore from './debitStore'
 
 export default class RootStore {
     constructor() {
@@ -23,5 +24,6 @@ export default class RootStore {
         this.debitComplexStore = new DebitComplexStore(this)
         this.productDetailsStore = new ProductDetailsStore(this)
         this.productCommentsStore = new ProductCommentsStore(this)
+        this.debitStore = new DebitStore(this)
     }
 }

@@ -5,6 +5,7 @@ import {InputText} from 'primereact/components/inputtext/InputText'
 import {Dropdown} from 'primereact/components/dropdown/Dropdown'
 import {InputTextarea} from 'primereact/inputtextarea'
 import {Panel} from 'primereact/components/panel/Panel'
+import Progressbar from '../common/ProgressBar'
 
 @inject('rootStore')
 @observer
@@ -19,10 +20,13 @@ class ProductForm extends Component {
     }
 
     render() {
+        const { loading } = this.props.rootStore.productStore
         const { product } = this.props
+
         return (
             <Panel header="Product">
                 <div className="p-grid p-fluid" style={{height: '45vh'}}>
+                    <Progressbar loading={loading}/>
                         <div className="p-col-12">
                             <label htmlFor="categoryid">Category</label>
                             <Dropdown id="categoryid"
