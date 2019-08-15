@@ -4,6 +4,7 @@ import {InputText} from 'primereact/components/inputtext/InputText'
 import {Button} from 'primereact/components/button/Button'
 import {Toolbar} from 'primereact/toolbar'
 import {ToggleButton} from 'primereact/togglebutton'
+import StatusChange from '../common/StatusChange'
 
 const DebitToolbar = (props) => {
     return (
@@ -15,7 +16,7 @@ const DebitToolbar = (props) => {
             <div className="p-toolbar-group-right" style={{display: 'flex'}}>
                 <Button label="Add Product" icon="pi pi-plus" className="p-button-secondary" onClick={props.onAddDebit} />
                 <Button label="Add To Box" icon="pi pi-plus" className="p-button-secondary" onClick={props.onAddToBox} />
-                <Button label="Change Status" icon="pi pi-check" className="p-button-secondary" />
+                <StatusChange />
                 <ToggleButton style={{width:'150px'}} onLabel="Columns Filter On" offLabel="Columns Filter Off" onIcon="pi pi-check" offIcon="pi pi-times"
                               checked={props.isFilteredByColumns} onChange={props.onFilterColumns} />
                 <ToggleButton style={{width:'150px'}} onLabel="Columns Sort On" offLabel="Columns Sort Off" onIcon="pi pi-check" offIcon="pi pi-times"

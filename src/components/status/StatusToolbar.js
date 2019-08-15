@@ -19,7 +19,7 @@ const StatusToolbar = (props) => {
 }
 
 StatusToolbar.propTypes = {
-    searchExpr: PropTypes.string.isRequired,
+    searchExpr: PropTypes.string,
     onSearch: PropTypes.func.isRequired,
     onAddStatus: PropTypes.func.isRequired
 }
