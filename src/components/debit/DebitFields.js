@@ -9,131 +9,134 @@ class DebitFields extends Form {
         }
     }
 
-    setup() {
+    setup(statuses) {
         return {
             fields: [{
-                name: 'categoryid',
-                label: 'Category',
-                rules: 'required|numeric'
-            },
-            {
-                name: 'title',
-                label: 'Product name',
-                placeholder: 'Type product name',
-                rules: 'required|string|between:1,48',
-                default: ''
-            },
-            {
-                name: 'description',
-                label: 'Product description',
-                placeholder: 'Type product description',
-                rules: 'string|between:1,1024',
-                default: ''
-            },
-            {
-                name: 'model',
-                label: 'Product model',
-                placeholder: 'Type product model',
-                rules: 'string|between:1,128',
-                default: ''
-            },
-            {
-                name: 'url',
-                label: 'Product URL',
-                placeholder: 'Type product URL',
-                rules: 'string|between:1,1024',
-                default: ''
-            },
-            {
-                name: 'serialno',
-                label: 'Product serial number',
-                placeholder: 'Type product serial number',
-                rules: 'string|between:1,128',
-                default: ''
-            },
-            {
-                name: 'weight',
-                label: 'Product weight',
-                placeholder: 'Type product weight',
-                rules: 'number',
-                default: 0
-            },
-            {
-                name: 'height',
-                label: 'Product height',
-                placeholder: 'Type product height',
-                rules: 'number',
-                default: 0
-            },
-            {
-                name: 'width',
-                label: 'Product width',
-                placeholder: 'Type product width',
-                rules: 'number',
-                default: 0
-            },
-            {
-                name: 'length',
-                label: 'Product length',
-                placeholder: 'Type product length',
-                rules: 'number',
-                default: 0
-            },
-            {
-                name: 'comment',
-                label: 'Product comment',
-                placeholder: 'Type product comment',
-                rules: 'string|between:1,1024',
-                default: ''
-            },
-            {
-                name: 'warehouseid',
-                label: 'Warehouse',
-                rules: 'required|numeric'
-            },
-            {
-                name: 'qty',
-                label: 'Product qty',
-                placeholder: 'Type product qty',
-                rules: 'required|number',
-                default: 0
-            },
-            {
-                name: 'price',
-                label: 'Product price',
-                placeholder: 'Type product price',
-                rules: 'required|number',
-                default: 0
-            },
-            {
-                name: 'pricetypeid',
-                label: 'Price Type',
-                rules: 'required|numeric'
-            },
-            {
-                name: 'discountid',
-                label: 'Discount',
-                rules: 'required|numeric'
-            },
-            {
-                name: 'tracknumber',
-                label: 'Track number',
-                placeholder: 'Type track number',
-                rules: 'string|between:1,64',
-                default: ''
-            },
-            {
-                name: 'statusid',
-                label: 'Status',
-                rules: 'required|numeric'
-            },
-            {
-                name: 'notes',
-                label: 'Debit notes',
-                placeholder: 'Type debit notes',
-                rules: 'string|between:1,1024',
-                default: ''
-            }
+                    name: 'debitid',
+                    rules: 'numeric',
+                    type: 'hidden',
+                    default: ''
+                },
+                {
+                    name: 'tracknumber',
+                    label: 'Track number',
+                    placeholder: 'Type track number',
+                    rules: 'required|string|between:1,64'
+                },
+                {
+                    name: 'statusid',
+                    label: 'Status',
+                    rules: 'required|numeric',
+                    placeholder: 'Select status'
+                },
+                {
+                    name: 'qty',
+                    label: 'Qty',
+                    placeholder: 'Type product qty',
+                    rules: 'numeric',
+                    default: 0
+                },
+                {
+                    name: 'price',
+                    label: 'Price',
+                    placeholder: 'Type product price',
+                    rules: 'numeric',
+                    default: 0
+                },
+                {
+                    name: 'pricetypeid',
+                    label: 'Price Type',
+                    rules: 'required|numeric',
+                    placeholder: 'Select price type'
+                },
+                {
+                    name: 'discountid',
+                    label: 'Discount',
+                    rules: 'required|numeric',
+                    placeholder: 'Select discount'
+                },
+                {
+                    name: 'warehouseid',
+                    label: 'Warehouse',
+                    rules: 'required|numeric',
+                    placeholder: 'Select warehouse'
+                },
+                {
+                    name: 'notes',
+                    label: 'Price notes',
+                    placeholder: 'Type price notes',
+                    rules: 'string|between:1,1024'
+                },
+                {
+                    name: 'categoryid',
+                    label: 'Category',
+                    rules: 'required|numeric',
+                    placeholder: 'Select category'
+                },
+                {
+                    name: 'title',
+                    label: 'Product name',
+                    placeholder: 'Type product name',
+                    rules: 'required|string|between:1,48'
+                },
+                {
+                    name: 'description',
+                    label: 'Product description',
+                    placeholder: 'Type product description',
+                    rules: 'string|between:1,1024'
+                },
+                {
+                    name: 'model',
+                    label: 'Product model',
+                    placeholder: 'Type product model',
+                    rules: 'string|between:1,128'
+                },
+                {
+                    name: 'url',
+                    label: 'Product URL',
+                    placeholder: 'Type product URL',
+                    rules: 'string|between:1,1024'
+                },
+                {
+                    name: 'serialno',
+                    label: 'Product serial number',
+                    placeholder: 'Type serial number',
+                    rules: 'string|between:1,128'
+                },
+                {
+                    name: 'weight',
+                    label: 'Product weight',
+                    placeholder: 'Type product weight',
+                    rules: 'numeric',
+                    default: 0
+                },
+                {
+                    name: 'height',
+                    label: 'Product height',
+                    placeholder: 'Type product height',
+                    rules: 'numeric',
+                    default: 0
+                },
+                {
+                    name: 'width',
+                    label: 'Product width',
+                    placeholder: 'Type product width',
+                    rules: 'numeric',
+                    default: 0
+                },
+                {
+                    name: 'lenght',
+                    label: 'Product length',
+                    placeholder: 'Type product length',
+                    rules: 'numeric',
+                    default: 0
+                },
+                {
+                    name: 'comment',
+                    label: 'Product comment',
+                    placeholder: 'Type product comment',
+                    rules: 'string|between:1,1024'
+                }
             ],
         }
     }
@@ -143,7 +146,7 @@ class DebitFields extends Form {
             onSuccess(form) {
                 const store = form.store
                 store.saveDebit(form.values())
-                store.showDialog(false)
+                store.debitDialogShow(false)
             },
             onError(form) {
                 const store = form.store

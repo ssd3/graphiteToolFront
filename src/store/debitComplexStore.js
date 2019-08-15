@@ -11,6 +11,7 @@ export default class DebitComplexStore {
     @observable expandedRows = []
     @observable isFilteredByColumns = false
     @observable isSortedByColumns = false
+    @observable isShowDebitDialog = false
     @observable pagerInfo = {
         page: 1,
         first: 0,
@@ -183,6 +184,10 @@ export default class DebitComplexStore {
 
     @action clearErrors() {
         this.error = ''
+    }
+
+    @action debitDialogShow(isShow) {
+        this.isShowDebitDialog = isShow
     }
 
 }

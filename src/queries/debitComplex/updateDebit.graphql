@@ -25,7 +25,7 @@ mutation UpdateDebitComplex
     $notes: String
 )
 {
-    updateDebitcomplex(
+    result: updateDebitcomplex(
         productData: {
             productid: $productid,
             categoryid: $categoryid,
@@ -59,37 +59,57 @@ mutation UpdateDebitComplex
         }
     )
     {
-        product
-        {
-            productid
-            categoryid{
-                categoryid
-                title
-            }
-            title
-            description
-        }
-        productdetails {
-            productdetailsid
-            model
-            url
-            serialno
-            weight
-            height
-            width
-            length
-        }
-        productcomment{
-            productcommentid
-            comment
-        }
         debit
         {
             debitid
-            warehouseid{
+            warehouse: warehouseid {
                 warehouseid
+                title
             }
+            product: productid {
+                productid
+                title
+                description
+                category: categoryid {
+                    categoryid
+                    title
+                }
+                productdetails: productdetailsSet {
+                    productdetailsid
+                    model
+                    url
+                    serialno
+                    weight
+                    height
+                    width
+                    length
+                }
+                productcomments: productcommentSet {
+                    productcommentid
+                    comment
+                    created
+                }
+            }
+            qty
+            price
             tracknumber
+            pricetype: pricetypeid {
+                pricetypeid
+                title
+            }
+            discount: discountid {
+                discountid
+                title
+                value
+                units
+            }
+            status: statusid {
+                statusid
+                title
+                value
+            }
+            notes
+            created
         }
     }
 }

@@ -29,7 +29,6 @@ export class Debits extends Component {
         super(props)
 
         this.state = {
-            modalDialog: false,
             boxSidebar: false
         }
 
@@ -71,9 +70,8 @@ export class Debits extends Component {
     }
 
     hideDialog = (e) => {
-        this.setState({
-            modalDialog: false
-        })
+        const { debitComplexStore } = this.props.rootStore
+        debitComplexStore.debitDialogShow(false)
     }
 
     onDebitSearch = (e) => {
@@ -81,9 +79,35 @@ export class Debits extends Component {
     }
 
     addDebit = () => {
-        this.setState({
-            modalDialog: true
+        // TODO: ???? how to set extra or options data in mox-react-form
+        // debitFields.$('statusid').set('extra', this.props.rootStore.statusStore.all_statuses)
+        // console.log(debitFields.$('statusid').get('extra'))
+        debitFields.clear()
+        debitFields.set('value', {
+            qty: 0,
+            price: 0,
+            weight: 0,
+            height: 0,
+            width: 0,
+            lenght: 0,
+            warehouseid: '1',
+            statusid: '1',
+            pricetypeid: '1',
+            discountid: '1',
+            categoryid: '1'
         })
+
+        const { rootStore } = this.props
+        const { debitComplexStore } = rootStore
+
+        debitFields.statuses = rootStore.statusStore.all_statuses
+        debitFields.pricetypes = rootStore.priceTypeStore.pricetypes
+        debitFields.discounts = rootStore.discountStore.discounts
+        debitFields.in_warehouses = rootStore.warehouseStore.in_warehouses
+        debitFields.categories = rootStore.categoryStore.categories
+
+        debitFields.store = debitComplexStore
+        debitComplexStore.debitDialogShow(true)
     }
 
     addToBox = () => {
@@ -149,7 +173,8 @@ export class Debits extends Component {
                 isFilteredByColumns,
                 isSortedByColumns,
                 debitsPageInfo,
-                pagerInfo } = this.props.rootStore.debitComplexStore
+                pagerInfo,
+                isShowDebitDialog } = this.props.rootStore.debitComplexStore
 
         return (
             <div className="p-grid">
@@ -222,10 +247,15 @@ export class Debits extends Component {
 
                 </Sidebar>
 
+                <DebitDialog form={debitFields}
+                             isShowDebit={isShowDebitDialog}
+                             title={'Add Product'}
+                             hideDialog={this.hideDialog} />
+
                 <Dialog
                     header="Header Text"
                     footer={this.dialogFooter}
-                    visible={this.state.modalDialog}
+                    visible={false}
                     style={{width: '50vw'}}
                     modal={true}
                     maximizable={true}

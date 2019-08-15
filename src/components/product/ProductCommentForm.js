@@ -2,7 +2,7 @@ import {inject, observer} from 'mobx-react'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {InputTextarea} from 'primereact/components/inputtextarea/InputTextarea'
-import Moment from 'react-moment'
+import formatDate from '../common/FormatDate'
 
 @inject('rootStore')
 @observer
@@ -23,7 +23,9 @@ class ProductCommentForm extends Component {
         return (
             <div className="p-col-12">
                 <label>
-                    Date: <Moment format="DD/MM/YYYY HH:MM">{productComment.created}</Moment>
+                    Date: {
+                        formatDate(productComment.created)
+                    }
                 </label>
                 <InputTextarea rows={15} cols={30}
                                readOnly={true}
