@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Panel} from 'primereact/panel'
 import ProductForm from '../product/ProductForm'
 import ProductDetailsForm from '../product/ProductDetailsForm'
 import ProductCommentsForm from '../product/ProductCommentsForm'
@@ -9,10 +8,6 @@ import DebitDetailsForm from './DebitDetailsForm'
 class DebitRowTemplate extends Component {
     constructor(props) {
         super(props)
-    }
-
-    componentDidMount() {
-        //
     }
 
     render() {

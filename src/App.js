@@ -30,10 +30,13 @@ import {inject, observer} from 'mobx-react'
 import {PrivateRoute} from './components/PrivateRoute'
 import {Switch} from 'react-router'
 import Logout from './components/auth/Logout'
+import Toast from './components/common/Toast'
 
 @inject('rootStore')
 @observer
 class App extends Component {
+
+    toastId = null
 
     constructor(props) {
         super(props)
@@ -159,19 +162,31 @@ class App extends Component {
         }
 
         if (type === 'success') {
-            toast.success(message, options)
+            toast(<Toast text={message}/>, {
+                type: toast.TYPE.SUCCESS,
+                ...options
+            })
         }
 
         if(type === 'error') {
-            toast.error(message, options)
+            toast(<Toast text={message}/>, {
+                type: toast.TYPE.ERROR,
+                ...options
+            })
         }
 
         if(type === 'warn') {
-            toast.warn(message, options)
+            toast(<Toast text={message}/>, {
+                type: toast.TYPE.WARNING,
+                ...options
+            })
         }
 
         if(type === 'info') {
-            toast.info(message, options)
+            toast(<Toast text={message}/>, {
+                type: toast.TYPE.INFO,
+                ...options
+            })
         }
     }
 

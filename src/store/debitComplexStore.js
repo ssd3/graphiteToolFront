@@ -179,7 +179,7 @@ export default class DebitComplexStore {
                 _errors.push(errors[error])
             }
         }
-        this.error = _errors.join('\n')
+        this.error = _errors.join('<br />')
     }
 
     @action clearErrors() {
