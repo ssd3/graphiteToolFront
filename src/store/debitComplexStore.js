@@ -199,4 +199,32 @@ export default class DebitComplexStore {
             in_warehouses: this.rootStore.warehouseStore.in_warehouses
         }
     }
+
+    @action updateDebitsStatus(statusid) {
+        try {
+            this.loading = true
+
+            const params = {
+                debitid: this.selectedRows.map(item => item.debitid),
+                statusid: statusid
+            }
+
+            this.debitComplexService.updateDebitsStatus(params)
+                .then(({ data }) => {
+                    data.result.debits.map(debit => {
+                        const idx = _.findIndex(this.debits, { debitid: debit.debitid })
+                        if (idx > -1)
+                            this.debits[idx] = debit
+                    })
+                })
+                .catch(error => {
+                    this.error = error.message
+                })
+                .finally(() => {
+                    this.loading = false
+                })
+        } catch (e) {
+            this.error = e.message
+        }
+    }
 }

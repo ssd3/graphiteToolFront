@@ -11,7 +11,8 @@ class StatusButton extends Component {
     }
 
     changeStatus = id => {
-        console.log(id)
+        const { debitComplexStore } = this.props.rootStore
+        debitComplexStore.updateDebitsStatus(id)
     }
 
     render() {

@@ -1,0 +1,57 @@
+mutation UPDATE_DEBITS_STATUS($debitid: [Int]!, $statusid: Int!)
+{
+    result: updateDebitStatusid(debitid: $debitid, statusid: $statusid)
+    {
+        debits: debit {
+            debitid
+            warehouse: warehouseid {
+                warehouseid
+                title
+            }
+            product: productid {
+                productid
+                title
+                description
+                category: categoryid {
+                    categoryid
+                    title
+                }
+                productdetails: productdetailsSet {
+                    productdetailsid
+                    model
+                    url
+                    serialno
+                    weight
+                    height
+                    width
+                    lenght
+                }
+                productcomments: productcommentSet {
+                    productcommentid
+                    comment
+                    created
+                }
+            }
+            qty
+            price
+            tracknumber
+            pricetype: pricetypeid {
+                pricetypeid
+                title
+            }
+            discount: discountid {
+                discountid
+                title
+                rate
+                units
+            }
+            status: statusid {
+                statusid
+                title
+                color
+            }
+            notes
+            created
+        }
+    }
+}
