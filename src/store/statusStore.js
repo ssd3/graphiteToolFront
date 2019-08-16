@@ -18,6 +18,7 @@ export default class StatusStore {
         this.statusService = new StatusService()
         autorun(() => {
             this.getAllStatuses
+            this.getStatuses({ search: '' })
         })
     }
 

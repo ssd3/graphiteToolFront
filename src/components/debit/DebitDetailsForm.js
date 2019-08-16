@@ -20,9 +20,15 @@ class DebitDetailsForm extends Component {
     }
 
     render() {
+        const { statuses,
+                pricetypes,
+                discounts,
+                in_warehouses } = this.props.rootStore.debitComplexStore.getListData
+
         const { loading } = this.props.rootStore.debitStore
         const { debit } = this.props
-        return (
+
+        return ((debit && statuses.length > 0) &&
             <Panel header="Product price details">
                 <div className="p-grid p-fluid" style={{height: '45vh'}}>
                     <Progressbar loading={loading}/>
@@ -37,7 +43,7 @@ class DebitDetailsForm extends Component {
                         <Dropdown id="statusid"
                                   placeholder="Select Status"
                                   value={debit.status.statusid}
-                                  options={this.props.rootStore.statusStore.all_statuses}
+                                  options={statuses}
                                   onChange={this.onDataChange} />
                     </div>
                     <div className="p-grid p-fluid p-col-12">
@@ -60,7 +66,7 @@ class DebitDetailsForm extends Component {
                             <Dropdown id="pricetypeid"
                                       placeholder="Select price type"
                                       value={debit.pricetype.pricetypeid}
-                                      options={this.props.rootStore.priceTypeStore.pricetypes}
+                                      options={pricetypes}
                                       onChange={this.onDataChange} />
                         </div>
                         <div className="p-md-6">
@@ -68,7 +74,7 @@ class DebitDetailsForm extends Component {
                             <Dropdown id="discountid"
                                       placeholder="Select discount"
                                       value={debit.discount.discountid}
-                                      options={this.props.rootStore.discountStore.discounts}
+                                      options={discounts}
                                       onChange={this.onDataChange} />
                         </div>
                     </div>
@@ -77,7 +83,7 @@ class DebitDetailsForm extends Component {
                         <Dropdown id="warehouseid"
                                   placeholder="Select warehouse"
                                   value={debit.warehouse.warehouseid}
-                                  options={this.props.rootStore.warehouseStore.in_warehouses}
+                                  options={in_warehouses}
                                   onChange={this.onDataChange} />
                     </div>
                     <div className="p-col-12">

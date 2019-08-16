@@ -11,13 +11,9 @@ class StatusChange extends Component {
         super(props)
     }
 
-    componentDidMount() {
-        this.props.rootStore.statusStore.getStatuses({})
-    }
-
     render() {
         const { statuses } = this.props.rootStore.statusStore
-        return (
+        return (statuses.length > 0 &&
             <Fragment>
                 <Button type="button"
                         label="Change Status"

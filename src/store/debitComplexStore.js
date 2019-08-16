@@ -190,4 +190,13 @@ export default class DebitComplexStore {
         this.isShowDebitDialog = isShow
     }
 
+    get getListData() {
+        return {
+            categories: this.rootStore.categoryStore.categories,
+            statuses: this.rootStore.statusStore.all_statuses,
+            pricetypes: this.rootStore.priceTypeStore.pricetypes,
+            discounts: this.rootStore.discountStore.discounts,
+            in_warehouses: this.rootStore.warehouseStore.in_warehouses
+        }
+    }
 }

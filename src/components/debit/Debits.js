@@ -89,11 +89,17 @@ export class Debits extends Component {
         const { rootStore } = this.props
         const { debitComplexStore } = rootStore
 
-        debitFields.statuses = rootStore.statusStore.all_statuses
-        debitFields.pricetypes = rootStore.priceTypeStore.pricetypes
-        debitFields.discounts = rootStore.discountStore.discounts
-        debitFields.in_warehouses = rootStore.warehouseStore.in_warehouses
-        debitFields.categories = rootStore.categoryStore.categories
+        const { categories,
+                statuses,
+                pricetypes,
+                discounts,
+                in_warehouses } = this.props.rootStore.debitComplexStore.getListData
+
+        debitFields.statuses = statuses
+        debitFields.pricetypes = pricetypes
+        debitFields.discounts = discounts
+        debitFields.in_warehouses = in_warehouses
+        debitFields.categories = categories
 
         debitFields.store = debitComplexStore
         debitComplexStore.debitDialogShow(true)
