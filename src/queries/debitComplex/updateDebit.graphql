@@ -11,7 +11,7 @@ mutation UpdateDebitComplex
     $weight: Decimal,
     $height: Decimal,
     $width: Decimal,
-    $length: Decimal,
+    $lenght: Decimal,
     $productcommentid: Int!,
     $comment: String,
     $debitid: Int!,
@@ -40,7 +40,7 @@ mutation UpdateDebitComplex
             weight: $weight,
             height: $height,
             width: $width,
-            length: $length
+            lenght: $lenght
         }
         productcommentData: {
             productcomentid: $productcommentid,
@@ -82,7 +82,7 @@ mutation UpdateDebitComplex
                     weight
                     height
                     width
-                    length
+                    lenght
                 }
                 productcomments: productcommentSet {
                     productcommentid

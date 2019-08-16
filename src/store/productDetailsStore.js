@@ -12,7 +12,7 @@ const rules = {
     weight: 'numeric',
     height: 'numeric',
     width: 'numeric',
-    length: 'numeric'
+    lenght: 'numeric'
 }
 
 export default class ProductDetailsStore {

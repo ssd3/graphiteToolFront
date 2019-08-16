@@ -23,6 +23,14 @@ type CreateCategory {
     category: CategoryType
 }
 
+type CreateCredit {
+    credit: CreditType
+}
+
+type CreateCreditDetail {
+    creditdetail: CreditDetailsType
+}
+
 type CreateDebit {
     debit: DebitType
 }
@@ -58,6 +66,47 @@ type CreateWarehouse {
     warehouse: WarehouseType
 }
 
+type CreditDetailsType {
+    created: DateTime!
+    creditdetailsid: ID!
+    creditid: CreditType!
+    price: Float!
+    pricetypeid: PricetypeType!
+    productid: ProductType!
+    qty: Float!
+    userid: UserType!
+}
+
+type CreditType implements Node {
+    buyerid: Int!
+    created: DateTime!
+    creditdetailsSet: [CreditDetailsType]
+    creditid: ID!
+    fromwarehouseid: Int
+    "The ID of the object."
+    id: ID!
+    received: DateTime
+    sent: DateTime
+    towarehouseid: Int
+    userid: UserType!
+}
+
+type CreditTypeConnection {
+    "Contains the nodes in this connection."
+    edges: [CreditTypeEdge]!
+    "Pagination data for this connection."
+    pageInfo: PageInfo!
+    totalCount: Int
+}
+
+"A Relay edge containing a `CreditType` and its cursor."
+type CreditTypeEdge {
+    "A cursor for use in pagination"
+    cursor: String!
+    "The item at the end of the edge"
+    node: CreditType
+}
+
 type DebitType implements Node {
     created: DateTime!
     debitid: ID!
@@ -80,6 +129,7 @@ type DebitTypeConnection {
     edges: [DebitTypeEdge]!
     "Pagination data for this connection."
     pageInfo: PageInfo!
+    totalCount: Int
 }
 
 "A Relay edge containing a `DebitType` and its cursor."
@@ -119,6 +169,7 @@ type PageInfo {
 
 type PricetypeType {
     created: DateTime!
+    creditdetailsSet: [CreditDetailsType]
     debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     description: String
     pricetypeid: ID!
@@ -140,12 +191,13 @@ type ProductConnection {
     edges: [ProductEdge]!
     "Pagination data for this connection."
     pageInfo: PageInfo!
+    totalCount: Int
 }
 
 type ProductDetailsType {
     created: DateTime!
     height: Float
-    length: Float
+    lenght: Float
     model: String
     productdetailsid: ID!
     productid: ProductType!
@@ -167,6 +219,7 @@ type ProductEdge {
 type ProductType {
     categoryid: CategoryType!
     created: DateTime!
+    creditdetailsSet: [CreditDetailsType]
     debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     description: String
     productcommentSet: [ProductCommentType]
@@ -183,23 +236,27 @@ type Refresh {
 
 type RootMutation {
     createCategory(title: String!): CreateCategory
+    createCredit(buyerid: Int!, credittypeid: Int!, fromwarehouseid: Int, received: DateTime, sent: DateTime, towarehouseid: Int): CreateCredit
+    createCreditdetail(creditid: Int!, price: Int!, pricetypeid: Int!, productid: Int!, qty: Int!): CreateCreditDetail
     createDebit(discountid: Int!, notes: String, price: Decimal!, pricetypeid: Int!, productid: Int!, qty: Decimal!, statusid: Int!, tracknumber: String!, warehouseid: Int!): CreateDebit
     createDebitcomplex(debitData: DebitInput!, productData: ProductInput!, productcommentData: ProductCommentInput, productdetailsData: ProductDetailsInput): CreateDebitComplex
     createPricetype(description: String, ratio: Int!, title: String!): CreatePriceType
     createProduct(categoryid: Int!, description: String, title: String!): CreateProduct
     createProductcomment(comment: String, productid: Int!): CreateProductComment
-    createProductdetails(height: Decimal, length: Decimal, model: String, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): CreateProductDetails
+    createProductdetails(height: Decimal, lenght: Decimal, model: String, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): CreateProductDetails
     createStatus(title: String!, value: String!): CreateStatus
     createWarehouse(active: Boolean!, description: String, inField: Boolean!, out: Boolean!, title: String!): CreateWarehouse
     refreshToken(token: String!): Refresh
     "Obtain JSON Web Token mutation"
     tokenAuth(password: String!, username: String!): ObtainJSONWebToken
     updateCategory(categoryid: Int!, title: String!): UpdateCategory
+    updateCredit(buyerid: Int!, creditid: Int!, credittypeid: Int!, fromwarehouseid: Int, received: DateTime, sent: DateTime, towarehouseid: Int): UpdateCredit
+    updateCreditdetail(creditdetailid: Int!, creditid: Int, price: Int, pricetypeid: Int, productid: Int, qty: Int): UpdateCreditDetail
     updateDebit(debitid: Int!, discountid: Int!, notes: String, price: Decimal!, pricetypeid: Int!, productid: Int!, qty: Decimal!, statusid: Int!, tracknumber: String!, warehouseid: Int!): UpdateDebit
     updateDebitcomplex(debitData: DebitUpdateInput!, productData: ProductUpdateInput!, productcommentData: ProductCommentUpdateInput, productdetailsData: ProductDetailsUpdateInput): UpdateDebitComplex
     updateProduct(categoryid: Int!, description: String, productid: Int!, title: String!): UpdateProduct
     updateProductcomment(comment: String, productcommentid: Int!): UpdateProductComment
-    updateProductdetails(height: Decimal, length: Decimal, model: String, productdetailsid: Int!, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): UpdateProductDetails
+    updateProductdetails(height: Decimal, lenght: Decimal, model: String, productdetailsid: Int!, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): UpdateProductDetails
     updateStatus(statusid: Int!, title: String!, value: String!): UpdateStatus
     updateWarehouse(active: Boolean!, description: String, inField: Boolean!, out: Boolean!, title: String!, warehouseid: Int!): UpdateWarehouse
     verifyToken(token: String!): Verify
@@ -207,8 +264,13 @@ type RootMutation {
 
 type RootQuery {
     categories: [CategoryType]
+    credit(creditid: Int): CreditType
+    creditdetail(creditdetailid: Int): CreditDetailsType
+    creditdetails(creditid: Int): [CreditDetailsType]
+    credits(after: String, before: String, credittypeid: ID, credittypeid_In: ID, first: Int, last: Int): CreditTypeConnection
     debit(debitid: Int): DebitType
     debits(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debitsBytext(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, searchText: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     discount(discountid: Int, title: String, units: String, value: Decimal): DiscountType
     discounts: [DiscountType]
     pricetype(pricetypeid: Int, title: String): PricetypeType
@@ -219,9 +281,11 @@ type RootQuery {
     productdetail(productdetailsid: Int): ProductDetailsType
     productdetails(productid: Int): [ProductDetailsType]
     products(after: String, before: String, first: Int, last: Int): ProductConnection
+    productsBycategoryTitle(after: String, before: String, categoryTitle: String, first: Int, last: Int): ProductConnection
+    productsByuser(after: String, before: String, categoryTitle: String, first: Int, last: Int): ProductConnection
     status(statusid: Int, title: String): StatusType
-    statuses(search: String): [StatusType]
-    "<graphene.types.scalars.String object at 0x7fb8646acd68>"
+    statuses(dateFrom: DateTime, dateTo: DateTime, search: String): [StatusType]
+    "<graphene.types.scalars.String object at 0x7efe94631b00>"
     user(email: String, userid: Int, username: String): UserType
     users: [UserType]
     warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]
@@ -239,6 +303,14 @@ type StatusType {
 
 type UpdateCategory {
     category: CategoryType
+}
+
+type UpdateCredit {
+    credit: CreditType
+}
+
+type UpdateCreditDetail {
+    creditdetail: CreditDetailsType
 }
 
 type UpdateDebit {
@@ -274,6 +346,8 @@ type UpdateWarehouse {
 
 type UserType {
     categorySet: [CategoryType]
+    creditSet(after: String, before: String, credittypeid: ID, credittypeid_In: ID, first: Int, last: Int): CreditTypeConnection
+    creditdetailsSet: [CreditDetailsType]
     dateJoined: DateTime!
     debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     discountSet: [DiscountType]
@@ -362,7 +436,7 @@ input ProductCommentUpdateInput {
 
 input ProductDetailsInput {
     height: Decimal
-    length: Decimal
+    lenght: Decimal
     model: String
     serialno: String
     url: String
@@ -372,7 +446,7 @@ input ProductDetailsInput {
 
 input ProductDetailsUpdateInput {
     height: Decimal
-    length: Decimal
+    lenght: Decimal
     model: String
     productdetailsid: Int!
     serialno: String

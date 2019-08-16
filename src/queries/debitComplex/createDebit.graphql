@@ -9,7 +9,7 @@ mutation CREATE_DEBIT_COMPLEX
     $weight: Decimal,
     $height: Decimal,
     $width: Decimal,
-    $length: Decimal,
+    $lenght: Decimal,
     $comment: String,
     $warehouseid: Int!,
     $qty: Decimal!,
@@ -34,7 +34,7 @@ mutation CREATE_DEBIT_COMPLEX
             weight: $weight,
             height: $height,
             width: $width,
-            length: $length
+            lenght: $lenght
         }
         productcommentData: {
             comment: $comment
@@ -74,7 +74,7 @@ mutation CREATE_DEBIT_COMPLEX
                     weight
                     height
                     width
-                    length
+                    lenght
                 }
                 productcomments: productcommentSet {
                     productcommentid

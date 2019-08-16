@@ -99,11 +99,11 @@ class ProductDetailsForm extends Component {
                                        onBlur={this.onDataChange} />
                         </div>
                         <div className="p-md-6">
-                            <label htmlFor="length">Product length</label>
-                            <InputText id="length"
+                            <label htmlFor="lenght">Product length</label>
+                            <InputText id="lenght"
                                        placeholder="Type length"
                                        keyfilter="num"
-                                       defaultValue={productDetails.length}
+                                       defaultValue={productDetails.lenght}
                                        onBlur={this.onDataChange} />
                         </div>
                     </div>

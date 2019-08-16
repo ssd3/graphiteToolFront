@@ -21,7 +21,7 @@ query GET_DEBIT($debitid: Int!) {
                         weight
                         height
                         width
-                        length
+                        lenght
                     }
                     productcomment: productcommentSet {
                         productcommentid

@@ -46,7 +46,7 @@ mutation UPDATE_DEBIT
                     weight
                     height
                     width
-                    length
+                    lenght
                 }
                 productcomments: productcommentSet {
                     productcommentid

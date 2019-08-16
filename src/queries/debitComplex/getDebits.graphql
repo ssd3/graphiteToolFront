@@ -23,7 +23,7 @@ query GET_DEBITS {
                         weight
                         height
                         width
-                        length
+                        lenght
                     }
                     productcomments: productcommentSet {
                         productcommentid

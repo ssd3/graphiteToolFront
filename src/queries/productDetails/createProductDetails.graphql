@@ -7,7 +7,7 @@ mutation CREATE_PRODUCT_DETAILS
     $weight: Decimal,
     $height: Decimal,
     $width: Decimal,
-    $length: Decimal
+    $lenght: Decimal
 )
 {
     result: createProductdetails(
@@ -18,7 +18,7 @@ mutation CREATE_PRODUCT_DETAILS
         weight: $weight,
         height: $height,
         width: $width,
-        length: $length
+        lenght: $lenght
     )
     {
         productdetails
@@ -33,7 +33,7 @@ mutation CREATE_PRODUCT_DETAILS
             weight
             height
             width
-            length
+            lenght
         }
     }
 }

@@ -12,6 +12,6 @@ query GET_PRODUCT_DETAIL_BY_ID($productdetailsid: Int!)
         weight
         height
         width
-        length
+        lenght
     }
 }
