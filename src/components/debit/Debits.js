@@ -3,21 +3,17 @@ import {inject, observer} from 'mobx-react'
 import {Button} from 'primereact/button'
 import {Column} from 'primereact/column'
 import {DataTable} from 'primereact/datatable'
-import {InputText} from 'primereact/inputtext'
 import {Sidebar} from 'primereact/sidebar'
-import {Growl} from 'primereact/growl'
 import {Fieldset} from 'primereact/fieldset'
-import {Dialog} from 'primereact/dialog'
 
 import DebitDialog from './DebitDialog'
 import debitFields from './DebitFields'
 import DebitToolbar from './DebitToolbar'
 import Progressbar from '../common/ProgressBar'
 import formatDate from '../common/FormatDate'
-import Pager from '../common/Pager'
 import DebitRowTemplate from './DebitRowTemplate'
 import statusColor from '../common/StatusColor'
-
+import Pager from '../common/Pager'
 
 const expandedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-down'
 const collapsedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-right'
@@ -31,13 +27,6 @@ export class Debits extends Component {
         this.state = {
             boxSidebar: false
         }
-
-        this.dialogFooter = (
-            <div>
-                <Button label="Yes" icon="pi pi-check" onClick={this.displayBoxSidebar} />
-                <Button label="No" icon="pi pi-times" onClick={this.hideDialog} />
-            </div>
-        )
     }
 
     componentDidMount(){
@@ -252,41 +241,6 @@ export class Debits extends Component {
                              title={'Add Product'}
                              hideDialog={this.hideDialog} />
 
-                <Dialog
-                    header="Header Text"
-                    footer={this.dialogFooter}
-                    visible={false}
-                    style={{width: '50vw'}}
-                    modal={true}
-                    maximizable={true}
-                    closeOnEscape={false}
-                    onHide={this.hideDialog}>
-                    <div>
-                        <Fieldset key={'Product'} legend="Product" toggleable={false} >
-                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
-                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
-                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
-                        </Fieldset>
-
-                        <div className="vertical-space10" />
-
-                        <Fieldset key={'Product Details'} legend="Product Details" toggleable={false} >
-                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
-                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
-                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
-                        </Fieldset>
-
-                        <div className="vertical-space10" />
-
-                        <Fieldset key={'Product Comments'} legend="Product Comments" toggleable={true} >
-                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
-                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
-                            <InputText type="search" onInput={this.onGlobalSearch} placeholder="Search" size="30" />
-                        </Fieldset>
-                    </div>
-                </Dialog>
-
-                <Growl ref={(el) => this.growl = el} position='topleft' />
             </div>
         )
     }
@@ -297,8 +251,5 @@ export class Debits extends Component {
                                 <Column field="brand" header="Brand" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<Dropdown appendTo={document.body} style={{width: '100%'}} value={this.state.brand} options={this.state.brands} onChange={this.onBrandChange}/>} />
                                 <Column field="color" header="Color" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<MultiSelect appendTo={document.body} style={{width:'100%'}} value={this.state.color} options={this.state.colors} onChange={this.onColorChange}/>} />
 
-
-                <DebitDialog form={debitFields} title={'title'} hideDialog={this.hideDialog} />
-
-                            <Pager onPageChange={this.pageChange} pageInfo={debitsPageInfo} pagerInfo={pagerInfo}/>
+                                <Pager onPageChange={this.pageChange} pageInfo={debitsPageInfo} pagerInfo={pagerInfo}/>
 */

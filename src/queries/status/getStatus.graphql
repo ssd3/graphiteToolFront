@@ -3,6 +3,7 @@ query GET_STATUS($statusid: Int!)
     status(statusid: $statusid) {
         statusid
         title
-        value
+        color
+        created
     }
 }

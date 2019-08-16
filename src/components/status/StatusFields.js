@@ -25,7 +25,7 @@ class StatusFields extends Form {
                 default: ''
             },
             {
-                name: 'value',
+                name: 'color',
                 label: 'Status Color',
                 placeholder: '',
                 rules: 'required|string|between:1,32',

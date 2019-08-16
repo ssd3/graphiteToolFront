@@ -13,7 +13,7 @@ const statusColor = (rowData, column, objectName = '') => {
     else {
         return <Fragment>
             <div className='flex-block'>
-                <div style={{backgroundColor: `#${result.value}`}} className='color-box' />
+                <div style={{backgroundColor: `#${result.color}`}} className='color-box' />
                 <span className='color-value'>{result.title}</span>
             </div>
         </Fragment>

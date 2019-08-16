@@ -39,13 +39,13 @@ query GET_DEBIT($debitid: Int!) {
                 discount: discountid {
                     discountid
                     title
-                    value
+                    rate
                     units
                 }
                 status: statusid {
                     statusid
                     title
-                    value
+                    color
                 }
                 notes
                 created

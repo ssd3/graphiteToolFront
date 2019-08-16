@@ -22,7 +22,7 @@ class StatusButton extends Component {
                     <Button label={status.title}
                             icon="pi pi-check"
                             className="p-button-secondary"
-                            style={{backgroundColor: `#${status.value}`, width: '150px'}}
+                            style={{backgroundColor: `#${status.color}`, width: '150px'}}
                             onClick={(e) => {this.changeStatus(status.statusid)}}/>
                 </div>
             </Fragment>

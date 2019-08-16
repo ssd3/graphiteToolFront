@@ -1,12 +1,12 @@
-mutation CREATE_STATUS($title: String!, $value: String!)
+mutation CREATE_STATUS($title: String!, $color: String!)
 {
-    result: createStatus(title: $title, value: $value)
+    result: createStatus(title: $title, color: $color)
     {
         status
         {
             statusid
             title
-            value
+            color
             created
         }
     }

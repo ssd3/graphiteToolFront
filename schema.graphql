@@ -144,10 +144,10 @@ type DiscountType {
     created: DateTime!
     debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     discountid: ID!
+    rate: Float!
     title: String!
     units: String!
     userid: UserType!
-    value: Float!
 }
 
 "Obtain JSON Web Token mutation"
@@ -244,7 +244,7 @@ type RootMutation {
     createProduct(categoryid: Int!, description: String, title: String!): CreateProduct
     createProductcomment(comment: String, productid: Int!): CreateProductComment
     createProductdetails(height: Decimal, lenght: Decimal, model: String, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): CreateProductDetails
-    createStatus(title: String!, value: String!): CreateStatus
+    createStatus(color: String!, title: String!): CreateStatus
     createWarehouse(active: Boolean!, description: String, inField: Boolean!, out: Boolean!, title: String!): CreateWarehouse
     refreshToken(token: String!): Refresh
     "Obtain JSON Web Token mutation"
@@ -257,7 +257,7 @@ type RootMutation {
     updateProduct(categoryid: Int!, description: String, productid: Int!, title: String!): UpdateProduct
     updateProductcomment(comment: String, productcommentid: Int!): UpdateProductComment
     updateProductdetails(height: Decimal, lenght: Decimal, model: String, productdetailsid: Int!, productid: Int!, serialno: String, url: String, weight: Decimal, width: Decimal): UpdateProductDetails
-    updateStatus(statusid: Int!, title: String!, value: String!): UpdateStatus
+    updateStatus(color: String, statusid: Int!, title: String): UpdateStatus
     updateWarehouse(active: Boolean!, description: String, inField: Boolean!, out: Boolean!, title: String!, warehouseid: Int!): UpdateWarehouse
     verifyToken(token: String!): Verify
 }
@@ -285,7 +285,7 @@ type RootQuery {
     productsByuser(after: String, before: String, categoryTitle: String, first: Int, last: Int): ProductConnection
     status(statusid: Int, title: String): StatusType
     statuses(dateFrom: DateTime, dateTo: DateTime, search: String): [StatusType]
-    "<graphene.types.scalars.String object at 0x7efe94631b00>"
+    "<graphene.types.scalars.String object at 0x7f74a0d0c4e0>"
     user(email: String, userid: Int, username: String): UserType
     users: [UserType]
     warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]
@@ -293,12 +293,12 @@ type RootQuery {
 }
 
 type StatusType {
+    color: String!
     created: DateTime!
     debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     statusid: ID!
     title: String!
     userid: UserType!
-    value: String!
 }
 
 type UpdateCategory {

@@ -28,13 +28,13 @@ export default observer(({ form, title, isShowDialog, hideDialog }) => (
                     <span className="error-text">{form.$('title').error}</span>
                 </div>
                 <div className="p-col-4" style={{padding:'.75em'}}>
-                    <label htmlFor={form.$('value').id}>
-                        {form.$('value').label}
+                    <label htmlFor={form.$('color').id}>
+                        {form.$('color').label}
                     </label>
                 </div>
                 <div className="p-col-8" style={{padding:'.5em'}}>
-                    <ColorPicker {...form.$('value').bind()} />
-                    <span className="error-text">{form.$('value').error}</span>
+                    <ColorPicker {...form.$('color').bind()} />
+                    <span className="error-text">{form.$('color').error}</span>
                 </div>
                 <input type="hidden" {...form.$('statusid').bind()} />
             </div>

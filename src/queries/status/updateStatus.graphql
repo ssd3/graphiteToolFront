@@ -1,12 +1,12 @@
-mutation UPDATE_STATUS($statusid: Int!, $title: String!, $value: String!)
+mutation UPDATE_STATUS($statusid: Int!, $title: String!, $color: String!)
 {
-    result: updateStatus(statusid: $statusid, title: $title, value: $value)
+    result: updateStatus(statusid: $statusid, title: $title, color: $color)
     {
         status
         {
             statusid
             title
-            value
+            color
             created
         }
     }

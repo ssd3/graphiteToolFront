@@ -2,7 +2,7 @@ query GET_STATUSES($search: String) {
     statuses(search: $search) {
         statusid
         title
-        value
+        color
         created
     }
 }

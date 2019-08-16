@@ -36,6 +36,7 @@ const client = new ApolloClient({
         // resultCaching: false
     }),
     defaultOptions: defaultOptions
+    // connectToDevTools: true
 })
 /*
 import ApolloClient from 'apollo-boost'

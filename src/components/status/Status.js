@@ -77,7 +77,7 @@ export default class Status extends Component {
                                    onRowSelect={this.onStatusSelect}>
                             <Column field="statusid" header="ID" sortable={true} style={{width: '10%'}} />
                             <Column field="title" header="Title" sortable={true} style={{width: '30%'}} />
-                            <Column field="value" header="Color" sortable={true} style={{width: '30%'}} body={statusColor} />
+                            <Column field="color" header="Color" sortable={true} style={{width: '30%'}} body={statusColor} />
                             <Column field="created" header="Created" sortable={true} style={{width: '30%'}} body={formatDate} />
                         </DataTable>
 

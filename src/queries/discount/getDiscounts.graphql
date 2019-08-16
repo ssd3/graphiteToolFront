@@ -2,7 +2,7 @@ query GET_DISCOUNTS {
     discounts {
         value: discountid
         label: title
-        vol: value
+        rate
         units
     }
 }
