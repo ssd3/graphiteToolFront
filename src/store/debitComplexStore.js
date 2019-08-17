@@ -5,19 +5,17 @@ import _ from 'lodash'
 export default class DebitComplexStore {
     @observable loading = false
     @observable debits = []
-    @observable debitsPageInfo = {}
     @observable error = ''
     @observable selectedRows = []
     @observable expandedRows = []
     @observable isFilteredByColumns = false
     @observable isSortedByColumns = false
     @observable isShowDebitDialog = false
-    @observable pagerInfo = {
-        page: 1,
-        first: 0,
-        rows: 20,
-        pageCount: 0
-    }
+    @observable searchText = ''
+    @observable first = 1
+    @observable pageNum = 1
+    @observable rowsCount = 10
+    @observable totalCount
 
     constructor(rootStore) {
         this.rootStore = rootStore
@@ -44,14 +42,18 @@ export default class DebitComplexStore {
         }
     }
 
-    getDebits(params) {
+    getDebits() {
         try {
             this.loading = true
-            this.debitComplexService.getDebitsComplex(params)
+            this.debitComplexService.getDebitsComplex({
+                searchText: this.searchText,
+                pageNum: this.pageNum,
+                rowsCount: this.rowsCount
+            })
                 .then(({ loading, data }) => {
                     this.loading = loading
                     this.debits = data.debits.edges.map(node => node.node)
-                    this.debitsPageInfo = data.debits.pageInfo
+                    this.totalCount = data.debits.totalCount
                 })
                 .catch(error => {
                     this.error = error.message
@@ -67,6 +69,8 @@ export default class DebitComplexStore {
     @action saveDebit(debit) {
         try {
             this.loading = true
+            if (debit.comment === '')
+                delete debit.comment
             this.debitComplexService.saveDebitComplex(debit)
                 .then(({ data }) => {
                     const idx = _.findIndex(this.debits, { debitid: data.result.debit.debitid })
@@ -111,8 +115,11 @@ export default class DebitComplexStore {
         this.loading = false
     }
 
-    @action pageChange(data) {
-        this.pagerInfo = data
+    @action pageChange(e) {
+        this.first = e.first
+        this.pageNum = e.page
+        this.rowsCount = e.rows
+        this.getDebits()
     }
 
     @action updateProduct(product, debitid) {

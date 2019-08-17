@@ -271,7 +271,7 @@ type RootQuery {
     credits(after: String, before: String, credittypeid: ID, credittypeid_In: ID, first: Int, last: Int): CreditTypeConnection
     debit(debitid: Int): DebitType
     debits(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
-    debitsBytext(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, searchText: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debitsBytext(after: String, before: String, first: Int, last: Int, notes_Icontains: String, pageNum: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, rowsCount: Int, searchText: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     discount(discountid: Int, title: String, units: String, value: Decimal): DiscountType
     discounts: [DiscountType]
     pricetype(pricetypeid: Int, title: String): PricetypeType
@@ -286,7 +286,7 @@ type RootQuery {
     productsByuser(after: String, before: String, categoryTitle: String, first: Int, last: Int): ProductConnection
     status(statusid: Int, title: String): StatusType
     statuses(dateFrom: DateTime, dateTo: DateTime, search: String): [StatusType]
-    "<graphene.types.scalars.String object at 0x7f2a48420be0>"
+    "<graphene.types.scalars.String object at 0x7ff934034198>"
     user(email: String, userid: Int, username: String): UserType
     users: [UserType]
     warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]

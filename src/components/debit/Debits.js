@@ -14,6 +14,7 @@ import formatDate from '../common/FormatDate'
 import DebitRowTemplate from './DebitRowTemplate'
 import statusColor from '../common/StatusColor'
 import Pager from '../common/Pager'
+import {Paginator} from 'primereact/paginator'
 
 const expandedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-down'
 const collapsedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-right'
@@ -31,7 +32,7 @@ export class Debits extends Component {
 
     componentDidMount(){
         this.props.pageTitle('Debit')
-        this.props.rootStore.debitComplexStore.getDebits({})
+        this.props.rootStore.debitComplexStore.getDebits({searchText: ''})
     }
 
     displaySelection = (data) => {
@@ -63,8 +64,16 @@ export class Debits extends Component {
         debitComplexStore.debitDialogShow(false)
     }
 
-    onDebitSearch = (e) => {
-        this.setState({globalFilter: e.target.value})
+    onDebitSearchInput = e => {
+        const { debitComplexStore } = this.props.rootStore
+        debitComplexStore.searchText = e.target.value
+        if (e.target.value === '')
+            debitComplexStore.getDebits()
+    }
+
+    onDebitSearch = e => {
+        const { debitComplexStore } = this.props.rootStore
+        debitComplexStore.getDebits()
     }
 
     addDebit = () => {
@@ -167,8 +176,11 @@ export class Debits extends Component {
                 expandedRows,
                 isFilteredByColumns,
                 isSortedByColumns,
-                debitsPageInfo,
-                pagerInfo,
+                searchText,
+                first,
+                pageNum,
+                rowsCount,
+                totalCount,
                 isShowDebitDialog } = this.props.rootStore.debitComplexStore
 
         return (
@@ -186,20 +198,20 @@ export class Debits extends Component {
                                           isSortedByColumns={isSortedByColumns}
                                           onSortColumns={this.sortColumns}
                                           onReset={this.resetAll}
-                            />
+                                          searchText={searchText}
+                                          onDebitSearchInput={this.onDebitSearchInput} />
 
                             <div className="vertical-space10" />
 
                             <DataTable value={debits}
                                        loading={loading}
-                                       globalFilter={this.state.globalFilter}
                                        ref={(el) => this.dt = el}
                                        selection={selectedRows}
                                        onSelectionChange={this.selectionChange}
                                        sortMode="multiple"
                                        reorderableColumns={true}
                                        resizableColumns={true}
-                                       paginator={true}
+                                       paginator={false}
                                        rows={20}
                                        rowsPerPageOptions={[10,15,20,50,100]}
                                        scrollable={true}
@@ -226,7 +238,11 @@ export class Debits extends Component {
                                 <Column field="created" header="Created" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} body={formatDate}  />
                                 <Column selectionMode="multiple" style={{ width:'3em'}} />
                             </DataTable>
-
+                            <Paginator first={first}
+                                       rows={rowsCount}
+                                       totalRecords={totalCount}
+                                       rowsPerPageOptions={[10,20,30,50,100]}
+                                       onPageChange={this.pageChange} />
                         </div>
                 </div>
 
@@ -256,6 +272,9 @@ export class Debits extends Component {
                                 <Column field="year" header="Year" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<InputText style={{width: '100%'}} onInput={this.onYearChange} />} />
                                 <Column field="brand" header="Brand" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<Dropdown appendTo={document.body} style={{width: '100%'}} value={this.state.brand} options={this.state.brands} onChange={this.onBrandChange}/>} />
                                 <Column field="color" header="Color" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<MultiSelect appendTo={document.body} style={{width:'100%'}} value={this.state.color} options={this.state.colors} onChange={this.onColorChange}/>} />
+                <Pager onPageChange={this.pageChange}
+                       pageInfo={pageInfo}
+                       totalCount={totalCount} />
 
                                 <Pager onPageChange={this.pageChange} pageInfo={debitsPageInfo} pagerInfo={pagerInfo}/>
 */

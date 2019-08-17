@@ -10,8 +10,13 @@ const DebitToolbar = (props) => {
     return (
         <Toolbar>
             <div className="p-toolbar-group-left">
-                <i className="pi pi-search" style={{margin:'4px 4px 0 0'}} />
-                <InputText type="search" onInput={props.onDebitSearch} placeholder="Search" size="30" style={{marginRight: '.25em'}}/>
+                <InputText type="search"
+                           onInput={props.onDebitSearchInput}
+                           placeholder="Search" size="30"
+                           style={{marginRight: '.25em'}}
+                           defaultValue={props.searchText}
+                />
+                <Button icon="pi pi-search" className="p-button-secondary" onClick={props.onDebitSearch} />
             </div>
             <div className="p-toolbar-group-right" style={{display: 'flex'}}>
                 <Button label="Add Product" icon="pi pi-plus" className="p-button-secondary" onClick={props.onAddDebit} />
@@ -28,6 +33,7 @@ const DebitToolbar = (props) => {
 }
 
 DebitToolbar.propTypes = {
+    onDebitSearchInput: PropTypes.func.isRequired,
     onDebitSearch: PropTypes.func.isRequired,
     onAddDebit: PropTypes.func.isRequired,
     onAddToBox: PropTypes.func.isRequired,
@@ -35,7 +41,8 @@ DebitToolbar.propTypes = {
     isFilteredByColumns: PropTypes.bool.isRequired,
     onSortColumns: PropTypes.func.isRequired,
     isSortedByColumns: PropTypes.bool.isRequired,
-    onReset: PropTypes.func.isRequired
+    onReset: PropTypes.func.isRequired,
+    searchText: PropTypes.string
 }
 
 export default DebitToolbar

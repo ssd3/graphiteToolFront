@@ -1,7 +1,19 @@
-query GET_DEBITS {
-    debits(first: 50) {
+query GET_DEBITS
+(
+    $searchText: String,
+    $pageNum: Int,
+    $rowsCount: Int
+)
+{
+    debits: debitsBytext
+    (
+        pageNum: $pageNum,
+        searchText: $searchText,
+        rowsCount: $rowsCount
+    )
+    {
         edges{
-            node{
+            node {
                 debitid
                 warehouse: warehouseid {
                     warehouseid
@@ -52,7 +64,9 @@ query GET_DEBITS {
                 notes
                 created
             }
+            cursor
         }
+        totalCount
         pageInfo {
             hasNextPage
             hasPreviousPage
