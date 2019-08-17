@@ -186,7 +186,13 @@ export class Debits extends Component {
                 pageNum,
                 rowsCount,
                 totalCount,
+                pageInfo,
                 isShowDebitDialog } = this.props.rootStore.debitComplexStore
+
+        console.log('first',first)
+        console.log('pageNum',pageNum)
+        console.log('rowsCount',rowsCount)
+        console.log('totalCount',totalCount)
 
         return (
             <div className="p-grid">
@@ -211,7 +217,6 @@ export class Debits extends Component {
 
                             <DataTable value={debits}
                                        loading={loading}
-                                       ref={(el) => this.dt = el}
                                        selection={selectedRows}
                                        onSelectionChange={this.selectionChange}
                                        sortMode="multiple"
@@ -241,11 +246,9 @@ export class Debits extends Component {
                                 <Column field="created" header="Created" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} body={formatDate}  />
                                 <Column selectionMode="multiple" style={{ width:'3em'}} />
                             </DataTable>
-                            <Paginator first={first}
-                                       rows={rowsCount}
-                                       totalRecords={totalCount}
-                                       rowsPerPageOptions={[10,20,30,50,100]}
-                                       onPageChange={this.pageChange} />
+                            {(pageInfo && totalCount) && <Pager onPageChange={this.pageChange}
+                                                                pageInfo={pageInfo}
+                                                                totalCount={totalCount}/>}
                         </div>
                 </div>
 
@@ -280,4 +283,12 @@ export class Debits extends Component {
                        totalCount={totalCount} />
 
                                 <Pager onPageChange={this.pageChange} pageInfo={debitsPageInfo} pagerInfo={pagerInfo}/>
+
+                            <Paginator first={first}
+                                       pageNum={pageNum}
+                                       rows={rowsCount}
+                                       totalRecords={totalCount}
+                                       rowsPerPageOptions={[5,10,20,30,50,100]}
+                                       onPageChange={this.pageChange} />
+
 */

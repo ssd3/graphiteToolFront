@@ -1,17 +1,22 @@
 query GET_DEBITS
 (
     $searchText: String,
-    $pageNum: Int,
-    $rowsCount: Int
+    $first: Int,
+    $after: String,
+    $last: Int,
+    $before: String
 )
 {
     debits: debitsBytext
     (
-        pageNum: $pageNum,
         searchText: $searchText,
-        rowsCount: $rowsCount
+        first: $first,
+        after: $after,
+        last: $last,
+        before: $before
     )
     {
+        totalCount
         edges{
             node {
                 debitid
@@ -64,12 +69,10 @@ query GET_DEBITS
                 notes
                 created
             }
-            cursor
         }
-        totalCount
         pageInfo {
-            hasNextPage
             hasPreviousPage
+            hasNextPage
             startCursor
             endCursor
         }

@@ -14,7 +14,8 @@ export default class DebitComplexStore {
     @observable searchText = ''
     @observable first = 1
     @observable pageNum = 1
-    @observable rowsCount = 10
+    @observable rowsCount = 5
+    @observable pageInfo
     @observable totalCount
 
     constructor(rootStore) {
@@ -46,13 +47,12 @@ export default class DebitComplexStore {
         try {
             this.loading = true
             this.debitComplexService.getDebitsComplex({
-                searchText: this.searchText,
-                pageNum: this.pageNum,
-                rowsCount: this.rowsCount
+                searchText: this.searchText
             })
                 .then(({ loading, data }) => {
                     this.loading = loading
                     this.debits = data.debits.edges.map(node => node.node)
+                    this.pageInfo = data.debits.pageInfo
                     this.totalCount = data.debits.totalCount
                 })
                 .catch(error => {
@@ -117,7 +117,7 @@ export default class DebitComplexStore {
 
     @action pageChange(e) {
         this.first = e.first
-        this.pageNum = e.page
+        this.pageNum = e.page === 0 ? 1 : e.page
         this.rowsCount = e.rows
         this.getDebits()
     }

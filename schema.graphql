@@ -92,6 +92,7 @@ type CreditType implements Node {
 }
 
 type CreditTypeConnection {
+    edgeCount: Int
     "Contains the nodes in this connection."
     edges: [CreditTypeEdge]!
     "Pagination data for this connection."
@@ -125,6 +126,7 @@ type DebitType implements Node {
 }
 
 type DebitTypeConnection {
+    edgeCount: Int
     "Contains the nodes in this connection."
     edges: [DebitTypeEdge]!
     "Pagination data for this connection."
@@ -142,7 +144,7 @@ type DebitTypeEdge {
 
 type DiscountType {
     created: DateTime!
-    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debitSet(after: String, before: String, first: Int, last: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, tracknumber_Icontains: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     discountid: ID!
     rate: Float!
     title: String!
@@ -170,7 +172,7 @@ type PageInfo {
 type PricetypeType {
     created: DateTime!
     creditdetailsSet: [CreditDetailsType]
-    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debitSet(after: String, before: String, first: Int, last: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, tracknumber_Icontains: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     description: String
     pricetypeid: ID!
     ratio: Float!
@@ -220,7 +222,7 @@ type ProductType {
     categoryid: CategoryType!
     created: DateTime!
     creditdetailsSet: [CreditDetailsType]
-    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debitSet(after: String, before: String, first: Int, last: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, tracknumber_Icontains: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     description: String
     productcommentSet: [ProductCommentType]
     productdetailsSet: [ProductDetailsType]
@@ -270,8 +272,8 @@ type RootQuery {
     creditdetails(creditid: Int): [CreditDetailsType]
     credits(after: String, before: String, credittypeid: ID, credittypeid_In: ID, first: Int, last: Int): CreditTypeConnection
     debit(debitid: Int): DebitType
-    debits(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
-    debitsBytext(after: String, before: String, first: Int, last: Int, notes_Icontains: String, pageNum: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, rowsCount: Int, searchText: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debits(after: String, before: String, first: Int, last: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, tracknumber_Icontains: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debitsBytext(after: String, before: String, first: Int, last: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, searchText: String, tracknumber_Icontains: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     discount(discountid: Int, title: String, units: String, value: Decimal): DiscountType
     discounts: [DiscountType]
     pricetype(pricetypeid: Int, title: String): PricetypeType
@@ -286,7 +288,7 @@ type RootQuery {
     productsByuser(after: String, before: String, categoryTitle: String, first: Int, last: Int): ProductConnection
     status(statusid: Int, title: String): StatusType
     statuses(dateFrom: DateTime, dateTo: DateTime, search: String): [StatusType]
-    "<graphene.types.scalars.String object at 0x7ff934034198>"
+    "<graphene.types.scalars.String object at 0x7f426c72ec88>"
     user(email: String, userid: Int, username: String): UserType
     users: [UserType]
     warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]
@@ -296,7 +298,7 @@ type RootQuery {
 type StatusType {
     color: String!
     created: DateTime!
-    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debitSet(after: String, before: String, first: Int, last: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, tracknumber_Icontains: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     statusid: ID!
     title: String!
     userid: UserType!
@@ -354,7 +356,7 @@ type UserType {
     creditSet(after: String, before: String, credittypeid: ID, credittypeid_In: ID, first: Int, last: Int): CreditTypeConnection
     creditdetailsSet: [CreditDetailsType]
     dateJoined: DateTime!
-    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debitSet(after: String, before: String, first: Int, last: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, tracknumber_Icontains: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     discountSet: [DiscountType]
     email: String!
     firstName: String!
@@ -381,7 +383,7 @@ type Verify {
 type WarehouseType implements Node {
     active: Boolean!
     created: DateTime!
-    debitSet(after: String, before: String, first: Int, last: Int, notes_Icontains: String, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
+    debitSet(after: String, before: String, first: Int, last: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, tracknumber_Icontains: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
     description: String
     "The ID of the object."
     id: ID!
