@@ -15,6 +15,7 @@ const DebitToolbar = (props) => {
                            placeholder="Search" size="30"
                            style={{marginRight: '.25em'}}
                            defaultValue={props.searchText}
+                           onKeyDown={props.onHandleKeyDown}
                 />
                 <Button icon="pi pi-search" className="p-button-secondary" onClick={props.onDebitSearch} />
             </div>
@@ -33,6 +34,7 @@ const DebitToolbar = (props) => {
 }
 
 DebitToolbar.propTypes = {
+    onHandleKeyDown: PropTypes.func.isRequired,
     onDebitSearchInput: PropTypes.func.isRequired,
     onDebitSearch: PropTypes.func.isRequired,
     onAddDebit: PropTypes.func.isRequired,

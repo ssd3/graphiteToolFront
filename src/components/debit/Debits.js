@@ -64,16 +64,21 @@ export class Debits extends Component {
         debitComplexStore.debitDialogShow(false)
     }
 
-    onDebitSearchInput = e => {
+    debitSearchInput = e => {
         const { debitComplexStore } = this.props.rootStore
         debitComplexStore.searchText = e.target.value
         if (e.target.value === '')
             debitComplexStore.getDebits()
     }
 
-    onDebitSearch = e => {
+    debitSearch = e => {
         const { debitComplexStore } = this.props.rootStore
         debitComplexStore.getDebits()
+    }
+
+    handleKeyDown = e => {
+        if (e.key === 'Enter')
+            this.debitSearch()
     }
 
     addDebit = () => {
@@ -190,7 +195,7 @@ export class Debits extends Component {
 
                 <div className="p-col-12">
                         <div>
-                            <DebitToolbar onDebitSearch={this.onDebitSearch}
+                            <DebitToolbar onDebitSearch={this.debitSearch}
                                           onAddDebit={this.addDebit}
                                           onAddToBox={this.addToBox}
                                           isFilteredByColumns={isFilteredByColumns}
@@ -199,7 +204,8 @@ export class Debits extends Component {
                                           onSortColumns={this.sortColumns}
                                           onReset={this.resetAll}
                                           searchText={searchText}
-                                          onDebitSearchInput={this.onDebitSearchInput} />
+                                          onDebitSearchInput={this.debitSearchInput}
+                                          onHandleKeyDown={this.handleKeyDown}/>
 
                             <div className="vertical-space10" />
 
@@ -211,9 +217,6 @@ export class Debits extends Component {
                                        sortMode="multiple"
                                        reorderableColumns={true}
                                        resizableColumns={true}
-                                       paginator={false}
-                                       rows={20}
-                                       rowsPerPageOptions={[10,15,20,50,100]}
                                        scrollable={true}
                                        scrollHeight="65vh" /*should be calculated*/
                                        footer={this.displaySelection(selectedRows)}
