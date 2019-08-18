@@ -187,8 +187,6 @@ export class Debits extends Component {
                 searchText,
                 rowsPerPage,
                 totalCount,
-                pageInfo,
-                cursors,
                 isShowDebitDialog } = this.props.rootStore.debitComplexStore
 
         return (
@@ -244,12 +242,10 @@ export class Debits extends Component {
                                 <Column selectionMode="multiple" style={{ width:'3em'}} />
                             </DataTable>
 
-                            {(pageInfo && totalCount) &&
-                                <Pager pageInfo={pageInfo}
-                                       totalCount={totalCount}
+                            {totalCount &&
+                                <Pager totalCount={totalCount}
                                        rowsPerPage={rowsPerPage}
                                        rowsPerPageList={[5,10,20,50,100]}
-                                       cursors={cursors}
                                        realRowsCount={debits.length}
                                        onPagerChange={this.pagerChange}
                                        onPagerChangeRowsPerPage={this.pagerChangeRowsPerPage} /> }
