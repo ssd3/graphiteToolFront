@@ -15,6 +15,21 @@ class Pager extends Component {
         }
     }
 
+    static getDerivedStateFromProps(props, state) {
+        if (props.rowsPerPage !== state.rowsPerPage) {
+            return {
+                pageCount: Math.ceil(props.totalCount / props.rowsPerPage)
+            }
+        }
+
+        if (props.firstPage !== state.currentPage) {
+            return {
+                currentPage: props.firstPage
+            }
+        }
+        return null
+    }
+
     onPagerFirstPage = e => {
         this.setState({currentPage: 1})
         this.props.onPagerChange({event: 'firstPage'})
@@ -87,6 +102,7 @@ class Pager extends Component {
     }
 
     static propTypes = {
+        firstPage: PropTypes.number.isRequired,
         rowsPerPage: PropTypes.number.isRequired,
         rowsPerPageList: PropTypes.array.isRequired,
         totalCount: PropTypes.number.isRequired,

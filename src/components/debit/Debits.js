@@ -243,7 +243,8 @@ export class Debits extends Component {
                             </DataTable>
 
                             {totalCount &&
-                                <Pager totalCount={totalCount}
+                                <Pager firstPage={1}
+                                       totalCount={totalCount}
                                        rowsPerPage={rowsPerPage}
                                        rowsPerPageList={[5,10,20,50,100]}
                                        realRowsCount={debits.length}
