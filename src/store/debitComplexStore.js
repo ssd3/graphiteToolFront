@@ -82,8 +82,10 @@ export default class DebitComplexStore {
             this.debitComplexService.saveDebitComplex(debit)
                 .then(({ data }) => {
                     const idx = _.findIndex(this.debits, { debitid: data.result.debit.debitid })
-                    if (idx === -1)
-                        this.debits.push(data.result.debit)
+                    if (idx === -1) {
+                        this.debits.unshift(data.result.debit)
+                        this.totalCount = this.totalCount + 1
+                    }
                     else
                         this.debits[idx] = data.result.debit
                 })
@@ -116,6 +118,7 @@ export default class DebitComplexStore {
 
     @action resetAll() {
         this.loading = false
+        this.rowsPerPage = 5
         this.selectedRows = []
         this.expandedRows = []
         this.isFilteredByColumns = false

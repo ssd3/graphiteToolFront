@@ -154,8 +154,9 @@ export class Debits extends Component {
     }
 
     resetAll = () => {
-        const store = this.props.rootStore.debitComplexStore
-        store.resetAll()
+        window.location.reload()
+        // const store = this.props.rootStore.debitComplexStore
+        // store.resetAll()
     }
 
     rowExpansionTemplate = (data) => {
