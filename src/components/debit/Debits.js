@@ -66,14 +66,12 @@ export class Debits extends Component {
 
     debitSearchInput = e => {
         const { debitComplexStore } = this.props.rootStore
-        debitComplexStore.searchText = e.target.value
-        if (e.target.value === '')
-            debitComplexStore.getDebits()
+        debitComplexStore.getDebits({searchText: e.target.value.trim()})
     }
 
     debitSearch = e => {
         const { debitComplexStore } = this.props.rootStore
-        debitComplexStore.getDebits()
+        debitComplexStore.getDebits({searchText: ''})
     }
 
     handleKeyDown = e => {
@@ -158,15 +156,20 @@ export class Debits extends Component {
         store.resetAll()
     }
 
-    pageChange = (e) => {
-        const store = this.props.rootStore.debitComplexStore
-        store.pageChange(e)
-    }
-
     rowExpansionTemplate = (data) => {
         return  (
             <DebitRowTemplate data={data}/>
         )
+    }
+
+    pagerChange = e => {
+        const store = this.props.rootStore.debitComplexStore
+        store.pagerChange({ type: e.event })
+    }
+
+    pagerChangeRowsPerPage = e => {
+        const store = this.props.rootStore.debitComplexStore
+        store.pagerChange({ type: 'rowsPerPage', rowsPerPage: e.target.value })
     }
 
     statusColor = (rowData, column) => {
@@ -182,17 +185,11 @@ export class Debits extends Component {
                 isFilteredByColumns,
                 isSortedByColumns,
                 searchText,
-                first,
-                pageNum,
-                rowsCount,
+                rowsPerPage,
                 totalCount,
                 pageInfo,
+                cursors,
                 isShowDebitDialog } = this.props.rootStore.debitComplexStore
-
-        console.log('first',first)
-        console.log('pageNum',pageNum)
-        console.log('rowsCount',rowsCount)
-        console.log('totalCount',totalCount)
 
         return (
             <div className="p-grid">
@@ -246,9 +243,16 @@ export class Debits extends Component {
                                 <Column field="created" header="Created" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} body={formatDate}  />
                                 <Column selectionMode="multiple" style={{ width:'3em'}} />
                             </DataTable>
-                            {(pageInfo && totalCount) && <Pager onPageChange={this.pageChange}
-                                                                pageInfo={pageInfo}
-                                                                totalCount={totalCount}/>}
+
+                            {(pageInfo && totalCount) &&
+                                <Pager pageInfo={pageInfo}
+                                       totalCount={totalCount}
+                                       rowsPerPage={rowsPerPage}
+                                       rowsPerPageList={[5,10,20,50,100]}
+                                       cursors={cursors}
+                                       realRowsCount={debits.length}
+                                       onPagerChange={this.pagerChange}
+                                       onPagerChangeRowsPerPage={this.pagerChangeRowsPerPage} /> }
                         </div>
                 </div>
 

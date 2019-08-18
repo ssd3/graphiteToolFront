@@ -12,11 +12,10 @@ export default class DebitComplexStore {
     @observable isSortedByColumns = false
     @observable isShowDebitDialog = false
     @observable searchText = ''
-    @observable first = 1
-    @observable pageNum = 1
-    @observable rowsCount = 5
+    @observable rowsPerPage = 10
     @observable pageInfo
     @observable totalCount
+    @observable cursors = []
 
     constructor(rootStore) {
         this.rootStore = rootStore
@@ -43,17 +42,29 @@ export default class DebitComplexStore {
         }
     }
 
-    getDebits() {
+    getDebits(params) {
         try {
             this.loading = true
-            this.debitComplexService.getDebitsComplex({
-                searchText: this.searchText
-            })
+            this.searchText = params.searchText
+
+            if (params.first === undefined && params.last === undefined)
+                params.first = this.rowsPerPage
+
+            this.debitComplexService.getDebitsComplex(params)
                 .then(({ loading, data }) => {
                     this.loading = loading
-                    this.debits = data.debits.edges.map(node => node.node)
-                    this.pageInfo = data.debits.pageInfo
-                    this.totalCount = data.debits.totalCount
+                    if (data.debits !== null) {
+                        this.debits = data.debits.edges.map(node => node.node)
+                        this.pageInfo = data.debits.pageInfo
+                        this.totalCount = data.debits.totalCount
+                        this.cursors = data.debits.edges.map(node => node.cursor)
+                    }
+                    else {
+                        this.debits = []
+                        this.pageInfo = {}
+                        this.totalCount = 0
+                        this.cursors = []
+                    }
                 })
                 .catch(error => {
                     this.error = error.message
@@ -115,11 +126,45 @@ export default class DebitComplexStore {
         this.loading = false
     }
 
-    @action pageChange(e) {
-        this.first = e.first
-        this.pageNum = e.page === 0 ? 1 : e.page
-        this.rowsCount = e.rows
-        this.getDebits()
+    @action pagerChange(e) {
+        const _type = e.type
+        const query = {
+            searchText: this.searchText,
+            first: this.rowsPerPage,
+            last: this.rowsPerPage,
+            after: this.pageInfo.endCursor,
+            before: this.pageInfo.startCursor
+        }
+        switch (_type) {
+            case 'firstPage':
+                delete query.last
+                delete query.after
+                delete query.before
+                break
+            case 'nextPage':
+                delete query.last
+                delete query.before
+                break
+            case 'prevPage':
+                delete query.first
+                delete query.after
+                break
+            case 'lastPage':
+                delete query.first
+                delete query.after
+                delete query.before
+                break
+            case 'rowsPerPage':
+                this.rowsPerPage = e.rowsPerPage
+                query.first = this.rowsPerPage
+                delete query.last
+                delete query.after
+                delete query.before
+                break
+            default:
+                break
+        }
+        this.getDebits(query)
     }
 
     @action updateProduct(product, debitid) {
