@@ -15,7 +15,6 @@ export default class DebitComplexStore {
     @observable rowsPerPage = 10
     @observable pageInfo
     @observable totalCount
-    @observable cursors = []
 
     constructor(rootStore) {
         this.rootStore = rootStore
@@ -57,13 +56,11 @@ export default class DebitComplexStore {
                         this.debits = data.debits.edges.map(node => node.node)
                         this.pageInfo = data.debits.pageInfo
                         this.totalCount = data.debits.totalCount
-                        this.cursors = data.debits.edges.map(node => node.cursor)
                     }
                     else {
                         this.debits = []
                         this.pageInfo = {}
                         this.totalCount = 0
-                        this.cursors = []
                     }
                 })
                 .catch(error => {
@@ -118,12 +115,14 @@ export default class DebitComplexStore {
     }
 
     @action resetAll() {
-        this.loading = true
+        this.loading = false
         this.selectedRows = []
         this.expandedRows = []
         this.isFilteredByColumns = false
         this.isSortedByColumns = false
-        this.loading = false
+        this.searchText = ''
+        this.rowsPerPage = 10
+        this.getDebits({searchText: ''})
     }
 
     @action pagerChange(e) {

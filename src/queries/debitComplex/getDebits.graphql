@@ -18,7 +18,6 @@ query GET_DEBITS
     {
         totalCount
         edges{
-            cursor
             node {
                 debitid
                 warehouse: warehouseid {
