@@ -66,17 +66,21 @@ export class Debits extends Component {
 
     debitSearchInput = e => {
         const { debitComplexStore } = this.props.rootStore
-        debitComplexStore.getDebits({searchText: e.target.value.trim()})
+        debitComplexStore.searchText = e.target.value.trim()
+        if (debitComplexStore.searchText === '')
+            debitComplexStore.getDebits({searchText: ''})
     }
 
     debitSearch = e => {
         const { debitComplexStore } = this.props.rootStore
-        debitComplexStore.getDebits({searchText: ''})
+        debitComplexStore.getDebits({searchText: debitComplexStore.searchText})
     }
 
     handleKeyDown = e => {
-        if (e.key === 'Enter')
-            this.debitSearch()
+        if (e.key === 'Enter') {
+            const { debitComplexStore } = this.props.rootStore
+            this.debitSearch({searchText: debitComplexStore.searchText})
+        }
     }
 
     addDebit = () => {
@@ -279,17 +283,4 @@ export class Debits extends Component {
                                 <Column field="year" header="Year" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<InputText style={{width: '100%'}} onInput={this.onYearChange} />} />
                                 <Column field="brand" header="Brand" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<Dropdown appendTo={document.body} style={{width: '100%'}} value={this.state.brand} options={this.state.brands} onChange={this.onBrandChange}/>} />
                                 <Column field="color" header="Color" sortable={true} filter={true} headerStyle={{overflow:'visible'}} filterElement={<MultiSelect appendTo={document.body} style={{width:'100%'}} value={this.state.color} options={this.state.colors} onChange={this.onColorChange}/>} />
-                <Pager onPageChange={this.pageChange}
-                       pageInfo={pageInfo}
-                       totalCount={totalCount} />
-
-                                <Pager onPageChange={this.pageChange} pageInfo={debitsPageInfo} pagerInfo={pagerInfo}/>
-
-                            <Paginator first={first}
-                                       pageNum={pageNum}
-                                       rows={rowsCount}
-                                       totalRecords={totalCount}
-                                       rowsPerPageOptions={[5,10,20,30,50,100]}
-                                       onPageChange={this.pageChange} />
-
 */
