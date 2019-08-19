@@ -13,12 +13,14 @@ class StatusChange extends Component {
 
     render() {
         const { statuses } = this.props.rootStore.statusStore
-        return (statuses.length > 0 &&
+        const { selectedRows } = this.props.rootStore.debitComplexStore
+        return ((statuses.length > 0 && selectedRows) &&
             <Fragment>
                 <Button type="button"
                         label="Change Status"
                         icon="pi pi-check"
                         className="p-button-secondary"
+                        disabled={selectedRows.length === 0}
                         onClick={(e) => this.op.toggle(e)} />
                 <OverlayPanel ref={(el) => this.op = el}
                               showCloseIcon={true}

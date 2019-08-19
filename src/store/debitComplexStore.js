@@ -64,6 +64,8 @@ export default class DebitComplexStore {
                     }
                 })
                 .catch(error => {
+                    console.log('getDebitsComplex', error)
+                    alert('getDebitsComplex error')
                     this.error = error.message
                 })
                 .finally(() => {
@@ -118,14 +120,13 @@ export default class DebitComplexStore {
 
     @action resetAll() {
         this.loading = false
-        this.rowsPerPage = 5
         this.selectedRows = []
         this.expandedRows = []
         this.isFilteredByColumns = false
         this.isSortedByColumns = false
         this.searchText = ''
         this.rowsPerPage = 10
-        this.getDebits({searchText: ''})
+        this.getDebits({searchText: '', first: 10})
     }
 
     @action pagerChange(e) {
