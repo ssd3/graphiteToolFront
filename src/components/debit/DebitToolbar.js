@@ -21,8 +21,11 @@ const DebitToolbar = (props) => {
             </div>
             <div className="p-toolbar-group-right" style={{display: 'flex'}}>
                 <Button label="Add Product" icon="pi pi-plus" className="p-button-secondary" onClick={props.onAddDebit} />
-                <Button label="Add To Box" icon="pi pi-plus" className="p-button-secondary" onClick={props.onAddToBox} />
-                <StatusChange />
+                <Button label="Add To Box" icon="pi pi-plus"
+                        className="p-button-secondary"
+                        onClick={props.onAddToBox}
+                        disabled={props.selectedRows.length === 0 }/>
+                <StatusChange selectedRows={props.selectedRows} />
                 <ToggleButton style={{width:'150px'}} onLabel="Columns Filter On" offLabel="Columns Filter Off" onIcon="pi pi-check" offIcon="pi pi-times"
                               checked={props.isFilteredByColumns} onChange={props.onFilterColumns} />
                 <ToggleButton style={{width:'150px'}} onLabel="Columns Sort On" offLabel="Columns Sort Off" onIcon="pi pi-check" offIcon="pi pi-times"
@@ -44,7 +47,8 @@ DebitToolbar.propTypes = {
     onSortColumns: PropTypes.func.isRequired,
     isSortedByColumns: PropTypes.bool.isRequired,
     onReset: PropTypes.func.isRequired,
-    searchText: PropTypes.string
+    searchText: PropTypes.string,
+    selectedRows: PropTypes.object.isRequired
 }
 
 export default DebitToolbar

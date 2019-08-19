@@ -276,6 +276,7 @@ export default class DebitComplexStore {
                     this.error = error.message
                 })
                 .finally(() => {
+                    this.selectedRows = []
                     this.loading = false
                 })
         } catch (e) {

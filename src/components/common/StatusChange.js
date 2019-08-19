@@ -13,7 +13,7 @@ class StatusChange extends Component {
 
     render() {
         const { statuses } = this.props.rootStore.statusStore
-        const { selectedRows } = this.props.rootStore.debitComplexStore
+        const { selectedRows } = this.props
         return ((statuses.length > 0 && selectedRows) &&
             <Fragment>
                 <Button type="button"

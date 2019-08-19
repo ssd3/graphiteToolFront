@@ -208,7 +208,8 @@ export class Debits extends Component {
                                           onReset={this.resetAll}
                                           searchText={searchText}
                                           onDebitSearchInput={this.debitSearchInput}
-                                          onHandleKeyDown={this.handleKeyDown}/>
+                                          onHandleKeyDown={this.handleKeyDown}
+                                          selectedRows={selectedRows} />
 
                             <div className="vertical-space10" />
 
