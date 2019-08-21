@@ -12,6 +12,8 @@ import ProductCommentsStore from './productCommentsStore'
 import DebitStore from './debitStore'
 import CreditStore from './creditStore'
 import ListStore from './listStore'
+import CreditTypeStore from './creditTypeStore'
+import LossTypeStore from './lossTypeStore'
 
 export default class RootStore {
     constructor() {
@@ -23,6 +25,8 @@ export default class RootStore {
         this.warehouseStore = new WarehouseStore(this)
         this.priceTypeStore = new PriceTypeStore(this)
         this.discountStore = new DiscountStore(this)
+        this.lossTypeStore = new LossTypeStore(this)
+        this.creditTypeStore = new CreditTypeStore(this)
         this.debitComplexStore = new DebitComplexStore(this)
         this.productDetailsStore = new ProductDetailsStore(this)
         this.productCommentsStore = new ProductCommentsStore(this)

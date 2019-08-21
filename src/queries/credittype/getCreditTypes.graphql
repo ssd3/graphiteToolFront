@@ -1,0 +1,9 @@
+query GET_CREDIT_TYPES
+{
+    credittypes {
+        credittypeid
+        title
+        description
+        created
+    }
+}

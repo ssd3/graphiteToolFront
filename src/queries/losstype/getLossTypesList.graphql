@@ -1,0 +1,6 @@
+query GET_LOSS_TYPES_LIST {
+    losstypes{
+        value: losstypeid
+        label: title
+    }
+}

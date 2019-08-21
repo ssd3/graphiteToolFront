@@ -1,0 +1,7 @@
+query GET_LOSS_TYPES {
+    losstypes {
+        losstypeid
+        title
+        created
+    }
+}
