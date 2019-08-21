@@ -48,7 +48,7 @@ DebitToolbar.propTypes = {
     isSortedByColumns: PropTypes.bool.isRequired,
     onReset: PropTypes.func.isRequired,
     searchText: PropTypes.string,
-    selectedRows: PropTypes.object.isRequired
+    selectedRows: PropTypes.array.isRequired
 }
 
 export default DebitToolbar

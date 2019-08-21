@@ -1,5 +1,7 @@
-query GET_STATUSES_LIST {
-    statuses {
+query GET_STATUSES_LIST($search: String = "") {
+    statuses(
+        search: $search
+    ) {
         value: statusid
         label: title
     }

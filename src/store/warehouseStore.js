@@ -5,13 +5,15 @@ export default class WarehouseStore {
     @observable loading = false
     @observable warehouses = []
     @observable in_warehouses = []
+    @observable out_warehouses = []
     @observable error = ''
 
     constructor(rootStore) {
         this.rootStore = rootStore
         this.warehouseService = new WarehouseService()
         autorun(() => {
-            this.getInWarehouses
+            this.getWarehousesList({active: true, inField: true, outField: false})
+            this.getWarehousesList({active: true, inField: false, outField: true})
         })
     }
 
@@ -30,13 +32,16 @@ export default class WarehouseStore {
         }
     }
 
-    @computed get getInWarehouses() {
+    getWarehousesList(params) {
         try {
             this.loading = true
-            this.warehouseService.getInWarehouses()
+            this.warehouseService.getWarehousesList(params)
                 .then(({ loading, data }) => {
                     this.loading = loading
-                    this.in_warehouses = data.warehouses.edges.map(node => node.node)
+                    if (params.inField)
+                        this.in_warehouses = data.warehouses.edges.map(node => node.node)
+                    else
+                        this.out_warehouses = data.warehouses.edges.map(node => node.node)
                 })
                 .catch(error => {
                     this.error = error.message

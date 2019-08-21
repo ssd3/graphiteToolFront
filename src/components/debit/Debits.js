@@ -2,9 +2,6 @@ import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import {Column} from 'primereact/column'
 import {DataTable} from 'primereact/datatable'
-import {Sidebar} from 'primereact/sidebar'
-import {Fieldset} from 'primereact/fieldset'
-
 import DebitDialog from './DebitDialog'
 import debitFields from './DebitFields'
 import DebitToolbar from './DebitToolbar'
@@ -13,6 +10,7 @@ import formatDate from '../common/FormatDate'
 import DebitRowTemplate from './DebitRowTemplate'
 import statusColor from '../common/StatusColor'
 import Pager from '../common/Pager'
+import BoxCreditSidebar from '../credit/BoxCreditSidebar'
 
 const expandedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-down'
 const collapsedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-right'
@@ -22,10 +20,6 @@ const collapsedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-ri
 export class Debits extends Component {
     constructor(props){
         super(props)
-
-        this.state = {
-            boxSidebar: false
-        }
     }
 
     componentDidMount(){
@@ -45,16 +39,8 @@ export class Debits extends Component {
         }
     }
 
-    displayBoxSidebar = (e) => {
-        this.setState({
-            boxSidebar: true
-        })
-    }
-
-    hideBoxSidebar = (e) => {
-        this.setState({
-            boxSidebar: false
-        })
+    hideBoxCreditSidebar = (e) => {
+        this.props.rootStore.creditStore.showBoxCreditSidebar(false)
     }
 
     hideDialog = (e) => {
@@ -107,7 +93,7 @@ export class Debits extends Component {
                 statuses,
                 pricetypes,
                 discounts,
-                in_warehouses } = this.props.rootStore.debitComplexStore.getListData
+                in_warehouses } = this.props.rootStore.listStore.getListData
 
         debitFields.statuses = statuses
         debitFields.pricetypes = pricetypes
@@ -120,9 +106,7 @@ export class Debits extends Component {
     }
 
     addToBox = () => {
-        this.setState({
-            boxSidebar: true
-        })
+        this.props.rootStore.creditStore.showBoxCreditSidebar(true)
     }
 
     filterColumns = (e) => {
@@ -191,6 +175,8 @@ export class Debits extends Component {
                 totalCount,
                 isShowDebitDialog } = this.props.rootStore.debitComplexStore
 
+        const { isBoxCreditSidebar } = this.props.rootStore.creditStore
+
         return (
             <div className="p-grid">
                 {error && this.props.notify('error', error)}
@@ -256,17 +242,8 @@ export class Debits extends Component {
                         </div>
                 </div>
 
-                <Sidebar
-                    visible={this.state.boxSidebar}
-                    position="right"
-                    style={{width:'40em'}}
-                    onHide={this.hideBoxSidebar}
-                    dismissable={false}>
-                    <Fieldset legend="Add To Box">
-                        Form elements, DataTable etc
-                    </Fieldset>
-
-                </Sidebar>
+                <BoxCreditSidebar isBoxCreditSidebar={isBoxCreditSidebar}
+                                  onHideBoxCreditSidebar={this.hideBoxCreditSidebar}/>
 
                 <DebitDialog form={debitFields}
                              isShowDebit={isShowDebitDialog}

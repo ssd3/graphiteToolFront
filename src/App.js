@@ -9,7 +9,7 @@ import {ScrollPanel} from 'primereact/components/scrollpanel/ScrollPanel'
 
 import {Dashboard} from './components/Dashboard'
 import {Debits} from './components/debit/Debits'
-import {Credits} from './components/Credits'
+import {Credits} from './components/credit/Credits'
 import {Balance} from './components/Balance'
 import {Warehouse} from './components/Warehouse'
 import {EmptyPage} from './components/EmptyPage'

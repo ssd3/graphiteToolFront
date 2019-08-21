@@ -10,6 +10,8 @@ import DebitComplexStore from './debitComplexStore'
 import ProductDetailsStore from './productDetailsStore'
 import ProductCommentsStore from './productCommentsStore'
 import DebitStore from './debitStore'
+import CreditStore from './creditStore'
+import ListStore from './listStore'
 
 export default class RootStore {
     constructor() {
@@ -25,5 +27,7 @@ export default class RootStore {
         this.productDetailsStore = new ProductDetailsStore(this)
         this.productCommentsStore = new ProductCommentsStore(this)
         this.debitStore = new DebitStore(this)
+        this.creditStore = new CreditStore(this)
+        this.listStore = new ListStore(this)
     }
 }

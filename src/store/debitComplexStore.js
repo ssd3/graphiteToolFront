@@ -64,8 +64,6 @@ export default class DebitComplexStore {
                     }
                 })
                 .catch(error => {
-                    console.log('getDebitsComplex', error)
-                    alert('getDebitsComplex error')
                     this.error = error.message
                 })
                 .finally(() => {

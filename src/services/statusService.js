@@ -6,9 +6,10 @@ import UPDATE_STATUS from '../queries/status/updateStatus.graphql'
 import GET_STATUSES_LIST from '../queries/status/getStatusesList.graphql'
 
 class StatusService {
-    getAllStatuses = async () => {
+    getAllStatuses = async (search) => {
         return await client.query({
-            query: GET_STATUSES_LIST
+            query: GET_STATUSES_LIST,
+            variables: search
         })
     }
 

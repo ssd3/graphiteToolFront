@@ -17,15 +17,15 @@ export default class StatusStore {
         this.rootStore = rootStore
         this.statusService = new StatusService()
         autorun(() => {
-            this.getAllStatuses
+            this.getAllStatuses({ search: '' })
             this.getStatuses({ search: '' })
         })
     }
 
-    @computed get getAllStatuses() {
+    getAllStatuses(search) {
         try {
             this.loading = true
-            this.statusService.getAllStatuses()
+            this.statusService.getAllStatuses(search)
                 .then(({ loading, data }) => {
                     this.all_statuses = data.statuses
                 })

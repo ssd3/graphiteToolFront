@@ -23,12 +23,13 @@ class DebitDetailsForm extends Component {
         const { statuses,
                 pricetypes,
                 discounts,
-                in_warehouses } = this.props.rootStore.debitComplexStore.getListData
+                in_warehouses } = this.props.rootStore.listStore.getListData
 
         const { loading } = this.props.rootStore.debitStore
         const { debit } = this.props
 
-        return ((debit && statuses.length > 0) &&
+        console.log('DebitDetailsForm statatuses', statuses)
+        return ((debit && statuses) &&
             <Panel header="Product price details">
                 <div className="p-grid p-fluid" style={{height: '45vh'}}>
                     <Progressbar loading={loading}/>

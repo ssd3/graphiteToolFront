@@ -1,5 +1,5 @@
-query GET_IN_WAREHOUSES {
-    warehouses (active: true, inField: true) {
+query GET_WAREHOUSES_LIST($active: Boolean, $inField: Boolean, $outField: Boolean) {
+    warehouses (active: $active, inField: $inField, out: $outField) {
         edges {
             node {
                 value: warehouseid
