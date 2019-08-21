@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {inject, observer} from 'mobx-react'
 import {Panel} from 'primereact/components/panel/Panel'
 import {Dropdown} from 'primereact/components/dropdown/Dropdown'
-import {inject, observer} from 'mobx-react'
 import {Calendar} from 'primereact/calendar'
+import {InputText} from 'primereact/components/inputtext/InputText'
 
 @inject('rootStore')
 @observer
@@ -15,27 +16,30 @@ class CreditForm extends Component {
             buyerid: 1,
             fromwarehouseid: 2,
             towarehouseid: 3,
+            tracknumber: 'xxx-yyy-zzz',
             sent: new Date(),
             received: new Date()
         }
-        this.credittypes = []
         this.buyers = []
-        this.out_warehouses = []
-        this.in_warehouses = []
+    }
+
+    onDataChange = (e) => {
+        console.log('e', e.target.value)
     }
 
     render() {
         const { credit } = this.props
+        const { credittypes, /*buyers,*/ in_warehouses, out_warehouses } = this.props.rootStore.listStore.getListData
         return (
-            <Panel header="Box details">
-                <div className="p-grid p-fluid" style={{height: '25vh'}}>
+            <Panel header="Credit details">
+                <div className="p-grid p-fluid">
                     <div className="p-grid p-fluid p-col-12">
                         <div className="p-md-6">
                             <label htmlFor="credittypeid">Credit type</label>
                             <Dropdown id="credittypeid"
                                       placeholder="Select credit type"
                                       value={this.credit.credittypeid}
-                                      options={this.credittypes}
+                                      options={credittypes}
                                       onChange={this.onDataChange} />
                         </div>
                         <div className="p-md-6">
@@ -53,7 +57,7 @@ class CreditForm extends Component {
                             <Dropdown id="fromwarehouseid"
                                       placeholder="Select warehouse from"
                                       value={this.credit.fromwarehouseid}
-                                      options={this.out_warehouses}
+                                      options={out_warehouses}
                                       onChange={this.onDataChange} />
                         </div>
                         <div className="p-md-6">
@@ -61,7 +65,7 @@ class CreditForm extends Component {
                             <Dropdown id="towarehouseid"
                                       placeholder="Select warehouse to"
                                       value={this.credit.towarehouseid}
-                                      options={this.in_warehouses}
+                                      options={in_warehouses}
                                       onChange={this.onDataChange} />
                         </div>
                     </div>
@@ -79,6 +83,14 @@ class CreditForm extends Component {
                                       value={this.credit.received}
                                       onChange={this.onDataChange}
                                       showIcon={true} />
+                        </div>
+                    </div>
+                    <div className="p-grid p-fluid p-col-12">
+                        <div className="p-md-6">
+                            <label htmlFor="tracknumber">Track number</label>
+                            <InputText id="tracknumber"
+                                       defaultValue={this.credit.tracknumber}
+                                       onChange={this.onDataChange} />
                         </div>
                     </div>
 

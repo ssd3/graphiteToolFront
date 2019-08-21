@@ -11,7 +11,7 @@ class CreditProductsForm extends Component {
 
     render() {
         return (
-            <Panel header="Box products">
+            <Panel header="Credit products">
                 <div className="p-grid p-fluid">
                     <div className="p-grid p-fluid p-col-12">
                         <div className="vertical-space10" />

@@ -22,9 +22,9 @@ class BoxCreditSidebar extends Component {
                 style={{width:'75vw'}}
                 onHide={onHideBoxCreditSidebar}
                 dismissable={false}>
-                <Fieldset legend="Add To Box" style={{height: '92vh'}}>
+                <Fieldset legend="Add To Credit" style={{height: '92vh'}}>
                     <div className="p-grid p-fluid p-col-12">
-                        <div className="p-md-6">
+                        <div className="p-md-5">
                             <div className="p-grid p-fluid p-col-12">
                                 <div className="p-md-12">
                                     <CreditForm/>
@@ -41,7 +41,7 @@ class BoxCreditSidebar extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="p-md-6">
+                        <div className="p-md-7">
                             <CreditProductsForm/>
                         </div>
                     </div>

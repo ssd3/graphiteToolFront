@@ -21,7 +21,7 @@ const DebitToolbar = (props) => {
             </div>
             <div className="p-toolbar-group-right" style={{display: 'flex'}}>
                 <Button label="Add Product" icon="pi pi-plus" className="p-button-secondary" onClick={props.onAddDebit} />
-                <Button label="Add To Box" icon="pi pi-plus"
+                <Button label="Add To Credit" icon="pi pi-plus"
                         className="p-button-secondary"
                         onClick={props.onAddToBox}
                         disabled={props.selectedRows.length === 0 }/>

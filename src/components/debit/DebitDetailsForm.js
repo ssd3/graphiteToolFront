@@ -28,7 +28,6 @@ class DebitDetailsForm extends Component {
         const { loading } = this.props.rootStore.debitStore
         const { debit } = this.props
 
-        console.log('DebitDetailsForm statatuses', statuses)
         return ((debit && statuses) &&
             <Panel header="Product price details">
                 <div className="p-grid p-fluid" style={{height: '45vh'}}>

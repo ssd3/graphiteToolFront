@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Panel} from 'primereact/components/panel/Panel'
-import {Button} from 'primereact/components/button/Button'
 import {InputTextarea} from 'primereact/components/inputtextarea/InputTextarea'
 
 class CreditCommentForm extends Component {
@@ -11,7 +10,7 @@ class CreditCommentForm extends Component {
 
     render() {
         return (
-            <Panel header="Box comment">
+            <Panel header="Credit comment">
                 <div className="vertical-space10" />
                 <div className="p-grid p-fluid p-col-12">
                     <InputTextarea rows={6} cols={30}
