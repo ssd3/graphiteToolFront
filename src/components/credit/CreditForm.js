@@ -29,7 +29,7 @@ class CreditForm extends Component {
 
     render() {
         const { credit } = this.props
-        const { credittypes, /*buyers,*/ in_warehouses, out_warehouses } = this.props.rootStore.listStore.getListData
+        const { credittypes, staffs, in_warehouses, out_warehouses } = this.props.rootStore.listStore.getListData
         return (
             <Panel header="Credit details">
                 <div className="p-grid p-fluid">
@@ -47,7 +47,7 @@ class CreditForm extends Component {
                             <Dropdown id="buyerid"
                                       placeholder="Select buyer"
                                       value={this.credit.buyerid}
-                                      options={this.buyers}
+                                      options={staffs}
                                       onChange={this.onDataChange} />
                         </div>
                     </div>

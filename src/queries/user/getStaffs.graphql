@@ -1,0 +1,6 @@
+query GET_STAFFS {
+    staffs: users {
+        value: id
+        label: username
+    }
+}

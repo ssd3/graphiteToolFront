@@ -12,7 +12,8 @@ export default class ListStore {
             in_warehouses: this.rootStore.warehouseStore.in_warehouses,
             out_warehouses: this.rootStore.warehouseStore.out_warehouses,
             credittypes: this.rootStore.creditTypeStore.all_credittypes,
-            losstypes: this.rootStore.lossTypeStore.all_losstypes
+            losstypes: this.rootStore.lossTypeStore.all_losstypes,
+            staffs: this.rootStore.userStore.staffs
         }
     }
 }

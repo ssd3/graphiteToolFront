@@ -340,7 +340,7 @@ type RootQuery {
     productsByuser(after: String, before: String, categoryTitle: String, first: Int, last: Int): ProductConnection
     status(statusid: Int, title: String): StatusType
     statuses(dateFrom: DateTime, dateTo: DateTime, search: String): [StatusType]
-    "<graphene.types.scalars.String object at 0x7f4fc0b62a90>"
+    "<graphene.types.scalars.String object at 0x7ff969f75438>"
     user(email: String, userid: Int, username: String): UserType
     users: [UserType]
     warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]
@@ -416,31 +416,8 @@ type UpdateWarehouse {
 }
 
 type UserType {
-    categorySet: [CategoryType]
-    creditSet(after: String, before: String, credittypeid: ID, credittypeid_In: ID, first: Int, last: Int): CreditTypeConnection
-    creditcommentSet: [CreditCommentType]
-    creditdetailsSet: [CreditDetailsType]
-    credittypeSet: [CredittypeType]
-    dateJoined: DateTime!
-    debitSet(after: String, before: String, first: Int, last: Int, qty: Float, qty_Gt: Float, qty_Gte: Float, qty_Lt: Float, qty_Lte: Float, tracknumber_Icontains: String, warehouseid: ID, warehouseid_In: ID): DebitTypeConnection
-    discountSet: [DiscountType]
-    email: String!
-    firstName: String!
     id: ID!
-    isActive: Boolean!
-    isStaff: Boolean!
-    isSuperuser: Boolean!
-    lastLogin: DateTime
-    lastName: String!
-    losstypeSet: [LosstypeType]
-    password: String!
-    pricetypeSet: [PricetypeType]
-    productSet: [ProductType]
-    productcommentSet: [ProductCommentType]
-    productdetailsSet: [ProductDetailsType]
-    statusSet: [StatusType]
     username: String!
-    warehouseSet(after: String, before: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String): WarehouseTypeConnection
 }
 
 type Verify {
