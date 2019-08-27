@@ -10,7 +10,7 @@ import formatDate from '../common/FormatDate'
 import DebitRowTemplate from './DebitRowTemplate'
 import statusColor from '../common/StatusColor'
 import Pager from '../common/Pager'
-import BoxCreditSidebar from '../credit/BoxCreditSidebar'
+import CreditSidebar from '../credit/CreditSidebar'
 
 const expandedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-down'
 const collapsedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-right'
@@ -20,6 +20,8 @@ const collapsedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-ri
 export class Debits extends Component {
     constructor(props){
         super(props)
+
+        this.saveCredit = this.saveCredit.bind(this)
     }
 
     componentDidMount(){
@@ -41,6 +43,10 @@ export class Debits extends Component {
 
     hideBoxCreditSidebar = (e) => {
         this.props.rootStore.creditStore.showBoxCreditSidebar(false)
+    }
+
+    saveCredit(e) {
+        this.props.rootStore.creditStore.saveCredit()
     }
 
     hideDialog = (e) => {
@@ -175,7 +181,7 @@ export class Debits extends Component {
                 totalCount,
                 isShowDebitDialog } = this.props.rootStore.debitComplexStore
 
-        const { isBoxCreditSidebar } = this.props.rootStore.creditStore
+        const { isCreditSidebar } = this.props.rootStore.creditStore
 
         return (
             <div className="p-grid">
@@ -242,8 +248,9 @@ export class Debits extends Component {
                         </div>
                 </div>
 
-                <BoxCreditSidebar isBoxCreditSidebar={isBoxCreditSidebar}
-                                  onHideBoxCreditSidebar={this.hideBoxCreditSidebar}/>
+                <CreditSidebar isCreditSidebar={isCreditSidebar}
+                               onSaveCredit={this.saveCredit}
+                               onHideCreditSidebar={this.hideBoxCreditSidebar}/>
 
                 <DebitDialog form={debitFields}
                              isShowDebit={isShowDebitDialog}

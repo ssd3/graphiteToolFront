@@ -8,19 +8,19 @@ import CreditLossesForm from './CreditLossesForm'
 import CreditCommentForm from './CreditCommentForm'
 import CreditProductsForm from './CreditProductsForm'
 
-class BoxCreditSidebar extends Component {
+class CreditSidebar extends Component {
     constructor(props) {
         super(props)
     }
 
     render() {
-        const { isBoxCreditSidebar, onHideBoxCreditSidebar } = this.props
+        const { isCreditSidebar, onHideCreditSidebar, onSaveCredit } = this.props
         return (
             <Sidebar
-                visible={isBoxCreditSidebar}
+                visible={isCreditSidebar}
                 position="right"
                 style={{width:'75vw'}}
-                onHide={onHideBoxCreditSidebar}
+                onHide={onHideCreditSidebar}
                 dismissable={false}>
                 <Fieldset legend="Add To Credit" style={{height: '92vh'}}>
                     <div className="p-grid p-fluid p-col-12">
@@ -35,14 +35,16 @@ class BoxCreditSidebar extends Component {
                                     <CreditLossesForm/>
                                 </div>
                             </div>
+                        </div>
+                        <div className="p-md-7">
                             <div className="p-grid p-fluid p-col-12">
                                 <div className="p-md-12">
                                     <CreditCommentForm/>
                                 </div>
+                                <div className="p-md-12">
+                                    <CreditProductsForm/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="p-md-7">
-                            <CreditProductsForm/>
                         </div>
                     </div>
                 </Fieldset>
@@ -52,13 +54,13 @@ class BoxCreditSidebar extends Component {
                         &nbsp;
                     </div>
                     <div className="p-md-1">
-                        <Button label="Save" icon="pi pi-check" />
+                        <Button label="Save" icon="pi pi-check" onClick={onSaveCredit} />
                     </div>
                     <div className="p-md-1">
                         <Button label="Cancel"
                                 icon="pi pi-times"
                                 style={{paddingRight: '5px'}}
-                                onClick={onHideBoxCreditSidebar}
+                                onClick={onHideCreditSidebar}
                         />
                     </div>
                 </div>
@@ -69,9 +71,10 @@ class BoxCreditSidebar extends Component {
     }
 
     static propTypes = {
-        isBoxCreditSidebar: PropTypes.bool.isRequired,
-        onHideBoxCreditSidebar: PropTypes.func.isRequired
+        isCreditSidebar: PropTypes.bool.isRequired,
+        onHideCreditSidebar: PropTypes.func.isRequired,
+        onSaveCredit: PropTypes.func.isRequired
     }
 }
 
-export default BoxCreditSidebar
+export default CreditSidebar

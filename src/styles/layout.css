@@ -1584,3 +1584,7 @@ body .p-datatable .p-datatable-tbody > tr > td {
 .p-col-12 {
   padding: 0.2em;
 }
+
+.calcVh {
+  height: calc(100vw * (9/16));
+}

@@ -39,12 +39,18 @@ export default observer(({ form, isShowDebit, title, hideDialog }) => (
                                     <div className="p-col-12">
                                         <label htmlFor={form.$('warehouseid').id}>{form.$('warehouseid').label}</label>
                                         <Dropdown {...form.$('warehouseid').bind()}
+                                                  filter={true}
+                                                  filterBy="label"
+                                                  showClear={true}
                                                   options={form.in_warehouses}
                                                   className={classNames({ 'p-error': form.$('warehouseid').error })}/>
                                     </div>
                                     <div className="p-col-12">
                                         <label htmlFor={form.$('statusid').id}>{form.$('statusid').label}</label>
                                         <Dropdown {...form.$('statusid').bind()}
+                                                  filter={true}
+                                                  filterBy="label"
+                                                  showClear={true}
                                                   options={form.statuses}
                                                   className={classNames({ 'p-error': form.$('statusid').error })}/>
                                     </div>
@@ -89,6 +95,9 @@ export default observer(({ form, isShowDebit, title, hideDialog }) => (
                                     <div className="p-col-12">
                                         <label htmlFor={form.$('categoryid').id}>{form.$('categoryid').label}</label>
                                         <Dropdown {...form.$('categoryid').bind()}
+                                                  filter={true}
+                                                  filterBy="label"
+                                                  showClear={true}
                                                   options={form.categories}
                                                   className={classNames({ 'p-error': form.$('categoryid').error })}/>
                                     </div>

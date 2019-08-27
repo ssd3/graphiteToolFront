@@ -42,6 +42,9 @@ class DebitDetailsForm extends Component {
                         <label htmlFor="statusid">Status</label>
                         <Dropdown id="statusid"
                                   placeholder="Select Status"
+                                  filter={true}
+                                  filterBy="label"
+                                  showClear={true}
                                   value={debit.status.statusid}
                                   options={statuses}
                                   onChange={this.onDataChange} />
@@ -81,6 +84,9 @@ class DebitDetailsForm extends Component {
                     <div className="p-col-12">
                         <label htmlFor="warehouseid">Warehouse</label>
                         <Dropdown id="warehouseid"
+                                  filter={true}
+                                  filterBy="label"
+                                  showClear={true}
                                   placeholder="Select warehouse"
                                   value={debit.warehouse.warehouseid}
                                   options={in_warehouses}

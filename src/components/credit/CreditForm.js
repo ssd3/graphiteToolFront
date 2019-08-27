@@ -11,25 +11,16 @@ import {InputText} from 'primereact/components/inputtext/InputText'
 class CreditForm extends Component {
     constructor(props) {
         super(props)
-        this.credit = {
-            credittypeid: 1,
-            buyerid: 1,
-            fromwarehouseid: 2,
-            towarehouseid: 3,
-            tracknumber: 'xxx-yyy-zzz',
-            sent: new Date(),
-            received: new Date()
-        }
-        this.buyers = []
     }
 
     onDataChange = (e) => {
-        console.log('e', e.target.value)
+        this.props.rootStore.creditStore.newCredit[e.target.id] = e.target.value
     }
 
     render() {
-        const { credit } = this.props
+        const { newCredit } = this.props.rootStore.creditStore
         const { credittypes, staffs, in_warehouses, out_warehouses } = this.props.rootStore.listStore.getListData
+
         return (
             <Panel header="Credit details">
                 <div className="p-grid p-fluid">
@@ -38,7 +29,10 @@ class CreditForm extends Component {
                             <label htmlFor="credittypeid">Credit type</label>
                             <Dropdown id="credittypeid"
                                       placeholder="Select credit type"
-                                      value={this.credit.credittypeid}
+                                      filter={true}
+                                      filterBy="label"
+                                      showClear={true}
+                                      value={newCredit.credittypeid}
                                       options={credittypes}
                                       onChange={this.onDataChange} />
                         </div>
@@ -46,7 +40,10 @@ class CreditForm extends Component {
                             <label htmlFor="buyerid">Buyer</label>
                             <Dropdown id="buyerid"
                                       placeholder="Select buyer"
-                                      value={this.credit.buyerid}
+                                      filter={true}
+                                      filterBy="label"
+                                      showClear={true}
+                                      value={newCredit.buyerid}
                                       options={staffs}
                                       onChange={this.onDataChange} />
                         </div>
@@ -56,7 +53,10 @@ class CreditForm extends Component {
                             <label htmlFor="fromwarehouseid">Warehouse from</label>
                             <Dropdown id="fromwarehouseid"
                                       placeholder="Select warehouse from"
-                                      value={this.credit.fromwarehouseid}
+                                      filter={true}
+                                      filterBy="label"
+                                      showClear={true}
+                                      value={newCredit.fromwarehouseid}
                                       options={out_warehouses}
                                       onChange={this.onDataChange} />
                         </div>
@@ -64,7 +64,10 @@ class CreditForm extends Component {
                             <label htmlFor="towarehouseid">Warehouse to</label>
                             <Dropdown id="towarehouseid"
                                       placeholder="Select warehouse to"
-                                      value={this.credit.towarehouseid}
+                                      filter={true}
+                                      filterBy="label"
+                                      showClear={true}
+                                      value={newCredit.towarehouseid}
                                       options={in_warehouses}
                                       onChange={this.onDataChange} />
                         </div>
@@ -73,14 +76,14 @@ class CreditForm extends Component {
                         <div className="p-md-6">
                             <label htmlFor="sent">Sent date</label>
                             <Calendar id="sent"
-                                      value={this.credit.sent}
+                                      value={newCredit.sent}
                                       onChange={this.onDataChange}
                                       showIcon={true} />
                         </div>
                         <div className="p-md-6">
                             <label htmlFor="received">Received date</label>
                             <Calendar id="received"
-                                      value={this.credit.received}
+                                      value={newCredit.received}
                                       onChange={this.onDataChange}
                                       showIcon={true} />
                         </div>
@@ -89,12 +92,12 @@ class CreditForm extends Component {
                         <div className="p-md-6">
                             <label htmlFor="tracknumber">Track number</label>
                             <InputText id="tracknumber"
-                                       defaultValue={this.credit.tracknumber}
+                                       defaultValue={newCredit.tracknumber}
                                        onChange={this.onDataChange} />
                         </div>
                     </div>
 
-                    <input type="hidden" id="creditid" value={this.credit.creditid} />
+                    <input type="hidden" id="creditid" value={newCredit.creditid} />
                 </div>
 
             </Panel>

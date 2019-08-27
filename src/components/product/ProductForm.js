@@ -31,6 +31,9 @@ class ProductForm extends Component {
                             <label htmlFor="categoryid">Category</label>
                             <Dropdown id="categoryid"
                                       placeholder="Select category"
+                                      filter={true}
+                                      filterBy="label"
+                                      showClear={true}
                                       value={product.category.categoryid}
                                       options={this.props.rootStore.categoryStore.categories}
                                       onChange={this.onDataChange} />
