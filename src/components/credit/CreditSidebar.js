@@ -19,12 +19,12 @@ class CreditSidebar extends Component {
             <Sidebar
                 visible={isCreditSidebar}
                 position="right"
-                style={{width:'75vw'}}
+                style={{width:'85vw'}}
                 onHide={onHideCreditSidebar}
                 dismissable={false}>
                 <Fieldset legend="Add To Credit" style={{height: '92vh'}}>
                     <div className="p-grid p-fluid p-col-12">
-                        <div className="p-md-5">
+                        <div className="p-md-4">
                             <div className="p-grid p-fluid p-col-12">
                                 <div className="p-md-12">
                                     <CreditForm/>
@@ -36,13 +36,13 @@ class CreditSidebar extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="p-md-7">
+                        <div className="p-md-8">
                             <div className="p-grid p-fluid p-col-12">
                                 <div className="p-md-12">
-                                    <CreditCommentForm/>
+                                    <CreditProductsForm/>
                                 </div>
                                 <div className="p-md-12">
-                                    <CreditProductsForm/>
+                                    <CreditCommentForm/>
                                 </div>
                             </div>
                         </div>

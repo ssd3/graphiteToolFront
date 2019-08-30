@@ -54,6 +54,7 @@ query GET_DEBITS
                 pricetype: pricetypeid {
                     pricetypeid
                     title
+                    ratio
                 }
                 discount: discountid {
                     discountid

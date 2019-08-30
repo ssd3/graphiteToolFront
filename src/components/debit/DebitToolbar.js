@@ -23,8 +23,8 @@ const DebitToolbar = (props) => {
                 <Button label="Add Product" icon="pi pi-plus" className="p-button-secondary" onClick={props.onAddDebit} />
                 <Button label="Add To Credit" icon="pi pi-plus"
                         className="p-button-secondary"
-                        onClick={props.onAddToBox}
-                        disabled={props.selectedRows.length === 0 }/>
+                        onClick={props.onAddToCredit}
+                        disabled={props.selectedRows.length === 0 && props.creditProducts.length === 0}/>
                 <StatusChange selectedRows={props.selectedRows} />
                 <ToggleButton style={{width:'150px'}} onLabel="Columns Filter On" offLabel="Columns Filter Off" onIcon="pi pi-check" offIcon="pi pi-times"
                               checked={props.isFilteredByColumns} onChange={props.onFilterColumns} />
@@ -41,14 +41,15 @@ DebitToolbar.propTypes = {
     onDebitSearchInput: PropTypes.func.isRequired,
     onDebitSearch: PropTypes.func.isRequired,
     onAddDebit: PropTypes.func.isRequired,
-    onAddToBox: PropTypes.func.isRequired,
+    onAddToCredit: PropTypes.func.isRequired,
     onFilterColumns: PropTypes.func.isRequired,
     isFilteredByColumns: PropTypes.bool.isRequired,
     onSortColumns: PropTypes.func.isRequired,
     isSortedByColumns: PropTypes.bool.isRequired,
     onReset: PropTypes.func.isRequired,
     searchText: PropTypes.string,
-    selectedRows: PropTypes.array.isRequired
+    selectedRows: PropTypes.array.isRequired,
+    creditProducts: PropTypes.array
 }
 
 export default DebitToolbar

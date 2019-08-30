@@ -41,8 +41,8 @@ export class Debits extends Component {
         }
     }
 
-    hideBoxCreditSidebar = (e) => {
-        this.props.rootStore.creditStore.showBoxCreditSidebar(false)
+    hideCreditSidebar = (e) => {
+        this.props.rootStore.creditStore.showCreditSidebar(false)
     }
 
     saveCredit(e) {
@@ -111,8 +111,8 @@ export class Debits extends Component {
         debitComplexStore.debitDialogShow(true)
     }
 
-    addToBox = () => {
-        this.props.rootStore.creditStore.showBoxCreditSidebar(true)
+    addToCredit = () => {
+        this.props.rootStore.creditStore.showCreditSidebar(true)
     }
 
     filterColumns = (e) => {
@@ -181,7 +181,7 @@ export class Debits extends Component {
                 totalCount,
                 isShowDebitDialog } = this.props.rootStore.debitComplexStore
 
-        const { isCreditSidebar } = this.props.rootStore.creditStore
+        const { isCreditSidebar, newCredit } = this.props.rootStore.creditStore
 
         return (
             <div className="p-grid">
@@ -192,7 +192,7 @@ export class Debits extends Component {
                         <div>
                             <DebitToolbar onDebitSearch={this.debitSearch}
                                           onAddDebit={this.addDebit}
-                                          onAddToBox={this.addToBox}
+                                          onAddToCredit={this.addToCredit}
                                           isFilteredByColumns={isFilteredByColumns}
                                           onFilterColumns={this.filterColumns}
                                           isSortedByColumns={isSortedByColumns}
@@ -201,7 +201,8 @@ export class Debits extends Component {
                                           searchText={searchText}
                                           onDebitSearchInput={this.debitSearchInput}
                                           onHandleKeyDown={this.handleKeyDown}
-                                          selectedRows={selectedRows} />
+                                          selectedRows={selectedRows}
+                                          creditProducts={newCredit.creditProducts}  />
 
                             <div className="vertical-space10" />
 
@@ -250,7 +251,7 @@ export class Debits extends Component {
 
                 <CreditSidebar isCreditSidebar={isCreditSidebar}
                                onSaveCredit={this.saveCredit}
-                               onHideCreditSidebar={this.hideBoxCreditSidebar}/>
+                               onHideCreditSidebar={this.hideCreditSidebar}/>
 
                 <DebitDialog form={debitFields}
                              isShowDebit={isShowDebitDialog}
