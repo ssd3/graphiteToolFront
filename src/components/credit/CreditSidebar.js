@@ -6,7 +6,7 @@ import {Button} from 'primereact/button'
 import CreditForm from './CreditForm'
 import CreditLossesForm from './CreditLossesForm'
 import CreditCommentForm from './CreditCommentForm'
-import CreditProductsForm from './CreditProductsForm'
+import CreditDetailsForm from './CreditDetailsForm'
 
 class CreditSidebar extends Component {
     constructor(props) {
@@ -19,9 +19,10 @@ class CreditSidebar extends Component {
             <Sidebar
                 visible={isCreditSidebar}
                 position="right"
-                style={{width:'85vw'}}
+                style={{width:'95vw'}}
                 onHide={onHideCreditSidebar}
-                dismissable={false}>
+                dismissable={false}
+                showCloseIcon={false}>
                 <Fieldset legend="Add To Credit" style={{height: '92vh'}}>
                     <div className="p-grid p-fluid p-col-12">
                         <div className="p-md-4">
@@ -30,21 +31,25 @@ class CreditSidebar extends Component {
                                     <CreditForm/>
                                 </div>
                             </div>
+                        </div>
+                        <div className="p-md-4">
                             <div className="p-grid p-fluid p-col-12">
                                 <div className="p-md-12">
                                     <CreditLossesForm/>
                                 </div>
                             </div>
                         </div>
-                        <div className="p-md-8">
+                        <div className="p-md-4">
                             <div className="p-grid p-fluid p-col-12">
-                                <div className="p-md-12">
-                                    <CreditProductsForm/>
-                                </div>
                                 <div className="p-md-12">
                                     <CreditCommentForm/>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div className="p-grid p-fluid p-col-12">
+                        <div className="p-md-12">
+                            <CreditDetailsForm/>
                         </div>
                     </div>
                 </Fieldset>
@@ -57,7 +62,7 @@ class CreditSidebar extends Component {
                         <Button label="Save" icon="pi pi-check" onClick={onSaveCredit} />
                     </div>
                     <div className="p-md-1">
-                        <Button label="Cancel"
+                        <Button label="Close"
                                 icon="pi pi-times"
                                 style={{paddingRight: '5px'}}
                                 onClick={onHideCreditSidebar}

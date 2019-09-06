@@ -31,8 +31,19 @@ type CreateCreditComment {
     creditcomment: CreditCommentType
 }
 
+type CreateCreditComplex {
+    credit: CreditType
+    creditcomment: CreditCommentType
+    creditdetails: [CreditDetailsType]
+    creditlosses: [CreditLossType]
+}
+
 type CreateCreditDetail {
     creditdetail: CreditDetailsType
+}
+
+type CreateCreditLoss {
+    creditloss: CreditLossType
 }
 
 type CreateCreditType {
@@ -90,10 +101,21 @@ type CreditDetailsType {
     created: DateTime!
     creditdetailsid: ID!
     creditid: CreditType!
+    debitid: DebitType!
     price: Float!
     pricetypeid: PricetypeType!
     productid: ProductType!
     qty: Float!
+    userid: UserType!
+}
+
+type CreditLossType {
+    created: DateTime!
+    creditid: CreditType!
+    creditlossid: ID!
+    losstypeid: LosstypeType!
+    notes: String
+    rate: Float!
     userid: UserType!
 }
 
@@ -103,6 +125,7 @@ type CreditType implements Node {
     creditcommentSet: [CreditCommentType]
     creditdetailsSet: [CreditDetailsType]
     creditid: ID!
+    creditlossSet: [CreditLossType]
     credittypeid: CredittypeType!
     fromwarehouseid: Int
     "The ID of the object."
@@ -142,6 +165,7 @@ type CredittypeType {
 
 type DebitType implements Node {
     created: DateTime!
+    creditdetailsSet: [CreditDetailsType]
     debitid: ID!
     discountid: DiscountType!
     "The ID of the object."
@@ -186,6 +210,7 @@ type DiscountType {
 
 type LosstypeType {
     created: DateTime!
+    creditlossSet: [CreditLossType]
     losstypeid: ID!
     title: String!
     userid: UserType!
@@ -279,7 +304,9 @@ type RootMutation {
     createCategory(title: String!): CreateCategory
     createCredit(buyerid: Int!, credittypeid: Int!, fromwarehouseid: Int, received: DateTime, sent: DateTime, towarehouseid: Int, tracknumber: String): CreateCredit
     createCreditcomment(comment: String!, creditid: Int!): CreateCreditComment
-    createCreditdetail(creditid: Int!, price: Int!, pricetypeid: Int!, productid: Int!, qty: Int!): CreateCreditDetail
+    createCreditcomplex(creditData: CreditInput!, creditcommentData: CreditCommentInput, creditdetailsData: CreditDetailsInput!, creditlossData: CreditLossesInput): CreateCreditComplex
+    createCreditdetail(creditid: Int!, debitid: Int!, price: Decimal!, pricetypeid: Int!, productid: Int!, qty: Decimal!): CreateCreditDetail
+    createCreditloss(creditid: Int!, losstypeid: Int!, notes: String, rate: Decimal!): CreateCreditLoss
     createCredittype(description: String, title: String!): CreateCreditType
     createDebit(discountid: Int!, notes: String, price: Decimal!, pricetypeid: Int!, productid: Int!, qty: Decimal!, statusid: Int!, tracknumber: String!, warehouseid: Int!): CreateDebit
     createDebitcomplex(debitData: DebitInput!, productData: ProductInput!, productcommentData: ProductCommentInput, productdetailsData: ProductDetailsInput): CreateDebitComplex
@@ -296,7 +323,8 @@ type RootMutation {
     updateCategory(categoryid: Int!, title: String!): UpdateCategory
     updateCredit(buyerid: Int!, creditid: Int!, credittypeid: Int!, fromwarehouseid: Int, received: DateTime, sent: DateTime, towarehouseid: Int, tracknumber: String): UpdateCredit
     updateCreditcomment(comment: String, creditcommentid: Int!, creditid: Int!): UpdateCreditComment
-    updateCreditdetail(creditdetailid: Int!, creditid: Int, price: Int, pricetypeid: Int, productid: Int, qty: Int): UpdateCreditDetail
+    updateCreditdetail(creditdetailid: Int!, creditid: Int, debitid: Int!, price: Decimal, pricetypeid: Int, productid: Int, qty: Decimal): UpdateCreditDetail
+    updateCreditloss(creditid: Int, creditlossid: Int!, losstypeid: Int, notes: String, rate: Decimal): UpdateCreditLoss
     updateCredittype(credittypeid: Int!, description: String, title: String): UpdateCreditType
     updateDebit(debitid: Int!, discountid: Int!, notes: String, price: Decimal!, pricetypeid: Int!, productid: Int!, qty: Decimal!, statusid: Int!, tracknumber: String!, warehouseid: Int!): UpdateDebit
     updateDebitStatusid(debitid: [Int], statusid: Int): UpdateDebitStatusID
@@ -318,6 +346,8 @@ type RootQuery {
     creditcommentsBycredit(creditid: Int): [CreditCommentType]
     creditdetail(creditdetailid: Int): CreditDetailsType
     creditdetails(creditid: Int): [CreditDetailsType]
+    creditloss(creditlossid: Int): CreditLossType
+    creditlosses(creditid: Int): [CreditLossType]
     credits(after: String, before: String, credittypeid: ID, credittypeid_In: ID, first: Int, last: Int): CreditTypeConnection
     credittype(credittypeid: Int): CredittypeType
     credittypes: [CredittypeType]
@@ -340,7 +370,7 @@ type RootQuery {
     productsByuser(after: String, before: String, categoryTitle: String, first: Int, last: Int): ProductConnection
     status(statusid: Int, title: String): StatusType
     statuses(dateFrom: DateTime, dateTo: DateTime, search: String): [StatusType]
-    "<graphene.types.scalars.String object at 0x7ff969f75438>"
+    "<graphene.types.scalars.String object at 0x7f412c4c9be0>"
     user(email: String, userid: Int, username: String): UserType
     users: [UserType]
     warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]
@@ -370,6 +400,10 @@ type UpdateCreditComment {
 
 type UpdateCreditDetail {
     creditdetail: CreditDetailsType
+}
+
+type UpdateCreditLoss {
+    creditloss: CreditLossType
 }
 
 type UpdateCreditType {
@@ -451,6 +485,42 @@ type WarehouseTypeEdge {
     cursor: String!
     "The item at the end of the edge"
     node: WarehouseType
+}
+
+input CreditCommentInput {
+    comment: String
+}
+
+input CreditDetailInput {
+    debitid: Int!
+    price: Decimal!
+    pricetypeid: Int!
+    productid: Int!
+    qty: Decimal!
+}
+
+input CreditDetailsInput {
+    creditdetails: [CreditDetailInput]
+}
+
+input CreditInput {
+    buyerid: Int!
+    credittypeid: Int!
+    fromwarehouseid: Int!
+    received: DateTime
+    sent: DateTime
+    towarehouseid: Int!
+    tracknumber: String
+}
+
+input CreditLossInput {
+    losstypeid: Int!
+    notes: String
+    rate: Decimal!
+}
+
+input CreditLossesInput {
+    creditlosses: [CreditLossInput]
 }
 
 input DebitInput {

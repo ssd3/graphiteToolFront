@@ -54,6 +54,9 @@ export default class DebitComplexStore {
                     this.loading = loading
                     if (data.debits !== null) {
                         this.debits = data.debits.edges.map(node => node.node)
+                        this.debits.forEach((debit, index) => {
+                            this.debits[index].availableqty = debit.qty - debit.credit.reduce((qty, item) => qty + item.qty, 0)
+                        })
                         this.pageInfo = data.debits.pageInfo
                         this.totalCount = data.debits.totalCount
                     }
@@ -212,11 +215,12 @@ export default class DebitComplexStore {
         this.loading = true
         const debitIdx = _.findIndex(this.debits, {debitid: debitid})
         if (debitIdx > -1) {
-            const { tracknumber, status, qty, price, pricetype, discount, warehouse, notes } = debit
+            const { tracknumber, status, qty, price, pricetype, discount, warehouse, notes, availableqty } = debit
             this.debits[debitIdx].tracknumber = tracknumber
             this.debits[debitIdx].status = status
             this.debits[debitIdx].price = price
             this.debits[debitIdx].qty = qty
+            // this.debits[debitIdx].availableqty = availableqty
             this.debits[debitIdx].pricetype = pricetype
             this.debits[debitIdx].discount = discount
             this.debits[debitIdx].warehouse = warehouse

@@ -102,7 +102,7 @@ class CreditLossesForm extends Component {
                         </div>
                         <div className="vertical-space10" />
                         <div className="p-md-12">
-                            <ScrollPanel style={{width: '100%', height: '33vh'}}>
+                            <ScrollPanel style={{width: '100%', height: '160px'}}>
                                 <DataTable value={newCredit.creditlosses}
                                            editable={true}
                                            autoLayout={true}>

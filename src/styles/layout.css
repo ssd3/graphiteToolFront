@@ -1585,6 +1585,6 @@ body .p-datatable .p-datatable-tbody > tr > td {
   padding: 0.2em;
 }
 
-.calcVh {
-  height: calc(100vw * (9/16));
+.p-datatable-row {
+  text-align: center;
 }

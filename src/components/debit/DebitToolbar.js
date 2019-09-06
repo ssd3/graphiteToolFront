@@ -24,7 +24,7 @@ const DebitToolbar = (props) => {
                 <Button label="Add To Credit" icon="pi pi-plus"
                         className="p-button-secondary"
                         onClick={props.onAddToCredit}
-                        disabled={props.selectedRows.length === 0 && props.creditProducts.length === 0}/>
+                        disabled={props.selectedRows.length === 0 && props.creditDetails.length === 0}/>
                 <StatusChange selectedRows={props.selectedRows} />
                 <ToggleButton style={{width:'150px'}} onLabel="Columns Filter On" offLabel="Columns Filter Off" onIcon="pi pi-check" offIcon="pi pi-times"
                               checked={props.isFilteredByColumns} onChange={props.onFilterColumns} />
@@ -49,7 +49,7 @@ DebitToolbar.propTypes = {
     onReset: PropTypes.func.isRequired,
     searchText: PropTypes.string,
     selectedRows: PropTypes.array.isRequired,
-    creditProducts: PropTypes.array
+    creditDetails: PropTypes.array
 }
 
 export default DebitToolbar

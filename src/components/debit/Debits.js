@@ -11,6 +11,7 @@ import DebitRowTemplate from './DebitRowTemplate'
 import statusColor from '../common/StatusColor'
 import Pager from '../common/Pager'
 import CreditSidebar from '../credit/CreditSidebar'
+import FormatBold from '../common/FormatBold'
 
 const expandedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-down'
 const collapsedAllClass = 'p-row-toggler-icon pi pi-fw p-clickable pi-chevron-right'
@@ -168,6 +169,14 @@ export class Debits extends Component {
         return statusColor(rowData, column, 'status')
     }
 
+    availableQty = (rowData, column) => {
+        const qty = +rowData[column.field]
+        if (qty <= 0)
+            return <span style={{color: 'red'}}>{rowData[column.field]}</span>
+        else
+            return <FormatBold rowData={rowData} column={column} />
+    }
+
     render() {
         const { loading,
                 error,
@@ -202,7 +211,7 @@ export class Debits extends Component {
                                           onDebitSearchInput={this.debitSearchInput}
                                           onHandleKeyDown={this.handleKeyDown}
                                           selectedRows={selectedRows}
-                                          creditProducts={newCredit.creditProducts}  />
+                                          creditDetails={newCredit.creditdetails}  />
 
                             <div className="vertical-space10" />
 
@@ -233,7 +242,9 @@ export class Debits extends Component {
                                 <Column field="price" header="Price" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="pricetype.title" header="Price type" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
                                 <Column field="discount.title" header="Discount" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}}  />
+                                <Column field="availableqty" header="Available Qty" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} body={this.availableQty} />
                                 <Column field="status.title" header="Status" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} body={this.statusColor}  />
+                                <Column field="user.username" header="Supplier" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} />
                                 <Column field="created" header="Created" sortable={isSortedByColumns} filter={isFilteredByColumns} headerStyle={{overflow:'visible'}} body={formatDate}  />
                                 <Column selectionMode="multiple" style={{ width:'3em'}} />
                             </DataTable>

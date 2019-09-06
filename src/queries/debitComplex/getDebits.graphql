@@ -67,8 +67,15 @@ query GET_DEBITS
                     title
                     color
                 }
+                credit: creditdetailsSet {
+                    qty
+                }
                 notes
                 created
+                user: userid {
+                    id
+                    username
+                }
             }
         }
         pageInfo {
