@@ -1,4 +1,4 @@
-import {action, observable} from 'mobx'
+import {action, extendObservable, observable} from 'mobx'
 import DebitComplexService from '../services/debitComplexService'
 import _ from 'lodash'
 
@@ -53,10 +53,16 @@ export default class DebitComplexStore {
                 .then(({ loading, data }) => {
                     this.loading = loading
                     if (data.debits !== null) {
-                        this.debits = data.debits.edges.map(node => node.node)
-                        this.debits.forEach((debit, index) => {
-                            this.debits[index].availableqty = debit.qty - debit.credit.reduce((qty, item) => qty + item.qty, 0)
+                        //TODO: MobX observable objects do not detect or react to property assignments that weren't declared observable before.
+                        // So MobX observable objects act as records with predefined keys. You can use extendObservable(target, props) to introduce
+                        // new observable properties to an object.
+                        // My solution: so, we should prepare the full object, then assign it to observable target object
+                        // In my case 'availableqty' is a new property on object
+                        const _data = data.debits.edges.map(node => node.node)
+                        _data.forEach((debit, index) => {
+                            _data[index].availableqty = debit.qty - debit.credit.reduce((qty, item) => qty + item.qty, 0)
                         })
+                        this.debits = _data
                         this.pageInfo = data.debits.pageInfo
                         this.totalCount = data.debits.totalCount
                     }
