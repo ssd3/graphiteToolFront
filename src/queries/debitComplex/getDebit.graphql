@@ -47,6 +47,9 @@ query GET_DEBIT($debitid: Int!) {
                     title
                     color
                 }
+                credit: creditdetailsSet {
+                    qty
+                }
                 notes
                 created
     }

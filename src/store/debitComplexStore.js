@@ -215,12 +215,12 @@ export default class DebitComplexStore {
         this.loading = true
         const debitIdx = _.findIndex(this.debits, {debitid: debitid})
         if (debitIdx > -1) {
-            const { tracknumber, status, qty, price, pricetype, discount, warehouse, notes, availableqty } = debit
+            const { tracknumber, status, qty, price, pricetype, discount, warehouse, notes, credit } = debit
             this.debits[debitIdx].tracknumber = tracknumber
             this.debits[debitIdx].status = status
             this.debits[debitIdx].price = price
             this.debits[debitIdx].qty = qty
-            // this.debits[debitIdx].availableqty = availableqty
+            this.debits[debitIdx].availableqty = qty - credit.reduce((qty, item) => qty + item.qty, 0)
             this.debits[debitIdx].pricetype = pricetype
             this.debits[debitIdx].discount = discount
             this.debits[debitIdx].warehouse = warehouse

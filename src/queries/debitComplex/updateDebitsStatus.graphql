@@ -50,6 +50,9 @@ mutation UPDATE_DEBITS_STATUS($debitid: [Int]!, $statusid: Int!)
                 title
                 color
             }
+            credit: creditdetailsSet {
+                qty
+            }
             notes
             created
         }

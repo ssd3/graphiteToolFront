@@ -72,6 +72,9 @@ mutation UPDATE_DEBIT
                 title
                 color
             }
+            credit: creditdetailsSet {
+                qty
+            }
             notes
             created
         }

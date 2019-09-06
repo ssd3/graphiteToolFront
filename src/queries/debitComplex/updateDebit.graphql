@@ -108,6 +108,9 @@ mutation UpdateDebitComplex
                 title
                 color
             }
+            credit: creditdetailsSet {
+                qty
+            }
             notes
             created
         }
