@@ -49,7 +49,7 @@ class CreditDetailsForm extends Component {
     }
 
     render() {
-        const { newCredit,
+        const { credit,
                 creditDetailsSum = 0,
                 creditDetailsCount = 0,
                 creditDetailsIncomeSum = 0
@@ -76,25 +76,25 @@ class CreditDetailsForm extends Component {
                     <div className="p-grid p-fluid p-col-12">
                         <div className="p-md-12">
                             <ScrollPanel style={{width: '100%', height: '40vh'}}>
-                                <DataTable value={newCredit.creditdetails}
+                                <DataTable value={credit.creditdetails}
                                            reorderableColumns={true}
                                            resizableColumns={true}
                                            editable={true}
                                            autoLayout={true}
                                            footerColumnGroup={footerColumnGroup}>
-                                    <Column field="productid" header="ID" />
-                                    <Column field="title" header="Product" />
-                                    <Column field="debitprice" header="Debit price" />
-                                    <Column field="debitavailableqty" header="Debit available qty" />
-                                    <Column field="debitpricetype" header="Debit price type" />
-                                    <Column field="discount" header="Discount" />
+                                    <Column field="product.productid" header="ID" />
+                                    <Column field="product.title" header="Product" />
+                                    <Column field="debit.price" header="Debit price" />
+                                    <Column field="debit.availableqty" header="Debit available qty" />
+                                    <Column field="debit.pricetype.title" header="Debit price type" />
+                                    <Column field="debit.discount.title" header="Discount" />
                                     <Column field="discountprice" header="Discount price" body={this.formatBold} />
-                                    <Column field="debitrowsum" header="Debit row sum" />
-                                    <Column field="creditprice" header="Credit price" editor={this.creditNumberEditor} />
-                                    <Column field="creditpricetype" header="Credit price type" />
-                                    <Column field="creditqty" header="Credit qty" editor={this.creditNumberEditor} />
-                                    <Column field="creditrowsum" header="Credit row sum" />
-                                    <Column field="creditrowincome" header="Income row" body={this.formatBold} />
+                                    <Column field="debit.rowsum" header="Debit row sum" />
+                                    <Column field="price" header="Credit price" editor={this.creditNumberEditor} />
+                                    <Column field="pricetype.title" header="Credit price type" />
+                                    <Column field="qty" header="Credit qty" editor={this.creditNumberEditor} />
+                                    <Column field="rowsum" header="Credit row sum" />
+                                    <Column field="rowincome" header="Income row" body={this.formatBold} />
                                     <Column style={{width: '35px'}} body={this.deleteRowTemplate} />
                                 </DataTable>
                             </ScrollPanel>

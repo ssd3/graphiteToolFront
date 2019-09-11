@@ -3,6 +3,9 @@ import CREATE_CREDIT_COMPLEX from '../queries/creditComplex/createCreditComplex.
 
 class CreditService {
     saveCredit = async (credit) => {
+        if (credit.creditid !== '') {
+            console.log('update credit: ', credit)
+        }
         return await client.mutate({
             mutation: credit.creditid === '' ? CREATE_CREDIT_COMPLEX : CREATE_CREDIT_COMPLEX,
             variables: credit

@@ -18,18 +18,22 @@ class CreditCommentForm extends Component {
     }
 
     render() {
-        const { newCredit } = this.props.rootStore.creditStore
+        const { creditComment } = this.props
         return (
             <Panel header="Credit comment">
                 <div className="vertical-space10" />
                 <div className="p-grid p-fluid p-col-12">
                     <InputTextarea rows={6} cols={30}
-                                   defaultValue={newCredit.comment}
+                                   defaultValue={creditComment.comment}
                                    placeholder="Type comment here"
                                    onChange={this.onCommentChange} />
                 </div>
             </Panel>
         )
+    }
+
+    static propTypes = {
+        creditComment: PropTypes.object.isRequired
     }
 }
 

@@ -74,9 +74,11 @@ export default class DebitStore {
             updatedDebit[e.target.id] = e.target.value
 
             const validation = new Validator(updatedDebit, rules)
-            validation.setAttributeNames({ tracknumber: 'Track Number' })
-            validation.setAttributeNames({ qty: 'Product Qty' })
-            validation.setAttributeNames({ price: 'Product Price' })
+            validation.setAttributeNames({
+                tracknumber: 'Track Number',
+                qty: 'Product Qty',
+                price: 'Product Price'
+            })
             if (validation.check())
                 this.saveDebit(updatedDebit, debitid)
             else

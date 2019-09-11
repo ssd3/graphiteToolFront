@@ -7,14 +7,21 @@ import CreditForm from './CreditForm'
 import CreditLossesForm from './CreditLossesForm'
 import CreditCommentForm from './CreditCommentForm'
 import CreditDetailsForm from './CreditDetailsForm'
+import {inject, observer} from 'mobx-react'
 
+@inject('rootStore')
+@observer
 class CreditSidebar extends Component {
     constructor(props) {
         super(props)
     }
 
     render() {
-        const { isCreditSidebar, onHideCreditSidebar, onSaveCredit } = this.props
+        const { isCreditSidebar,
+                onHideCreditSidebar,
+                onSaveCredit,
+                credit,
+                creditLossSum = 0 } = this.props
         return (
             <Sidebar
                 visible={isCreditSidebar}
@@ -28,21 +35,23 @@ class CreditSidebar extends Component {
                         <div className="p-md-4">
                             <div className="p-grid p-fluid p-col-12">
                                 <div className="p-md-12">
-                                    <CreditForm/>
+                                    <CreditForm credit={credit}/>
                                 </div>
                             </div>
                         </div>
                         <div className="p-md-4">
                             <div className="p-grid p-fluid p-col-12">
                                 <div className="p-md-12">
-                                    <CreditLossesForm/>
+                                    <CreditLossesForm creditlosses={credit.creditlosses}
+                                                      creditLossSum={creditLossSum}
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div className="p-md-4">
                             <div className="p-grid p-fluid p-col-12">
                                 <div className="p-md-12">
-                                    <CreditCommentForm/>
+                                    <CreditCommentForm creditComment={credit.creditcomment}/>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +85,8 @@ class CreditSidebar extends Component {
     }
 
     static propTypes = {
+        credit: PropTypes.object.isRequired,
+        creditLossSum: PropTypes.number.isRequired,
         isCreditSidebar: PropTypes.bool.isRequired,
         onHideCreditSidebar: PropTypes.func.isRequired,
         onSaveCredit: PropTypes.func.isRequired

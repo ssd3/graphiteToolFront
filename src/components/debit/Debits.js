@@ -190,7 +190,7 @@ export class Debits extends Component {
                 totalCount,
                 isShowDebitDialog } = this.props.rootStore.debitComplexStore
 
-        const { isCreditSidebar, newCredit } = this.props.rootStore.creditStore
+        const { isCreditSidebar, credit, creditLossSum = 0 } = this.props.rootStore.creditStore
 
         return (
             <div className="p-grid">
@@ -211,7 +211,7 @@ export class Debits extends Component {
                                           onDebitSearchInput={this.debitSearchInput}
                                           onHandleKeyDown={this.handleKeyDown}
                                           selectedRows={selectedRows}
-                                          creditDetails={newCredit.creditdetails}  />
+                                          creditDetails={credit.creditdetails}  />
 
                             <div className="vertical-space10" />
 
@@ -262,7 +262,9 @@ export class Debits extends Component {
 
                 <CreditSidebar isCreditSidebar={isCreditSidebar}
                                onSaveCredit={this.saveCredit}
-                               onHideCreditSidebar={this.hideCreditSidebar}/>
+                               onHideCreditSidebar={this.hideCreditSidebar}
+                               credit={credit}
+                               creditLossSum={creditLossSum}/>
 
                 <DebitDialog form={debitFields}
                              isShowDebit={isShowDebitDialog}

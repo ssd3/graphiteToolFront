@@ -24,7 +24,7 @@ class CreditLossesForm extends Component {
 
     creditLossAddRow = e => {
         this.props.rootStore.creditStore.addLocalCreditLoss({
-            creditid: '-1',
+            creditid: '',
             losstypeid: '1',
             rate: 0,
             notes: ''
@@ -82,7 +82,7 @@ class CreditLossesForm extends Component {
     }
 
     render() {
-        const { newCredit, creditLossSum } = this.props.rootStore.creditStore
+        const { creditlosses, creditLossSum = 0 } = this.props
 
         return (
                 <Panel header="Credit losses">
@@ -97,13 +97,13 @@ class CreditLossesForm extends Component {
                         </div>
                         <div className="p-md-6">
                             <div className="p-toolbar-group-right" style={{paddingTop: '5px'}}>
-                                <InputText value={`Total: ${creditLossSum}`} disabled={true} style={{opacity: 1}} />
+                                <InputText value={`Total: ${creditLossSum.toFixed(2)}`} disabled={true} style={{opacity: 1}} />
                             </div>
                         </div>
                         <div className="vertical-space10" />
                         <div className="p-md-12">
                             <ScrollPanel style={{width: '100%', height: '160px'}}>
-                                <DataTable value={newCredit.creditlosses}
+                                <DataTable value={creditlosses}
                                            editable={true}
                                            autoLayout={true}>
                                     <Column field="losstypeid"
@@ -120,10 +120,14 @@ class CreditLossesForm extends Component {
                                 </DataTable>
                             </ScrollPanel>
                         </div>
-                    <input type="hidden" id="creditid" value={newCredit.creditid} />
-                </div>
+                    </div>
                 </Panel>
         )
+    }
+
+    static propTypes = {
+        creditLossSum: PropTypes.number.isRequired,
+        creditlosses: PropTypes.array.isRequired
     }
 }
 

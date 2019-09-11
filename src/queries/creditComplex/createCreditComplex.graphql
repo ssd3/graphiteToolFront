@@ -7,7 +7,9 @@ mutation CREATE_CREDIT_COMPLEX
     $tracknumber: String,
     $creditdetails: [CreditDetailInput]!,
     $creditlosses: [CreditLossInput],
-    $comment: String
+    $comment: String,
+    $sent: DateTime,
+    $received: DateTime
 )
 {
     result: createCreditcomplex
@@ -17,7 +19,9 @@ mutation CREATE_CREDIT_COMPLEX
             buyerid: $buyerid,
             fromwarehouseid: $fromwarehouseid,
             towarehouseid: $towarehouseid,
-            tracknumber: $tracknumber
+            tracknumber: $tracknumber,
+            sent: $sent,
+            received: $received
         }
         creditlossData: {
             creditlosses: $creditlosses
@@ -45,7 +49,7 @@ mutation CREATE_CREDIT_COMPLEX
         }
         creditlosses {
             creditlossid
-            losstypeid {
+            losstype: losstypeid {
                 losstypeid
                 title
             }
