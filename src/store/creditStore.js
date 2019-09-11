@@ -181,7 +181,8 @@ export default class CreditStore {
             if (this.credit.creditid === '') {
                 creditData.comment = this.credit.creditcomment.comment
             } else {
-                creditData.creditcomment = this.credit.creditcomment
+                creditData.creditcommentid = this.credit.creditcomment.creditcommentid
+                creditData.creditcomment = this.credit.creditcomment.comment
             }
 
             const creditdetails = this.credit.creditdetails.map(creditdetail => {

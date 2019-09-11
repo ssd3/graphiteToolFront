@@ -1,0 +1,98 @@
+mutation UPDATE_CREDIT_COMPLEX
+(
+    $creditid: Int!,
+    $credittypeid: Int!,
+    $buyerid: Int!,
+    $fromwarehouseid: Int!,
+    $towarehouseid: Int!,
+    $tracknumber: String,
+    $sent: DateTime,
+    $received: DateTime,
+    $creditdetails: [CreditDetailUpdateInput]!,
+    $creditlosses: [CreditLossUpdateInput],
+    $creditcommentid: Int!,
+    $creditcomment: String
+)
+{
+    result: updateCreditcomplex
+    (
+        creditData: {
+            creditid: $creditid,
+            credittypeid: $credittypeid,
+            buyerid: $buyerid,
+            fromwarehouseid: $fromwarehouseid,
+            towarehouseid: $towarehouseid,
+            tracknumber: $tracknumber,
+            sent: $sent,
+            received: $received
+        }
+        creditlossData: {
+            creditlosses: $creditlosses
+        }
+        creditdetailsData: {
+            creditdetails: $creditdetails
+        }
+        creditcommentData: {
+            creditcommentid: $creditcommentid,
+            comment: $creditcomment
+        }
+    )
+    {
+        credit {
+            creditid
+            credittype: credittypeid {
+                credittypeid
+                title
+            }
+            buyerid
+            fromwarehouseid
+            towarehouseid
+            sent
+            received
+            tracknumber
+        }
+        creditlosses {
+            creditlossid
+            losstypeid {
+                losstypeid
+                title
+            }
+            rate
+            notes
+        }
+        creditdetails {
+            creditdetailsid
+            debit: debitid {
+                debitid
+                qty: qty
+                price: price
+                pricetype: pricetypeid {
+                    pricetypeid
+                    title
+                    ratio
+                }
+                discount: discountid {
+                    discountid
+                    title
+                    rate
+                    units
+                }
+            }
+            product: productid {
+                productid
+                title
+            }
+            price: price
+            qty: qty
+            pricetype: pricetypeid {
+                pricetypeid
+                title
+                ratio
+            }
+        }
+        creditcomment {
+            creditcommentid
+            comment
+        }
+    }
+}

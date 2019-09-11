@@ -323,6 +323,7 @@ type RootMutation {
     updateCategory(categoryid: Int!, title: String!): UpdateCategory
     updateCredit(buyerid: Int!, creditid: Int!, credittypeid: Int!, fromwarehouseid: Int, received: DateTime, sent: DateTime, towarehouseid: Int, tracknumber: String): UpdateCredit
     updateCreditcomment(comment: String, creditcommentid: Int!, creditid: Int!): UpdateCreditComment
+    updateCreditcomplex(creditData: CreditUpdateInput!, creditcommentData: CreditCommentUpdateInput, creditdetailsData: CreditDetailsUpdateInput!, creditlossData: CreditLossesUpdateInput): UpdateCreditComplex
     updateCreditdetail(creditdetailid: Int!, creditid: Int, debitid: Int!, price: Decimal, pricetypeid: Int, productid: Int, qty: Decimal): UpdateCreditDetail
     updateCreditloss(creditid: Int, creditlossid: Int!, losstypeid: Int, notes: String, rate: Decimal): UpdateCreditLoss
     updateCredittype(credittypeid: Int!, description: String, title: String): UpdateCreditType
@@ -370,7 +371,7 @@ type RootQuery {
     productsByuser(after: String, before: String, categoryTitle: String, first: Int, last: Int): ProductConnection
     status(statusid: Int, title: String): StatusType
     statuses(dateFrom: DateTime, dateTo: DateTime, search: String): [StatusType]
-    "<graphene.types.scalars.String object at 0x7f412c4c9be0>"
+    "<graphene.types.scalars.String object at 0x7ff9ae831d68>"
     user(email: String, userid: Int, username: String): UserType
     users: [UserType]
     warehouse(active: Boolean, inField: Boolean, out: Boolean, title: String, warehouseid: Int): [WarehouseType]
@@ -396,6 +397,13 @@ type UpdateCredit {
 
 type UpdateCreditComment {
     creditcomment: CreditCommentType
+}
+
+type UpdateCreditComplex {
+    credit: CreditType
+    creditcomment: CreditCommentType
+    creditdetails: [CreditDetailsType]
+    creditlosses: [CreditLossType]
 }
 
 type UpdateCreditDetail {
@@ -491,7 +499,22 @@ input CreditCommentInput {
     comment: String
 }
 
+input CreditCommentUpdateInput {
+    comment: String
+    creditcommentid: Int!
+}
+
 input CreditDetailInput {
+    debitid: Int!
+    price: Decimal!
+    pricetypeid: Int!
+    productid: Int!
+    qty: Decimal!
+}
+
+input CreditDetailUpdateInput {
+    creditdetailsid: Int
+    creditid: Int!
     debitid: Int!
     price: Decimal!
     pricetypeid: Int!
@@ -501,6 +524,10 @@ input CreditDetailInput {
 
 input CreditDetailsInput {
     creditdetails: [CreditDetailInput]
+}
+
+input CreditDetailsUpdateInput {
+    creditdetails: [CreditDetailUpdateInput]
 }
 
 input CreditInput {
@@ -519,8 +546,31 @@ input CreditLossInput {
     rate: Decimal!
 }
 
+input CreditLossUpdateInput {
+    creditid: Int!
+    creditlossid: Int
+    losstypeid: Int!
+    notes: String
+    rate: Decimal!
+}
+
 input CreditLossesInput {
     creditlosses: [CreditLossInput]
+}
+
+input CreditLossesUpdateInput {
+    creditlosses: [CreditLossUpdateInput]
+}
+
+input CreditUpdateInput {
+    buyerid: Int!
+    creditid: Int!
+    credittypeid: Int!
+    fromwarehouseid: Int!
+    received: DateTime
+    sent: DateTime
+    towarehouseid: Int!
+    tracknumber: String
 }
 
 input DebitInput {
