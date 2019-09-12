@@ -92,7 +92,9 @@ export default class DebitComplexStore {
                 .then(({ data }) => {
                     const idx = _.findIndex(this.debits, { debitid: data.result.debit.debitid })
                     if (idx === -1) {
-                        this.debits.unshift(data.result.debit)
+                        const { debit } = data.result
+                        debit.availableqty = debit.qty - debit.credit.reduce((qty, item) => qty + item.qty, 0)
+                        this.debits.unshift(debit)
                         this.totalCount = this.totalCount + 1
                     }
                     else

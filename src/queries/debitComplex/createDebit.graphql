@@ -105,6 +105,10 @@ mutation CREATE_DEBIT_COMPLEX
             }
             notes
             created
+            user: userid {
+                id
+                username
+            }
         }
     }
 }

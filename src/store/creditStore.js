@@ -70,12 +70,13 @@ export default class CreditStore {
             _creditlosses.splice(index, 1)
             this.credit.creditlosses = [..._creditlosses]
             this.recalcLocalCreditLoss()
+            this.recalcLocalCreditDetailsTotal()
         }
     }
 
     @action recalcLocalCreditLoss(){
         this.creditLossSum = this.credit.creditlosses.map(item => isNaN(item.rate) ? 0 : +item.rate)
-                                                        .reduce((prev, current) => prev + current)
+                                                        .reduce((prev, current) => prev + current, 0)
     }
 
     @action updateLocalCreditComment(data) {
@@ -126,7 +127,7 @@ export default class CreditStore {
     @action recalcLocalCreditDetailsTotal() {
         this.creditDetailsCount = this.credit.creditdetails
             .map(creditdetail => creditdetail.qty)
-            .reduce((acc, current) => acc + current, 0)
+            .reduce((acc, current) => +acc + +current, 0)
 
         this.creditDetailsSum = this.credit.creditdetails
             .map(creditdetail => creditdetail)

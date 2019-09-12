@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Panel} from 'primereact/components/panel/Panel'
 import {DataTable} from 'primereact/components/datatable/DataTable'
@@ -42,8 +42,8 @@ class CreditDetailsForm extends Component {
     }
 
     creditNumberEditor = (props) => {
-        return <InputText type="text" value={+props.rowData[props.field]}
-                          onChange={(e) => this.onEditorValueChange(props, +e.target.value)}
+        return <InputText type="text" value={props.rowData[props.field]}
+                          onChange={(e) => this.onEditorValueChange(props, e.target.value)}
                           required={true}
                           keyfilter="num" />
     }
@@ -52,8 +52,10 @@ class CreditDetailsForm extends Component {
         const { credit,
                 creditDetailsSum = 0,
                 creditDetailsCount = 0,
-                creditDetailsIncomeSum = 0
+                creditDetailsIncomeSum = 0,
+                creditLossSum = 0
               } = this.props.rootStore.creditStore
+
 
         const footerColumnGroup =
             <ColumnGroup>
@@ -64,7 +66,7 @@ class CreditDetailsForm extends Component {
                     <Column footer="" />
                     <Column footer="" />
                     <Column footer={creditDetailsCount} />
-                    <Column footer={creditDetailsSum} />
+                    <Column footer={creditDetailsIncomeSum - creditLossSum} />
                     <Column footer={creditDetailsIncomeSum} />
                     <Column footer="" />
                 </Row>
