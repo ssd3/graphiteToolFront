@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Panel} from 'primereact/components/panel/Panel'
 import {DataTable} from 'primereact/components/datatable/DataTable'
@@ -56,7 +56,6 @@ class CreditDetailsForm extends Component {
                 creditLossSum = 0
               } = this.props.rootStore.creditStore
 
-
         const footerColumnGroup =
             <ColumnGroup>
                 <Row>
@@ -65,9 +64,16 @@ class CreditDetailsForm extends Component {
                     <Column footer="" />
                     <Column footer="" />
                     <Column footer="" />
-                    <Column footer={creditDetailsCount} />
-                    <Column footer={creditDetailsIncomeSum - creditLossSum} />
-                    <Column footer={creditDetailsIncomeSum} />
+                    <Column footer={ creditDetailsCount } />
+                    <Column footer={ creditDetailsSum } />
+                    <Column footer={<div>
+                        <div>{creditDetailsIncomeSum}</div>
+                        <div style={{textAlign: 'left'}}>-</div>
+                        <div>{(creditLossSum).toFixed(2)}</div>
+                        <div style={{textAlign: 'left'}}>=</div>
+                        <div>{(creditDetailsIncomeSum - creditLossSum).toFixed(2)}</div>
+                    </div>} />
+
                     <Column footer="" />
                 </Row>
             </ColumnGroup>
@@ -92,7 +98,7 @@ class CreditDetailsForm extends Component {
                                     <Column field="debit.discount.title" header="Discount" />
                                     <Column field="discountprice" header="Discount price" body={this.formatBold} />
                                     <Column field="debit.rowsum" header="Debit row sum" />
-                                    <Column field="price" header="Credit price" editor={this.creditNumberEditor} />
+                                    <Column field="price" header="Credit price" editor={this.creditNumberEditor} body={this.formatBold} />
                                     <Column field="pricetype.title" header="Credit price type" />
                                     <Column field="qty" header="Credit qty" editor={this.creditNumberEditor} />
                                     <Column field="rowsum" header="Credit row sum" />

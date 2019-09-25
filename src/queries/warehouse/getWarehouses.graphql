@@ -1,13 +1,13 @@
-query GET_WAREHOUSES($active: Boolean!, $inField: Boolean, $out: Boolean) {
-    warehouses(active: $active, inField: $inField, out: $out) {
+query GET_WAREHOUSES($active: Boolean!, $incoming: Boolean, $outgoing: Boolean) {
+    warehouses(active: $active, incoming: $incoming, outgoing: $outgoing) {
         edges {
             node {
                 warehouseid
                 title
                 description
                 active
-                inField
-                out
+                incoming
+                outgoing
                 created
                 userid {
                     id

@@ -33,31 +33,13 @@ export class Warehouse extends Component {
         this.props.rootStore.warehouseStore.getWarehouses({
             active: true
         })
-
-        /*
-        HttpClient.getData(WarehouseQueries.GET_WAREHOUSES)
-            .then(result => {
-                const { loading, error, data } = result
-                let cleanData = utility.gqlQueryToCleanData(data)
-                this.setState({
-                    dataLoading: loading,
-                    warehouses: cleanData
-                })
-                if (error) {
-                    this.growl.show({severity: 'error', summary: 'Error Message', detail: JSON.stringify(error) })
-                } else {
-                    this.growl.show({severity: 'success', summary: 'Success Message', detail: JSON.stringify(data) })
-                }
-            })
-            .catch(e => console.log(e))
-        */
         this.props.pageTitle('Warehouse')
     }
 
     renderCheckBox(rowData, column) {
         const in_out_active = rowData[column.field] // active, in, out
         return <div>
-            <Checkbox checked={in_out_active}></Checkbox>
+            <Checkbox checked={in_out_active}/>
         </div>
     }
 
@@ -67,8 +49,8 @@ export class Warehouse extends Component {
                                                                 'title': warehouse.title,
                                                                 'description': warehouse.description,
                                                                 'active': warehouse.active,
-                                                                'in_field': warehouse.inField,
-                                                                'out': warehouse.out})
+                                                                'incoming': warehouse.incoming,
+                                                                'outgoing': warehouse.outgoing})
             .then(result =>{
                 if(result.error)
                 {
@@ -111,8 +93,8 @@ export class Warehouse extends Component {
                     <Column field="description" header="Description" editor={this.descriptionEditor} onEditorSubmit={this.updateWarehouse}/>
                     <Column field="active" header="Active" body={this.renderCheckBox} onEditorSubmit={this.updateWarehouse}/>
                     <Column field="created" header="Created" />
-                    <Column field="inField" header="In" body={this.renderCheckBox}  />
-                    <Column field="out" header="Out" body={this.renderCheckBox}  />
+                    <Column field="incoming" header="In" body={this.renderCheckBox}  />
+                    <Column field="outgoing" header="Out" body={this.renderCheckBox}  />
                 </DataTable>
                 <Growl ref={(el) => this.growl = el} position='topleft' />
             </div>

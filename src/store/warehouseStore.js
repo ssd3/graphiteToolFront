@@ -1,4 +1,4 @@
-import {autorun, computed, observable} from 'mobx'
+import {autorun, observable} from 'mobx'
 import WarehouseService from '../services/warehouseService'
 
 export default class WarehouseStore {
@@ -12,8 +12,8 @@ export default class WarehouseStore {
         this.rootStore = rootStore
         this.warehouseService = new WarehouseService()
         autorun(() => {
-            this.getWarehousesList({active: true, inField: true, outField: false})
-            this.getWarehousesList({active: true, inField: false, outField: true})
+            this.getWarehousesList({active: true, incoming: true, outgoing: false})
+            this.getWarehousesList({active: true, incoming: false, outgoing: true})
         })
     }
 

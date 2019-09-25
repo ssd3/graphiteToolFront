@@ -15,8 +15,8 @@ class WarehouseQueries {
                             description
                             active
                             created
-                            inField
-                            out
+                            incoming
+                            outgoing
                         } 
                     }
                 }
@@ -27,14 +27,14 @@ class WarehouseQueries {
     static get UPDATE_WAREHOUSE() {
         return gql`
         mutation Mutation($warehouseid: Int!, $title: String!, $description: String, 
-  									$active: Boolean!, $in_field: Boolean!, $out: Boolean!)
+  									$active: Boolean!, $incoming: Boolean!, $outgoing: Boolean!)
         {
             updateWarehouse(warehouseid: $warehouseid,
                                     title: $title,
                                     description: $description,
                                     active: $active,
-                                    inField: $in_field,
-                                    out: $out)
+                                    incoming: $incoming,
+                                    outgoing: $outgoing)
             {
                 warehouse
                 {

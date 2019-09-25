@@ -31,6 +31,7 @@ import {PrivateRoute} from './components/PrivateRoute'
 import {Switch} from 'react-router'
 import Logout from './components/auth/Logout'
 import Toast from './components/common/Toast'
+import {Products} from './components/product/Products'
 
 @inject('rootStore')
 @observer
@@ -109,6 +110,7 @@ class App extends Component {
     createMenu() {
         this.menu = [
             {label: 'Dashboard', icon: 'pi pi-fw pi-star-o', command: () => {window.location = '#/'}},
+            {label: 'Products', icon: 'pi pi-fw pi-sign-in', to: '/products'},
             {label: 'Debits', icon: 'pi pi-fw pi-sign-in', to: '/debits'},
             {label: 'Credits', icon: 'pi pi-fw pi-sign-out', to: '/credits'},
             {label: 'Balance', icon: 'pi pi-fw pi-dollar', to: '/balance'},
@@ -121,7 +123,7 @@ class App extends Component {
                     {label: 'Price Type', icon: 'pi pi-fw pi-briefcase', to: '/price_type'},
                     {label: 'Status', icon: 'pi pi-fw pi-lock', to: '/status'},
                     {label: 'Warehouse', icon: 'pi pi-fw pi-home', to: '/warehouse'},
-                    {label: 'Products', icon: 'pi pi-fw pi-shopping-cart', to: '/products'}
+                    {label: 'All Products', icon: 'pi pi-fw pi-shopping-cart', to: '/allProducts'}
                 ]
             }
         ]
@@ -238,6 +240,7 @@ class App extends Component {
                         <Switch>
                             <Route path="/login" exact component={Login} notify={this.notify} />
                             <PrivateRoute path="/" exact component={Dashboard} pageTitle={this.pageTitle} />
+                            <PrivateRoute path="/products" exact component={Products} pageTitle={this.pageTitle} notify={this.notify} />
                             <PrivateRoute path="/debits" exact component={Debits} pageTitle={this.pageTitle} notify={this.notify} />
                             <PrivateRoute path="/credits" exact component={Credits} pageTitle={this.pageTitle} />
                             <PrivateRoute path="/balance" exact component={Balance} pageTitle={this.pageTitle} />
